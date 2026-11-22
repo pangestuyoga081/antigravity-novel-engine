@@ -846,8 +846,12 @@ ${text}`;
   Terapkan secara alami sesuai konteks cerita, tanpa merusak alur, suasana, atau dialog karakter. Jelaskan hanya istilah yang benar-benar berpotensi membingungkan, utamakan saat pertama kali muncul, dan hindari pengulangan penjelasan yang sama. Gunakan bahasa sehari-hari yang lugas, bukan penjelasan formal seperti kamus. Jika istilah memiliki makna khusus dalam dunia cerita, jelaskan berdasarkan konteks tersebut.`;
 
   if (styleMode === 'harrypotter') {
-    return `Tuliskan kembali SELURUH alur adegan cerita novel Harry Potter berikut ke dalam Bahasa Indonesia yang SUPER SANTAI SEHARI-HARI, GAUL TONGKRONGAN ASRAMA (GUE - LU), NO SENSOR, LUGAS, LUCU, dan TO-THE-POINT — selevel webtoon fantasi modern / light novel adaptasi populer!
-Target pembaca: Pembaca remaja/dewasa yang ingin menikmati petualangan sihir Hogwarts yang seru, hidup, dan ceplas-ceplos tanpa eufemisme jadul yang kaku dan membosankan!
+    return `Tuliskan kembali SELURUH alur adegan cerita novel Harry Potter berikut ke dalam Bahasa Indonesia yang SUPER SANTAI SEHARI-HARI, GAUL TONGKRONGAN ASRAMA (GUE - LU), NO SENSOR, LUGAS, dan TO-THE-POINT — setara novel petualangan modern tanpa eufemisme jadul yang kaku!
+
+ATURAN PALING PENTING (SETIA PADA NASKAH ASLI & ANTI-HALUSINASI):
+- DILARANG MENAMBAH-NAMBAHKAN PIKIRAN BATIN / MONOLOG PALSU yang tidak ada di naskah sumber!
+- BANNED TOTAL JOKES OVERUSE: DILARANG KERAS menggunakan lelucon klise/garing seperti "budak korporat", "bos toxic", "lembur shift malam", "gaji UMR", dll. Harry Potter adalah anak/remaja penyihir di dunia magis, BUKAN pekerja kantoran Jakarta!
+- Pertahankan sudut pandang narator orang ketiga (third person POV) asli dari buku, JANGAN ubah narator cerita menjadi "batin gue" atau "kata gue". Sudut pandang orang pertama (Gue - Lu) HANYA untuk DIALOG antar karakter sebaya dan pikiran karakter yang MEMANG ADA di teks aslinya!
 
 DILARANG KERAS MEMBUAT RINGKASAN/RANGKUMAN:
 - Tuliskan kembali SELURUH narasi dan percakapan adegan secara LENGKAP, UTUH, dan MENGALIR dari awal sampai akhir tanpa memotong peristiwa atau detail cerita!
@@ -855,13 +859,14 @@ DILARANG KERAS MEMBUAT RINGKASAN/RANGKUMAN:
 
 ATURAN WAJIB & MUTLAK:
 1. SUDUT PANDANG & PRONOUNS (BANNED KATA AKU-KAMU):
-   - Percakapan antar murid/sahabat (Harry Potter, Ron Weasley, Hermione Granger, Neville Longbottom, Seamus Finnigan): gunakan GUE - LU secara luwes.
+   - Percakapan antar murid/sahabat sebaya (Harry Potter, Ron Weasley, Hermione Granger, Neville Longbottom, Seamus Finnigan, Fred, George): gunakan GUE - LU secara luwes.
    - BANNED TOTAL: DILARANG menggunakan kata kaku "aku", "kamu", "kau", "diriku", "kepadamu" untuk dialog pergaulan sebaya! Ganti jadi GUE / LU!
 
 2. TONE & MAKIAN / EMOSI TANPA SENSOR:
    - Terjemahkan umpatan sekolah dan makian para penyihir apa adanya tanpa disensor (Bloody hell, git, prat, damn -> anjir, bangsat, taik, sialan, keparat, songong).
-   - Karakterisasi tokoh terjaga kuat:
-     * Severus Snape: Dingin, menusuk, sarkas tajam, suka merendahkan dengan gaya berwibawa.
+   - Karakterisasi tokoh terjaga kuat sesuai aslinya:
+     * Harry Potter: Remaja mandiri, sinis kalau dijahatin, pemberani.
+     * Severus Snape: Dingin, menusuk, sarkas tajam, berwibawa menakutkan.
      * Draco Malfoy: Songong, tengil, manja anak orang kaya, rasis darah murni ("Darah lumpur lu!").
      * Rubeus Hagrid: Blak-blakan, ramah, polos, suka keceplosan info rahasia ("Aduh, harusnya gue nggak ngomong itu tadi...").
      * Albus Dumbledore: Bijak, tenang, misterius, santai tapi sangat berwibawa.
