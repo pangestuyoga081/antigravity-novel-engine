@@ -27,7 +27,7 @@ interface Chapter {
   text: string;
 }
 
-type StyleMode = 'dxd' | 'konosuba' | 'warhammer' | 'hobbit' | 'overlord' | 'mushoku' | 'dune' | 'metro' | 'expanse' | 'default';
+type StyleMode = 'dxd' | 'konosuba' | 'warhammer' | 'hobbit' | 'overlord' | 'mushoku' | 'dune' | 'metro' | 'expanse' | 'harrypotter' | 'default';
 
 function parseSSEorJSON(raw: string): string {
   let full = '';
@@ -845,6 +845,62 @@ ${text}`;
   Setiap istilah asing, istilah teknis, atau konsep yang berpotensi tidak dipahami pembaca dalam narasi maupun dialog harus disertai penjelasan singkat dalam bahasa Indonesia dengan format konsisten: Istilah (arti atau penjelasan sederhana). Contoh: Vox (perangkat komunikasi radio militer), Remembrancer (sejarawan/pencatat resmi ekspedisi), Browser (peramban web untuk menjelajahi internet).
   Terapkan secara alami sesuai konteks cerita, tanpa merusak alur, suasana, atau dialog karakter. Jelaskan hanya istilah yang benar-benar berpotensi membingungkan, utamakan saat pertama kali muncul, dan hindari pengulangan penjelasan yang sama. Gunakan bahasa sehari-hari yang lugas, bukan penjelasan formal seperti kamus. Jika istilah memiliki makna khusus dalam dunia cerita, jelaskan berdasarkan konteks tersebut.`;
 
+  if (styleMode === 'harrypotter') {
+    return `Tuliskan kembali SELURUH alur adegan cerita novel Harry Potter berikut ke dalam Bahasa Indonesia yang SUPER SANTAI SEHARI-HARI, GAUL TONGKRONGAN ASRAMA (GUE - LU), NO SENSOR, LUGAS, LUCU, dan TO-THE-POINT — selevel webtoon fantasi modern / light novel adaptasi populer!
+Target pembaca: Pembaca remaja/dewasa yang ingin menikmati petualangan sihir Hogwarts yang seru, hidup, dan ceplas-ceplos tanpa eufemisme jadul yang kaku dan membosankan!
+
+DILARANG KERAS MEMBUAT RINGKASAN/RANGKUMAN:
+- Tuliskan kembali SELURUH narasi dan percakapan adegan secara LENGKAP, UTUH, dan MENGALIR dari awal sampai akhir tanpa memotong peristiwa atau detail cerita!
+- Dilarang membuat kalimat pembuka atau penutup template seperti "Berikut adalah terjemahan...", "Ringkasan...", dll.
+
+ATURAN WAJIB & MUTLAK:
+1. SUDUT PANDANG & PRONOUNS (BANNED KATA AKU-KAMU):
+   - Percakapan antar murid/sahabat (Harry Potter, Ron Weasley, Hermione Granger, Neville Longbottom, Seamus Finnigan): gunakan GUE - LU secara luwes.
+   - BANNED TOTAL: DILARANG menggunakan kata kaku "aku", "kamu", "kau", "diriku", "kepadamu" untuk dialog pergaulan sebaya! Ganti jadi GUE / LU!
+
+2. TONE & MAKIAN / EMOSI TANPA SENSOR:
+   - Terjemahkan umpatan sekolah dan makian para penyihir apa adanya tanpa disensor (Bloody hell, git, prat, damn -> anjir, bangsat, taik, sialan, keparat, songong).
+   - Karakterisasi tokoh terjaga kuat:
+     * Severus Snape: Dingin, menusuk, sarkas tajam, suka merendahkan dengan gaya berwibawa.
+     * Draco Malfoy: Songong, tengil, manja anak orang kaya, rasis darah murni ("Darah lumpur lu!").
+     * Rubeus Hagrid: Blak-blakan, ramah, polos, suka keceplosan info rahasia ("Aduh, harusnya gue nggak ngomong itu tadi...").
+     * Albus Dumbledore: Bijak, tenang, misterius, santai tapi sangat berwibawa.
+     * Vernon & Petunia Dursley: Kolot, panik, sensi sama hal aneh, suka ngegas.
+
+3. HARAM BAHASA BAKU / FORMAL / KBBI KAKU (BLACKLIST MUTLAK):
+   - Dilarang keras memakai bahasa makalah/KBBI sastra kaku: ("adalah", "tatkala", "terpendar", "kian", "kendati demikian", "merupakan", "tak kunjung", "berada dalam situasi", "mengindikasikan", "beliau", "berujar", "berkata").
+   - BANNED KATA KAKU SEREMPET KBBI: DILARANG memakai kata "mencicit", "menukas", "menimpali", "tersenyum simpul", "bergumam", "meracau", "mendengus"!
+   - ANTI-REPETISI VERBA: Variasikan kata kerja aksi dan dialog secara dinamis sesuai naskah asli (bisik, seru, nyamber, nyolot, nyeletuk, motong omongan, senyum miring, nyengir, ngedumel, ngoceh, dengus kesel, hela napas).
+
+4. ATURAN MUTLAK FORMAT DIALOG (WAJIB NAMA LENGKAP: "..."):
+   - DILARANG KERAS mengeluarkan dialog tanpa nama pembicara!
+   - Setiap baris tuturan langsung WAJIB diawali format: Nama Lengkap: "..."
+   - DAFTAR NAMA LENGKAP TOKOH HARRY POTTER:
+     * Harry Potter -> Selalu gunakan: Harry Potter: "..."
+     * Ron Weasley -> Selalu gunakan: Ron Weasley: "..."
+     * Hermione Granger -> Selalu gunakan: Hermione Granger: "..."
+     * Albus Dumbledore -> Selalu gunakan: Albus Dumbledore: "..."
+     * Minerva McGonagall -> Selalu gunakan: Minerva McGonagall: "..."
+     * Severus Snape -> Selalu gunakan: Severus Snape: "..."
+     * Rubeus Hagrid -> Selalu gunakan: Rubeus Hagrid: "..."
+     * Draco Malfoy -> Selalu gunakan: Draco Malfoy: "..."
+     * Neville Longbottom -> Selalu gunakan: Neville Longbottom: "..."
+     * Vernon Dursley -> Selalu gunakan: Vernon Dursley: "..."
+     * Petunia Dursley -> Selalu gunakan: Petunia Dursley: "..."
+     * Dudley Dursley -> Selalu gunakan: Dudley Dursley: "..."
+     * Quirrell -> Selalu gunakan: Profesor Quirrell: "..."
+     * Ollivander -> Selalu gunakan: Garrick Ollivander: "..."
+
+5. MANTRA & ISTILAH SIHIR TETAP PRESISI (LOANWORDS):
+   - Pertahankan istilah sihir asli: Muggle, Quidditch, Golden Snitch, Bludger, Quaffle, Sorting Hat, Diagon Alley, Privet Drive, Gringotts, Galleon, Sickle, Knut, Invisibility Cloak, Mirror of Erised.
+   - Pertahankan nama mantra latin asli (Alohomora, Wingardium Leviosa, Petrificus Totalus, Lumos, dll.) dengan penjelasan efek dalam kurung jika membingungkan.
+${explanationRule}
+
+Naskah Asli:
+
+${text}`;
+  }
+
   if (styleMode === 'expanse') {
     return `Tuliskan kembali SELURUH alur adegan fiksi ilmiah The Expanse berikut dalam Bahasa Indonesia yang SUPER SANTAI SEHARI-HARI, TONGKRONGAN GAUL LUAR ANGKASA (GUE - LU), NO SENSOR, LUGAS, dan TO-THE-POINT — setara dengan sci-fi militer / space opera modern!
 Target pembaca: Pembaca dewasa/young adult yang suka cerita ketegangan luar angkasa realistis, intrik politik tajam, dan obrolan kru kapal yang luwes tanpa kepalsuan eufemisme kaku.
@@ -1406,7 +1462,8 @@ async function main() {
   const isDune = /dune|frank\s*herbert|arrakis|atreides/i.test(targetFile);
   const isMetro = /metro\s*2033|glukhovsky|artyom|vdnkh/i.test(targetFile);
   const isExpanse = /expanse|leviathan\s*wakes|caliban|abaddon|cibola|nemesis\s*games|babylon|persepolis|tiamat/i.test(targetFile);
-  const styleMode: StyleMode = isDxd ? 'dxd' : (isExpanse ? 'expanse' : (isMetro ? 'metro' : (isDune ? 'dune' : (isKonosuba ? 'konosuba' : (isWarhammer ? 'warhammer' : (isHobbit ? 'hobbit' : (isOverlord ? 'overlord' : (isMushoku ? 'mushoku' : 'default'))))))));
+  const isHarryPotter = /harry\s*potter|batu\s*bertuah|kamar\s*rahasia|tawanan\s*azkaban|piala\s*api|orde\s*phoenix|pangeran\s*berdarah|relikui\s*kematian/i.test(targetFile);
+  const styleMode: StyleMode = isDxd ? 'dxd' : (isHarryPotter ? 'harrypotter' : (isExpanse ? 'expanse' : (isMetro ? 'metro' : (isDune ? 'dune' : (isKonosuba ? 'konosuba' : (isWarhammer ? 'warhammer' : (isHobbit ? 'hobbit' : (isOverlord ? 'overlord' : (isMushoku ? 'mushoku' : 'default')))))))));
 
   if (!fs.existsSync(cacheDir)) {
     fs.mkdirSync(cacheDir, { recursive: true });
@@ -1419,6 +1476,7 @@ async function main() {
   console.log(`⚡ Concurrency  : ${CONFIG.concurrency} Workers | Model: ${CONFIG.model}`);
   
   let styleDesc = 'Laga Aksi Luwes (Tell-Don\'t-Show, To-The-Point)';
+  if (styleMode === 'harrypotter') styleDesc = 'Harry Potter Gaul Sihir Remake (No-Sensor, Gaul Tongkrongan Asrama Gryffindor Gue-Lu, Dialog Wajib Bernama Lengkap, Nol Kata Kaku)';
   if (styleMode === 'expanse') styleDesc = 'Hard Sci-Fi Space Opera The Expanse (No Sensor, Gaul Luar Angkasa Gue-Lu, Dialog Lengkap Bernama, Istilah Belter & Propulsi Presisi)';
   if (styleMode === 'metro') styleDesc = 'Sci-Fi Survival Post-Apokaliptik Metro 2033 (Tell-Don\'t-Show, Tegang & Gaul Stalker, Peta Terowongan)';
   if (styleMode === 'dune') styleDesc = 'Sci-Fi Epik Dune (Tell-Don\'t-Show, Intrik Feudal Arrakis, Istilah Lore Asli)';
