@@ -1,0 +1,10 @@
+node_modules/
+*.epub
+*.pdf
+*.zip
+*.tar
+*cache*/
+.temp*
+raw_trans*/
+__pycache__/
+*.pyc
