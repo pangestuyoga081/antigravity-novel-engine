@@ -862,15 +862,17 @@ ATURAN WAJIB & MUTLAK:
    - Percakapan antar murid/sahabat sebaya (Harry Potter, Ron Weasley, Hermione Granger, Neville Longbottom, Seamus Finnigan, Fred, George): gunakan GUE - LU secara luwes.
    - BANNED TOTAL: DILARANG menggunakan kata kaku "aku", "kamu", "kau", "diriku", "kepadamu" untuk dialog pergaulan sebaya! Ganti jadi GUE / LU!
 
-2. TONE & MAKIAN / EMOSI TANPA SENSOR:
-   - Terjemahkan umpatan sekolah dan makian para penyihir apa adanya tanpa disensor (Bloody hell, git, prat, damn -> anjir, bangsat, taik, sialan, keparat, songong).
+2. TONE KASAR, VULGAR, CEPLAS-CEPLOS & MAKIAN TANPA SENSOR:
+   - JANGAN TURUNKAN KEVULGARAN / KEBERANIAN BAHASA! Terjemahkan umpatan jalanan, perseteruan asrama, dan amarah karakter secara liar, frontal, dan to-the-point tanpa eufemisme sopan yang munafik (bloody hell, git, prat, damn, bastard, bitch, shit -> anjing, bangsat, taik, bajingan, sialan, keparat, tolol, brengsek, songong, lonte, kampret).
+   - Dialog perseteruan dan amarah antar murid (terutama Harry, Ron vs Malfoy, Crabbe, Goyle) wajib pedas, nyolot, dan tanpa rem!
    - Karakterisasi tokoh terjaga kuat sesuai aslinya:
-     * Harry Potter: Remaja mandiri, sinis kalau dijahatin, pemberani.
-     * Severus Snape: Dingin, menusuk, sarkas tajam, berwibawa menakutkan.
-     * Draco Malfoy: Songong, tengil, manja anak orang kaya, rasis darah murni ("Darah lumpur lu!").
-     * Rubeus Hagrid: Blak-blakan, ramah, polos, suka keceplosan info rahasia ("Aduh, harusnya gue nggak ngomong itu tadi...").
+     * Harry Potter: Remaja mandiri, sinis pedas kalau dijahatin, pemberani dan nggak segan ngegas.
+     * Ron Weasley: Ceplas-ceplos, gampang panas, hobi misuh/ngumpat kalau kaget atau kesel ("Buset anjing, bangsat bener tuh anak!").
+     * Severus Snape: Dingin, menusuk, sarkas tajam, suka merendahkan dan mempermalukan lawan bicaranya.
+     * Draco Malfoy: Songong, tengil, manja anak orang kaya, rasis darah murni penghina ("Najis dasar darah lumpur lu!").
+     * Rubeus Hagrid: Blak-blakan, ramah, polos, suka keceplosan info rahasia ("Aduh goblok, harusnya gue nggak ngomong itu tadi...").
      * Albus Dumbledore: Bijak, tenang, misterius, santai tapi sangat berwibawa.
-     * Vernon & Petunia Dursley: Kolot, panik, sensi sama hal aneh, suka ngegas.
+     * Vernon & Petunia Dursley: Kolot, panik, sensi sama hal aneh, suka ngegas dan bentak-bentak kasar.
 
 3. HARAM BAHASA BAKU / FORMAL / KBBI KAKU (BLACKLIST MUTLAK):
    - Dilarang keras memakai bahasa makalah/KBBI sastra kaku: ("adalah", "tatkala", "terpendar", "kian", "kendati demikian", "merupakan", "tak kunjung", "berada dalam situasi", "mengindikasikan", "beliau", "berujar", "berkata").
