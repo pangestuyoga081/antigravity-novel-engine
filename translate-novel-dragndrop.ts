@@ -27,7 +27,7 @@ interface Chapter {
   text: string;
 }
 
-type StyleMode = 'dxd' | 'konosuba' | 'warhammer' | 'hobbit' | 'overlord' | 'mushoku' | 'dune' | 'metro' | 'expanse' | 'harrypotter' | 'default';
+type StyleMode = 'dxd' | 'konosuba' | 'warhammer' | 'hobbit' | 'overlord' | 'mushoku' | 'dune' | 'metro' | 'expanse' | 'harrypotter' | 'comic_history' | 'default';
 
 function parseSSEorJSON(raw: string): string {
   let full = '';
@@ -845,6 +845,33 @@ ${text}`;
   Setiap istilah asing, istilah teknis, atau konsep yang berpotensi tidak dipahami pembaca dalam narasi maupun dialog harus disertai penjelasan singkat dalam bahasa Indonesia dengan format konsisten: Istilah (arti atau penjelasan sederhana). Contoh: Vox (perangkat komunikasi radio militer), Remembrancer (sejarawan/pencatat resmi ekspedisi), Browser (peramban web untuk menjelajahi internet).
   Terapkan secara alami sesuai konteks cerita, tanpa merusak alur, suasana, atau dialog karakter. Jelaskan hanya istilah yang benar-benar berpotensi membingungkan, utamakan saat pertama kali muncul, dan hindari pengulangan penjelasan yang sama. Gunakan bahasa sehari-hari yang lugas, bukan penjelasan formal seperti kamus. Jika istilah memiliki makna khusus dalam dunia cerita, jelaskan berdasarkan konteks tersebut.`;
 
+  if (styleMode === 'comic_history') {
+    return `Tuliskan kembali SELURUH naskah sejarah peradaban Islam karya Ira M. Lapidus berikut ke dalam Bahasa Indonesia dengan GAYA BAHASA KOMIK / WEBTOON SEJARAH (EPIC, DRAMATIC, PUNCHY, LUGAS, SERU, dan TO-THE-POINT) — setara narasi komik aksi/sejarah berkelas dunia tanpa bahasa makalah/skripsi yang membosankan!
+
+ATURAN PALING PENTING (SETIA PADA NASKAH ASLI & ANTI-HALUSINASI):
+- DILARANG MENAMBAH-NAMBAHKAN TOKOH FIKSI ATAU MONOLOG BATIN PALSU (jangan sebut karakter anime/game seperti Ainz, Albedo, dsb.)!
+- BANNED JOKES OVERUSE: DILARANG memakai jokes korporat klise ("budak korporat", "bos toxic", "shift malam"). Ini adalah catatan sejarah dunia nyata!
+- Tetap sajikan seluruh fakta sejarah, nama tokoh, tahun, wilayah, dan analisis institusi secara 100% LENGKAP tanpa memotong atau meringkas!
+
+DILARANG KERAS MEMBUAT RINGKASAN/RANGKUMAN:
+- Tuliskan kembali SELURUH naskah secara UTUH, MENGALIR, dan DETAIL dari awal sampai akhir!
+- Dilarang membuat kalimat pembuka atau penutup template seperti "Berikut adalah...", "Ringkasan...", dll.
+
+GAYA BAHASA KOMIK SEJARAH & ATURAN MUTLAK:
+1. PUNCHY & ENERGETIK: Paragraf mengalir dinamis, tempo cepat, kalimat lugas, dan dramatisasi epik (seperti narator komik Kingdom / Vinland Saga / Three Kingdoms).
+2. HARAM BAHASA BAKU KAKU / MAKALAH: DILARANG memakai kata usang kaku seperti ("tatkala", "manakala", "alkisah", "perihal yang mana", "kian", "kendati demikian", "beliau", "mengindikasikan", "mencicit", "menukas", "bergumam").
+3. FORMAT DIALOG & QUOTE: Jika ada tuturan langsung tokoh sejarah atau dokumen kuno, gunakan format: Nama Tokoh: "..." dan berikan penekanan tegas.
+4. NAMA TOKOH & ISTILAH SEJARAH:
+   - Tulis nama tokoh dan dinasti dengan presisi (Utsman, Ali bin Abi Thalib, Mu'awiyah, Bani Umayyah, Abbasiyah, Fatimiyah, Seljuk, Mamluk, Utsmani).
+   - Istilah sejarah Islam (Khilafah, Ulama, Waqf, Iqta', Fitnah, Baiat, Tahkim, Ghazw) tetap dipertahankan dengan penjelasan konteks alami jika perlu.
+5. PENTING: Pertahankan tag penanda [[ILUSTRASI:...]] persis di posisinya!
+${explanationRule}
+
+Naskah Asli:
+
+${text}`;
+  }
+
   if (styleMode === 'harrypotter') {
     return `Tuliskan kembali SELURUH alur adegan cerita novel Harry Potter berikut ke dalam Bahasa Indonesia yang SUPER SANTAI SEHARI-HARI, GAUL TONGKRONGAN ASRAMA (GUE - LU), NO SENSOR, LUGAS, dan TO-THE-POINT — setara novel petualangan modern tanpa eufemisme jadul yang kaku!
 
@@ -1470,7 +1497,8 @@ async function main() {
   const isMetro = /metro\s*2033|glukhovsky|artyom|vdnkh/i.test(targetFile);
   const isExpanse = /expanse|leviathan\s*wakes|caliban|abaddon|cibola|nemesis\s*games|babylon|persepolis|tiamat/i.test(targetFile);
   const isHarryPotter = /harry\s*potter|batu\s*bertuah|kamar\s*rahasia|tawanan\s*azkaban|piala\s*api|orde\s*phoenix|pangeran\s*berdarah|relikui\s*kematian/i.test(targetFile);
-  const styleMode: StyleMode = isDxd ? 'dxd' : (isHarryPotter ? 'harrypotter' : (isExpanse ? 'expanse' : (isMetro ? 'metro' : (isDune ? 'dune' : (isKonosuba ? 'konosuba' : (isWarhammer ? 'warhammer' : (isHobbit ? 'hobbit' : (isOverlord ? 'overlord' : (isMushoku ? 'mushoku' : 'default')))))))));
+  const isLapidus = /history\s*of\s*islamic\s*societies|lapidus/i.test(targetFile);
+  const styleMode: StyleMode = isLapidus ? 'comic_history' : (isDxd ? 'dxd' : (isHarryPotter ? 'harrypotter' : (isExpanse ? 'expanse' : (isMetro ? 'metro' : (isDune ? 'dune' : (isKonosuba ? 'konosuba' : (isWarhammer ? 'warhammer' : (isHobbit ? 'hobbit' : (isOverlord ? 'overlord' : (isMushoku ? 'mushoku' : 'default'))))))))));
 
   if (!fs.existsSync(cacheDir)) {
     fs.mkdirSync(cacheDir, { recursive: true });
@@ -1489,6 +1517,7 @@ async function main() {
   if (styleMode === 'dune') styleDesc = 'Sci-Fi Epik Dune (Tell-Don\'t-Show, Intrik Feudal Arrakis, Istilah Lore Asli)';
   if (styleMode === 'warhammer') styleDesc = 'Sci-Fi Militer Grimdark Warhammer 40k (Badass, Tell-Don\'t-Show, Taktis & Gaul Prajurit)';
   if (styleMode === 'konosuba') styleDesc = 'Light Novel Komedi Isekai (Tell-Don\'t-Show, Manga Pacing, Gaul)';
+  if (styleMode === 'comic_history') styleDesc = 'Komik/Webtoon Sejarah Islam (Epic, Dramatic, Punchy, To-The-Point, Fakta & Peta Utuh, Nol Kaku)';
   if (styleMode === 'hobbit') styleDesc = 'Petualangan Fantasi Modern Middle-earth (Tell-Don\'t-Show, Santai/Gaul, Peta & Ilustrasi)';
   if (styleMode === 'overlord') styleDesc = 'Dark Fantasy Anti-Hero (Ainz Monolog vs Wibawa Penguasa, Tell-Don\'t-Show, Taktis & Badass)';
   if (styleMode === 'dxd') styleDesc = 'High School DxD (No Sensor, Mesum Frontal, Tongkrongan Gaul Gue-Lu, Dialog Bernama Lengkap, Ilustrasi Presisi)';
