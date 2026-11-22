@@ -7,6 +7,7 @@
 iTunes*
 *.log
 *.zip
+!chat_backup/*.zip
 *.epub
 *.pdf
 *.tar
