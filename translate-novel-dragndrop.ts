@@ -1613,7 +1613,7 @@ async function main() {
     try {
       let helperScript = path.join(dirName, 'compile_epub_helper.py');
       if (!fs.existsSync(helperScript)) {
-        helperScript = path.join(__dirname, 'compile_epub_helper.py');
+        helperScript = path.resolve(process.cwd(), 'compile_epub_helper.py');
       }
       execSync(`python "${helperScript}" "${outputFile}" "${targetFile}" "${epubOutFile}"`, { stdio: 'inherit' });
     } catch (e: any) {
