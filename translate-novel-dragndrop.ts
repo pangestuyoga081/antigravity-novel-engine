@@ -1611,7 +1611,10 @@ async function main() {
     const epubOutFile = path.join(epubOutDir, `${baseName} (Illustrated ID-Direct).epub`);
     
     try {
-      let helperScript = path.join(dirName, 'compile_epub_helper.py');
+      let helperScript = path.resolve('E:/antigravity-novel-engine/compile_epub_helper.py');
+      if (!fs.existsSync(helperScript)) {
+        helperScript = path.join(dirName, 'compile_epub_helper.py');
+      }
       if (!fs.existsSync(helperScript)) {
         helperScript = path.resolve(process.cwd(), 'compile_epub_helper.py');
       }
