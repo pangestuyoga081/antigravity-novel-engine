@@ -827,6 +827,29 @@ function splitParagraphSafe(text: string, maxChars: number): string[] {
 
 function buildPrompt(text: string, styleMode: StyleMode, simplified = false): string {
   if (simplified) {
+    if (styleMode === 'comic_history') {
+      return `Tuliskan naskah sejarah Islam karya Ira M. Lapidus berikut ke dalam Bahasa Indonesia dengan GAYA BAHASA KOMIK / WEBTOON SEJARAH (EPIC, DRAMATIC, PUNCHY, LUGAS, dan TO-THE-POINT).
+- DILARANG MENAMBAH TOKOH FIKSI / ANIME / MONOLOG BATIN PALSU (jangan sebut Ainz, Albedo, Nazarick, dll.).
+- BANNED JOKES OVERUSE: DILARANG menggunakan kata "budak korporat", "bos toxic", "shift malam".
+- Haram bahasa baku kaku ("tatkala", "kian", "kendati demikian", "beliau").
+- Pertahankan seluruh fakta sejarah, nama tokoh, dan tahun secara akurat.
+- PENTING: Pertahankan tag penanda [[ILUSTRASI:...]] persis di posisinya!
+
+Naskah Asli:
+
+${text}`;
+    }
+    if (styleMode === 'harrypotter') {
+      return `Tuliskan adegan cerita novel Harry Potter berikut dalam Bahasa Indonesia yang SUPER SANTAI SEHARI-HARI, GAUL TONGKRONGAN ASRAMA (GUE - LU), NO SENSOR, dan TO-THE-POINT.
+- Dilarang monolog batin palsu. Dilarang jokes "budak korporat" / "bos toxic".
+- Haram bahasa baku kaku ("adalah", "tatkala", "terpendar", "kian", "kendati demikian", "mencicit", "menukas").
+- Dialog wajib format: Nama Lengkap: "..."
+- PENTING: Pertahankan tag penanda [[ILUSTRASI:...]] persis di posisinya!
+
+Adegan Cerita:
+
+${text}`;
+    }
     return `Tuliskan adegan fiksi fantasi berikut dalam Bahasa Indonesia yang SUPER SANTAI SEHARI-HARI, GAUL, KONYOL, dan TO-THE-POINT (gaya komik/manga terjemahan gaul santai).
 - Haram bahasa baku/formal kaku ("adalah", "tatkala", "terpendar", "kian", "kendati demikian", "mengindikasikan", "beliau").
 - Wajib bahasa santai tongkrongan: "nggak", "banget", "udah", "gitu", "parah", "bodo amat", "sialan/anjir", dll.
