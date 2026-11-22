@@ -45,6 +45,12 @@ Engineered and validated through **`translate-novel-dragndrop.ts`**:
 - **Precise Image Integration:** Uses PyMuPDF and EPUB manifest parsing to extract high-resolution cover and chapter illustrations, automatically placing them into the narrative stream.
 - **W3C EPUB 3.0 Compiler:** Generates clean, responsive, valid XHTML/CSS EPUB books ready for e-readers without formatting bugs or reader crashes.
 
+### 4. Blogspot & Safelink Link Bypass Engine (MediaFire / Google Drive)
+Located in `tools/bypass_blogspot_mediafire/`:
+- **Blogger JSON Feed Scraping:** Automatically traverses multi-volume light novel series published across Blogger/Blogspot architectures.
+- **Instant Base64 Safelink Bypass:** Automatically decodes and resolves shortened / protected links (such as `ruisafe`, `safelinku`, etc.) to obtain direct **MediaFire**, **Google Drive**, and **Krakenfiles** download URLs.
+- **Batch Export:** Outputs formatted lists of clean direct download URLs compatible with JDownloader, IDM, and curl.
+
 ---
 
 ## 🏆 Production Track Record
