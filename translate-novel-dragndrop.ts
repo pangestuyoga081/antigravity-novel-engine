@@ -16,7 +16,7 @@ import { execSync } from 'node:child_process';
 const CONFIG = {
   proxyUrl: process.env.LLM_PROXY_URL || 'http://localhost:20128/v1/chat/completions',
   model: process.env.LLM_MODEL || 'ag/gemini-3.8-flash-low',
-  apiKey: process.env.LLM_API_KEY || 'sk-2e591994696af18e-71ijj7-14263abd',
+  apiKey: process.env.LLM_API_KEY || 'sk-2c1573f206deb3a0-ryos2n-4198badd',
   maxChunkChars: 6500,
   concurrency: parseInt(process.env.CONCURRENCY || '15', 10)
 };
@@ -254,7 +254,7 @@ function extractEpubChapters(epubPath: string): Chapter[] {
   for (const full of targetFiles) {
     if (!fs.existsSync(full)) continue;
     const fname = path.basename(full);
-    if (/cover|alsobyauthor|copyright|title\.xhtml|dedication|next-reads|nav\.xhtml|frontmatter|_cop_|_tp_|_toc_|_fm1_|_bm1_/i.test(fname)) continue;
+    if (/cover|alsobyauthor|copyright|title|contents|brand|dedication|next-reads|nav\.xhtml|frontmatter|_cop_|_tp_|_toc_|_fm1_|_bm1_/i.test(fname)) continue;
 
     const html = fs.readFileSync(full, 'utf-8');
     let cleanText = html
