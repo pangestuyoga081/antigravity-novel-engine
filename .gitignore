@@ -1,10 +1,25 @@
-node_modules/
+*.txt
+*.json
+*.html
+*.wav
+*.mp3
+*.plist
+iTunes*
+*.log
+*.zip
 *.epub
 *.pdf
-*.zip
 *.tar
 *cache*/
 .temp*
 raw_trans*/
 __pycache__/
 *.pyc
+node_modules/
+Breeder_Mage_1_work/
+High School DxD/
+The Expanse/
+epubs/
+illustrations/
+temp_f5_multi/
+temp_sample_audio/
