@@ -16,7 +16,7 @@ import { execSync } from 'node:child_process';
 const CONFIG = {
   proxyUrl: process.env.LLM_PROXY_URL || 'http://localhost:20128/v1/chat/completions',
   model: process.env.LLM_MODEL || 'ag/gemini-3.8-flash-low',
-  apiKey: process.env.LLM_API_KEY || 'sk-2c1573f206deb3a0-ryos2n-4198badd',
+  apiKey: process.env.LLM_API_KEY || 'sk-2e591994696af18e-71ijj7-14263abd',
   maxChunkChars: 6500,
   concurrency: parseInt(process.env.CONCURRENCY || '15', 10)
 };
@@ -222,13 +222,13 @@ function extractEpubChapters(epubPath: string): Chapter[] {
     const opfXml = fs.readFileSync(opfFile, 'utf-8');
     const manifest: Record<string, string> = {};
     for (const itemTag of opfXml.match(/<item\b[^>]*>/gi) || []) {
-      const idM = itemTag.match(/\bid=["']([^"']+)["']/i);
-      const hrefM = itemTag.match(/\bhref=["']([^"']+)["']/i);
+      const idM = itemTag.match(/\bid=(["'])(.*?)\1/i);
+      const hrefM = itemTag.match(/\bhref=(["'])(.*?)\1/i);
       if (idM && hrefM) {
-        manifest[idM[1]] = hrefM[1];
+        manifest[idM[2]] = hrefM[2];
       }
     }
-    const itemrefs = [...opfXml.matchAll(/<itemref\b[^>]*\bidref=["']([^"']+)["']/gi)].map(m => m[1]);
+    const itemrefs = [...opfXml.matchAll(/<itemref\b[^>]*\bidref=(["'])(.*?)\1/gi)].map(m => m[2]);
     for (const idref of itemrefs) {
       if (manifest[idref]) spineHrefs.push(manifest[idref]);
     }
