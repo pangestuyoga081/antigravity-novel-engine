@@ -1755,6 +1755,12 @@ async function main() {
     if (!fs.existsSync(epubOutDir)) fs.mkdirSync(epubOutDir, { recursive: true });
     const epubOutFile = path.join(epubOutDir, `${baseName} (Illustrated ID-Direct).epub`);
     
+    // Auto-mirror ke folder pusat HASIL_TERJEMAHAN
+    const centralEpubDir = path.resolve(__dirname, 'HASIL_TERJEMAHAN', 'EPUB_SIAP_BACA');
+    const centralTxtDir = path.resolve(__dirname, 'HASIL_TERJEMAHAN', 'NASKAH_TXT');
+    if (!fs.existsSync(centralEpubDir)) fs.mkdirSync(centralEpubDir, { recursive: true });
+    if (!fs.existsSync(centralTxtDir)) fs.mkdirSync(centralTxtDir, { recursive: true });
+    
     try {
       let helperScript = path.resolve('E:/antigravity-novel-engine/compile_epub_helper.py');
       if (!fs.existsSync(helperScript)) {
@@ -1764,6 +1770,12 @@ async function main() {
         helperScript = path.resolve(process.cwd(), 'compile_epub_helper.py');
       }
       execSync(`python "${helperScript}" "${outputFile}" "${targetFile}" "${epubOutFile}"`, { stdio: 'inherit' });
+      // Salin langsung ke HASIL_TERJEMAHAN
+      try {
+        fs.copyFileSync(epubOutFile, path.join(centralEpubDir, path.basename(epubOutFile)));
+        fs.copyFileSync(outputFile, path.join(centralTxtDir, path.basename(outputFile)));
+        console.log(`📁 Berhasil disimpan rapi ke: HASIL_TERJEMAHAN/EPUB_SIAP_BACA`);
+      } catch {}
     } catch (e: any) {
       console.warn('⚠️ Catatan kompilasi EPUB:', e.message);
     }
