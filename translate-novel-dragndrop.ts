@@ -858,6 +858,7 @@ ${text}`;
 - Tell, Don't Show: Langsung beri tahu fakta dan emosi karakter secara tegas tanpa kalimat bertele-tele.
 - Dialog wajib format: Nama: "..."
 - PENTING: Pertahankan tag penanda [[ILUSTRASI:...]] persis di posisinya!
+- Istilah Asli (Loanwords): Pertahankan istilah aslinya (nama jurus, sihir, ras, senjata, rank, gelar, konsep lore semesta terkait) beserta penjelasan singkat dalam kurung jika membingungkan pembaca awam!
 
 Adegan Cerita:
 
