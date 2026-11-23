@@ -1625,6 +1625,16 @@ async function main() {
 
   console.log(`✅ Berhasil mendeteksi ${chapters.length} Bab dari file.\n`);
 
+  // Auto-init project di SQLite novel_pipeline.db
+  const projectId = baseName.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  const dbBridgeScript = path.resolve(__dirname, 'core_engine', 'src', 'database', 'db_bridge.py');
+  if (fs.existsSync(dbBridgeScript)) {
+    try {
+      execSync(`python "${dbBridgeScript}" init_project "${projectId}" "${baseName}" "${targetFile}" "${styleMode}" ${chapters.length}`, { stdio: 'pipe' });
+      console.log(`📡 Telemetri DB: Proyek '${projectId}' terdaftar di localhost:3000`);
+    } catch {}
+  }
+
   let checkpoint = { completedIds: [] as string[] };
   if (fs.existsSync(checkpointFile)) {
     try {
@@ -1712,10 +1722,27 @@ async function main() {
     fs.writeFileSync(checkpointFile, JSON.stringify(checkpoint, null, 2), 'utf-8');
     assembleFullOutput();
     console.log(`💾 Bab tersimpan ke output dan checkpoint.`);
+
+    // Auto-update chapter progress & snapshot to SQLite DB
+    if (fs.existsSync(dbBridgeScript)) {
+      try {
+        const transChapText = translatedParts.join('\n\n');
+        const tempChapFile = path.join(chapCacheDir, '_chapter_merged.tmp');
+        fs.writeFileSync(tempChapFile, transChapText, 'utf-8');
+        execSync(`python "${dbBridgeScript}" update_chapter "${projectId}" "${ch.id}" ${i + 1} "${ch.title.replace(/"/g, "'")}" ${transChapText.length} "completed" "${tempChapFile}"`, { stdio: 'pipe' });
+        fs.rmSync(tempChapFile, { force: true });
+      } catch {}
+    }
   }
 
   // Final assembly to ensure complete output file
   assembleFullOutput();
+
+  if (fs.existsSync(dbBridgeScript)) {
+    try {
+      execSync(`python "${dbBridgeScript}" finish_project "${projectId}"`, { stdio: 'pipe' });
+    } catch {}
+  }
 
   console.log('\n================================================================');
   console.log('🎉 PROSES TERJEMAHAN SELESAI!');
@@ -1740,6 +1767,17 @@ async function main() {
     } catch (e: any) {
       console.warn('⚠️ Catatan kompilasi EPUB:', e.message);
     }
+  }
+
+  // Auto Git-Sync On Completion (GitHub First)
+  try {
+    console.log('\n🔄 Sinkronisasi otomatis ke GitHub...');
+    execSync(`git add "${outputFile}" "${checkpointFile}" "${targetFile}" core_engine/novel_pipeline.db`, { stdio: 'pipe' });
+    execSync(`git commit -m "feat(novel): complete translation for ${baseName}"`, { stdio: 'pipe' });
+    execSync(`git push origin main`, { stdio: 'pipe' });
+    console.log('🚀 Berhasil disinkronkan ke repo GitHub origin main!');
+  } catch (gitErr: any) {
+    console.log('ℹ️ Catatan Git-Sync: Naskah lokal aman, sync ditunda.');
   }
 }
 

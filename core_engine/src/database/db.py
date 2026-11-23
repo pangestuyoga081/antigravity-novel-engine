@@ -100,11 +100,45 @@ class NovelDatabase:
             proj = self.conn.execute("SELECT * FROM projects WHERE id = ?", (project_id,)).fetchone()
             if not proj:
                 return {}
-            chapters = self.conn.execute("SELECT id, chapter_index, title, char_count, status, validation_errors FROM chapters WHERE project_id = ? ORDER BY chapter_index", (project_id,)).fetchall()
+            chapters = self.conn.execute("SELECT id, chapter_index, title, char_count, status, validation_errors, translated_text FROM chapters WHERE project_id = ? ORDER BY chapter_index", (project_id,)).fetchall()
             return {
                 "project": dict(proj),
                 "chapters": [dict(c) for c in chapters]
             }
+
+    def get_chapter(self, chapter_id: str) -> Optional[Dict[str, Any]]:
+        with self.conn:
+            row = self.conn.execute("SELECT * FROM chapters WHERE id = ?", (chapter_id,)).fetchone()
+            return dict(row) if row else None
+
+    def upsert_project_progress(self, project_id: str, title: str, source_path: str, profile_name: str, total_chapters: int, completed_chapters: int, status: str):
+        with self.conn:
+            self.conn.execute("""
+                INSERT INTO projects (id, title, source_path, profile_name, total_chapters, completed_chapters, status, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                ON CONFLICT(id) DO UPDATE SET
+                    title = excluded.title,
+                    source_path = excluded.source_path,
+                    profile_name = excluded.profile_name,
+                    total_chapters = excluded.total_chapters,
+                    completed_chapters = excluded.completed_chapters,
+                    status = excluded.status,
+                    updated_at = CURRENT_TIMESTAMP
+            """, (project_id, title, source_path, profile_name, total_chapters, completed_chapters, status))
+
+    def record_chapter_snapshot(self, project_id: str, chapter_id: str, chapter_index: int, title: str, char_count: int, status: str, translated_text: Optional[str] = None):
+        with self.conn:
+            self.conn.execute("""
+                INSERT INTO chapters (id, project_id, chapter_index, title, source_text, translated_text, char_count, status, updated_at)
+                VALUES (?, ?, ?, ?, '', ?, ?, ?, CURRENT_TIMESTAMP)
+                ON CONFLICT(id) DO UPDATE SET
+                    chapter_index = excluded.chapter_index,
+                    title = excluded.title,
+                    translated_text = COALESCE(excluded.translated_text, chapters.translated_text),
+                    char_count = excluded.char_count,
+                    status = excluded.status,
+                    updated_at = CURRENT_TIMESTAMP
+            """, (chapter_id, project_id, chapter_index, title, translated_text, char_count, status))
 
     def list_all_projects(self) -> List[Dict[str, Any]]:
         with self.conn:

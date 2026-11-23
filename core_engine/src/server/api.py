@@ -47,6 +47,15 @@ class TelemetryServer(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(stats).encode("utf-8"))
             return
 
+        elif path.startswith("/api/chapter/"):
+            cid = path.replace("/api/chapter/", "").strip()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.end_headers()
+            chap = db.get_chapter(cid)
+            self.wfile.write(json.dumps(chap or {}).encode("utf-8"))
+            return
+
         elif path == "/api/profiles":
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
