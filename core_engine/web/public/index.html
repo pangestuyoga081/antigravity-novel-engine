@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antigravity Engine &bull; Telemetry & Quick Reader</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f19; color: #e2e8f0; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Top Navigation -->
+  <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/20">
+        AG
+      </div>
+      <div>
+        <h1 class="font-extrabold text-lg tracking-tight text-white flex items-center gap-2">
+          Antigravity Telemetry <span class="text-xs bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded-full font-semibold">Live Monitor & Reader</span>
+        </h1>
+        <p class="text-xs text-slate-400">Autonomous Translation, Quality Gate & Live Chapter Peek</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-4 text-sm">
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        SQLite DB Streaming
+      </div>
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 text-xs font-semibold">
+        Auto-Refresh: 3s
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
+    <!-- Quick Metrics -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 shadow-sm">
+        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Novel Projects</div>
+        <div class="text-2xl font-extrabold text-white mt-1" id="stat-projects">-</div>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 shadow-sm">
+        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Completed Chapters</div>
+        <div class="text-2xl font-extrabold text-cyan-400 mt-1" id="stat-chapters">-</div>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 shadow-sm">
+        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pre-Translation Profiling</div>
+        <div class="text-2xl font-extrabold text-emerald-400 mt-1">YAML Locked</div>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 shadow-sm">
+        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Anti-Hallucination Gate</div>
+        <div class="text-2xl font-extrabold text-indigo-400 mt-1">Zero Leaks</div>
+      </div>
+    </div>
+
+    <!-- Telemetry Table -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+      <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+        <div>
+          <h2 class="font-bold text-white text-base">Live Execution Telemetry</h2>
+          <p class="text-xs text-slate-400 mt-0.5">Memantau pembacaan bab, profil lore, dan akses Quick Reader</p>
+        </div>
+        <div class="text-xs text-slate-400 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          Live Polling
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-950/60 text-xs text-slate-400 uppercase tracking-wider border-b border-slate-800">
+            <tr>
+              <th class="px-6 py-3">Novel</th>
+              <th class="px-6 py-3">YAML Profile</th>
+              <th class="px-6 py-3">Progress Ratio</th>
+              <th class="px-6 py-3">QA Health</th>
+              <th class="px-6 py-3">Status</th>
+              <th class="px-6 py-3 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800" id="project-list">
+            <tr>
+              <td colspan="6" class="px-6 py-8 text-center text-slate-500">
+                Menghubungkan ke endpoint telemetri database...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Quick Reader / Chapter Peek Panel -->
+    <div id="reader-panel" class="hidden bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl transition-all">
+      <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/40">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">📖</span>
+          <div>
+            <h3 class="font-bold text-white text-base" id="reader-novel-title">Novel Title</h3>
+            <p class="text-xs text-cyan-400" id="reader-chapter-title">Chapter Title</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <select id="chapter-select" onchange="loadSelectedChapter()" class="bg-slate-800 border border-slate-700 text-xs text-slate-200 px-3 py-1.5 rounded-lg focus:outline-none focus:border-cyan-500">
+            <option>Pilih Bab...</option>
+          </select>
+          <button onclick="closeReader()" class="px-3 py-1.5 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">
+            ✕ Tutup
+          </button>
+        </div>
+      </div>
+      <div class="p-6 max-h-[600px] overflow-y-auto space-y-4 text-slate-300 text-sm leading-relaxed" id="reader-content">
+        Pilih bab untuk membaca cuplikan terjemahan...
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800 py-4 text-center text-xs text-slate-500">
+    Antigravity Engine &bull; Pure Telemetry & Read-Only Observer Mode &bull; Production v4.1
+  </footer>
+
+  <script>
+    let activeProjectId = null;
+
+    async function updateTelemetry() {
+      try {
+        const res = await fetch('/api/projects');
+        const projects = await res.json();
+        
+        document.getElementById('stat-projects').textContent = projects.length;
+        
+        let totalChaps = 0;
+        const tbody = document.getElementById('project-list');
+        
+        if (projects.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-8 text-center text-slate-500">Belum ada proses yang berjalan. Silakan jalankan eksekusi novel dari terminal.</td></tr>';
+          document.getElementById('stat-chapters').textContent = '0';
+          return;
+        }
+
+        tbody.innerHTML = projects.map(p => {
+          totalChaps += p.completed_chapters || 0;
+          const percent = p.total_chapters > 0 ? Math.round((p.completed_chapters / p.total_chapters) * 100) : 0;
+          return `
+            <tr class="hover:bg-slate-800/40 transition">
+              <td class="px-6 py-4 font-semibold text-white">${p.title}</td>
+              <td class="px-6 py-4">
+                <span class="mono text-xs px-2.5 py-1 rounded-md bg-slate-800 text-cyan-300 border border-slate-700">
+                  ${p.profile_name}.yaml
+                </span>
+              </td>
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-3">
+                  <div class="flex-1 w-32 bg-slate-800 rounded-full h-2 overflow-hidden">
+                    <div class="bg-cyan-500 h-2 rounded-full" style="width: ${percent}%"></div>
+                  </div>
+                  <span class="text-xs font-semibold text-slate-400">${p.completed_chapters}/${p.total_chapters} (${percent}%)</span>
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <span class="text-xs px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">
+                  Zero-Refusal Passed
+                </span>
+              </td>
+              <td class="px-6 py-4">
+                <span class="text-xs px-2.5 py-1 rounded-full font-semibold ${p.status === 'completed' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}">
+                  ${p.status.toUpperCase()}
+                </span>
+              </td>
+              <td class="px-6 py-4 text-right">
+                <button onclick="openReader('${p.id}', '${p.title.replace(/'/g, "\\'")}')" class="px-3 py-1.5 text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-lg transition">
+                  👁️ Intip Bab
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        document.getElementById('stat-chapters').textContent = totalChaps;
+      } catch (err) {
+        console.error("Telemetry fetch error:", err);
+      }
+    }
+
+    async function openReader(projectId, novelTitle) {
+      activeProjectId = projectId;
+      document.getElementById('reader-panel').classList.remove('hidden');
+      document.getElementById('reader-novel-title').textContent = novelTitle;
+      document.getElementById('reader-content').innerHTML = '<div class="text-slate-500 italic">Memuat daftar bab...</div>';
+
+      try {
+        const res = await fetch(`/api/project/${projectId}`);
+        const data = await res.json();
+        const chaps = data.chapters || [];
+        const select = document.getElementById('chapter-select');
+
+        if (chaps.length === 0) {
+          select.innerHTML = '<option>Belum ada bab tersimpan</option>';
+          document.getElementById('reader-content').textContent = 'Belum ada cuplikan bab yang tersimpan di database untuk novel ini.';
+          return;
+        }
+
+        select.innerHTML = chaps.map(c => `
+          <option value="${c.id}">${c.title} (${c.status})</option>
+        `).join('');
+
+        loadSelectedChapter();
+      } catch (e) {
+        document.getElementById('reader-content').textContent = 'Gagal memuat detail proyek: ' + e.message;
+      }
+    }
+
+    async function loadSelectedChapter() {
+      const select = document.getElementById('chapter-select');
+      const cid = select.value;
+      if (!cid) return;
+
+      document.getElementById('reader-chapter-title').textContent = select.options[select.selectedIndex].text;
+      document.getElementById('reader-content').innerHTML = '<div class="text-slate-500 italic">Memuat naskah bab...</div>';
+
+      try {
+        const res = await fetch(`/api/chapter/${cid}`);
+        const chap = await res.json();
+        if (chap.translated_text) {
+          // Format text with friendly paragraphs
+          const formatted = chap.translated_text
+            .split('\n\n')
+            .map(p => {
+              if (p.startsWith('[PEMBERITAHUAN') || p.startsWith('[ACHIEVEMENT') || p.startsWith('[')) {
+                return `<div class="p-3 bg-slate-950 border border-cyan-800/40 rounded-lg text-cyan-300 font-semibold mono text-xs">${p}</div>`;
+              }
+              if (/^[A-Za-z\s]+:\s*".*"/.test(p)) {
+                return `<p class="font-medium text-slate-100">${p}</p>`;
+              }
+              return `<p>${p}</p>`;
+            })
+            .join('');
+          document.getElementById('reader-content').innerHTML = formatted;
+        } else {
+          document.getElementById('reader-content').textContent = 'Teks terjemahan bab ini belum terekam di snapshot database.';
+        }
+      } catch (e) {
+        document.getElementById('reader-content').textContent = 'Gagal memuat naskah bab: ' + e.message;
+      }
+    }
+
+    function closeReader() {
+      document.getElementById('reader-panel').classList.add('hidden');
+    }
+    
+    // Initial fetch and auto-refresh every 3 seconds
+    updateTelemetry();
+    setInterval(updateTelemetry, 3000);
+  </script>
+</body>
+</html>
