@@ -1,0 +1,99 @@
+title: "The Expanse 2: Caliban's War"
+author: "James S.A. Corey"
+genre: "Hard Sci-Fi / Space Opera / Military Action"
+tone: "comic-webtoon-fast-paced"
+style_notes: "Gaya komik/webtoon modern beroktan tinggi, tell-don't-show, sangat menghibur untuk pembaca awam, vulgar maksimal tanpa sensor, tongkrongan gaul santai (gue-lu)."
+pronouns: "gue-lu"
+
+banned_words:
+  - "mencicit"
+  - "menukas"
+  - "menimpali"
+  - "tersenyum simpul"
+  - "bergumam"
+  - "meracau"
+  - "mendengus"
+  - "budak korporat"
+  - "salaryman"
+  - "tatkala"
+  - "terpendar"
+  - "kendati demikian"
+
+forbidden_universe_words:
+  - "Ainz"
+  - "Albedo"
+  - "Great Tomb of Nazarick"
+  - "Tier Magic"
+  - "World Item"
+  - "Kwisatz Haderach"
+  - "Bene Gesserit"
+  - "Melange"
+  - "Spice"
+  - "Hogwarts"
+  - "Gryffindor"
+  - "Voldemort"
+  - "Boosted Gear"
+  - "Rias Gremory"
+
+key_characters:
+  - name: "James Holden"
+    dialog_format: 'James Holden: "..."'
+    role: "Kapten Rocinante, idealis garis keras yang selalu buka kartu ke seluruh tata surya."
+  - name: "Naomi Nagata"
+    dialog_format: 'Naomi Nagata: "..."'
+    role: "First Officer & Chief Engineer Rocinante, cerdas, orang Belter sejati."
+  - name: "Amos Burton"
+    dialog_format: 'Amos Burton: "..."'
+    role: "Mechanic & enforcer Rocinante, sosiopat penyayang, santai tapi mematikan."
+  - name: "Alex Kamal"
+    dialog_format: 'Alex Kamal: "..."'
+    role: "Pilot Rocinante, veteran Angkatan Laut Mars (MCRN), logat santai koboi."
+  - name: "Bobbie Draper"
+    dialog_format: 'Bobbie Draper: "..."'
+    role: "Gunnery Sergeant Roberta Draper, marinir tempur Mars (MMC) berkekuatan monster dan berbaju zirah tempur Goliath."
+  - name: "Chrisjen Avasarala"
+    dialog_format: 'Chrisjen Avasarala: "..."'
+    role: "Asisten Wakil Menteri PBB (Earth), nenek politisi paling kejam, mulut kotor vulgar tanpa sensor, cerdas dan sinis."
+  - name: "Prax Meng"
+    dialog_format: 'Prax Meng: "..."'
+    role: "Dr. Praxidike Meng, ahli biologi tanaman di Ganymede, ayah panik yang mencari anaknya (Mei Meng) yang diculik."
+  - name: "Mei Meng"
+    dialog_format: 'Mei Meng: "..."'
+    role: "Anak perempuan Prax yang menderita sindrom defisiensi imun, diculik untuk eksperimen protomolekul."
+  - name: "Dr. Strickland"
+    dialog_format: 'Dr. Strickland: "..."'
+    role: "Dokter pediatrik Mei yang ternyata ilmuwan jahat pengembang monster Caliban."
+  - name: "Sadavir Errinwright"
+    dialog_format: 'Sadavir Errinwright: "..."'
+    role: "Wakil Menteri Eksekutif PBB, atasan Avasarala yang bermain dua kaki dengan korporasi rahasia."
+  - name: "Cotyar Ghazi"
+    dialog_format: 'Cotyar Ghazi: "..."'
+    role: "Pengawal pribadi dan operator intelijen Avasarala."
+  - name: "Jules-Pierre Mao"
+    dialog_format: 'Jules-Pierre Mao: "..."'
+    role: "CEO Mao-Kwikowski Mercantile, taipan megalomaniak di balik Protomolekul & Project Caliban."
+  - name: "Fred Johnson"
+    dialog_format: 'Fred Johnson: "..."'
+    role: "Pemimpin stasiun Tycho dan faksi OPA moderat (Outer Planets Alliance)."
+
+factions_and_places:
+  - "Ganymede" # Lumbung pangan sistem Jupiter
+  - "MCRN" # Mars Coalition Revolutionary Navy
+  - "MMC" # Mars Marine Corps
+  - "UNN" # United Nations Navy (Bumi)
+  - "OPA" # Outer Planets Alliance (Sabuk Asteroid)
+  - "Tycho Station"
+  - "Rocinante" # Kapal korvet siluman bekas MCRN milik kru Holden
+  - "Guanshiyin" # Kapal pesiar mewah milik Jules-Pierre Mao
+
+loanwords:
+  - "Epstein Drive (Mesin propulsi fusi berdaya dorong luar biasa)"
+  - "PDC (Point Defense Cannon / meriam otomatis anti-rudal gatling)"
+  - "Railgun (Senjata pelontar proyektil elektromagnetik berkecepatan tinggi)"
+  - "High-G Burn (Akselerasi kecepatan tinggi yang menekan tubuh kru)"
+  - "Juice (Koktail obat stimulan anti-pingsan saat manuver g-force tinggi)"
+  - "Crash Couch (Kursi suspensi peredam g-force)"
+  - "Goliath Armor (Baju zirah tempur bertenaga listrik milik marinir Mars)"
+  - "Lang Belta (Bahasa kreol orang Belter)"
+  - "Protomolekul (Zat biologis alien pengubah bentuk dan teknologi)"
+  - "Project Caliban (Proyek pembuatan prajurit hybrid hibrida alien protomolekul)"

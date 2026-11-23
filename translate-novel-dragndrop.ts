@@ -960,48 +960,57 @@ ${text}`;
   }
 
   if (styleMode === 'expanse') {
-    return `Tuliskan kembali SELURUH alur adegan fiksi ilmiah The Expanse berikut dalam Bahasa Indonesia yang SUPER SANTAI SEHARI-HARI, TONGKRONGAN GAUL LUAR ANGKASA (GUE - LU), NO SENSOR, LUGAS, dan TO-THE-POINT — setara dengan sci-fi militer / space opera modern!
-Target pembaca: Pembaca dewasa/young adult yang suka cerita ketegangan luar angkasa realistis, intrik politik tajam, dan obrolan kru kapal yang luwes tanpa kepalsuan eufemisme kaku.
+    return `Tuliskan kembali SELURUH alur adegan fiksi ilmiah The Expanse berikut dalam Bahasa Indonesia bergaya KOMIK / WEBTOON MODERN, SANGAT MENGHIBUR, ENAK DIBACA AWAM, SUPER SANTAI TONGKRONGAN (GUE - LU), VULGAR MAKSIMAL NO SENSOR, TELL-DON'T-SHOW, LUGAS, dan TO-THE-POINT!
+Target pembaca: Pembaca awam yang bukan kutu buku sastra tebal, tapi pengin cerita fiksi ilmiah serasa nonton serial aksi luar angkasa Hollywood atau baca komik sci-fi dewasa yang nagih, intens, dan bikin betah dari bab ke bab.
 
 DILARANG KERAS MEMBUAT RINGKASAN/RANGKUMAN:
 - Tuliskan kembali SELURUH narasi dan percakapan adegan secara LENGKAP, UTUH, dan MENGALIR dari awal sampai akhir tanpa memotong peristiwa atau detail cerita!
 - Dilarang membuat kalimat pembuka atau penutup template seperti "Berikut adalah terjemahan...", "Ringkasan...", dll.
 
 ATURAN WAJIB & MUTLAK:
-1. SUDUT PANDANG & PRONOUNS (BANNED KATA AKU-KAMU):
-   - Percakapan antar kru pesawat (James Holden, Naomi Nagata, Amos Burton, Alex Kamal) dan detektif stasiun (Joe Miller): gunakan GUE - LU secara luwes.
-   - BANNED TOTAL: DILARANG menggunakan kata kaku "aku", "kamu", "kau", "diriku", "kepadamu" untuk dialog informal! Ganti jadi GUE / LU!
+1. GAYA KOMIK & TELL-DON'T-SHOW (NAGIH & GAK NGEBOSENIN):
+   - Gunakan pendekatan TELL-DON'T-SHOW yang lincah: deskripsi bertele-tele diubah jadi narasi aksi yang serba cepat, visual, dan langsung ke inti ketegangan.
+   - Narasi harus renyah, menghibur, dan bikin betah pembaca awam seolah-olah sedang membaca balon teks dan panel komik/manga sci-fi beroktan tinggi.
 
-2. TONE & MAKIAN KASAR / MILITER LUAR ANGKASA TANPA SENSOR:
-   - Terjemahkan umpatan militer dan jalanan stasiun luar angkasa apa adanya tanpa disensor (shit, fuck, damn, bastard, asshole -> anjing, bajingan, bangsat, taik, sialan, keparat).
-   - Dialog Chrisjen Avasarala wajib tajam, vulgar, ceplas-ceplos, dan tidak disensor sesuai ciri khas aslinya.
+2. SUDUT PANDANG & PRONOUNS (BANNED KATA AKU-KAMU):
+   - Semua dialog informal & pergaulan antar kru pesawat (Holden, Naomi, Amos, Alex), marinir Mars (Bobbie Draper), detektif, maupun peneliti (Prax Meng): WAJIB gunakan GUE - LU!
+   - BANNED TOTAL: DILARANG menggunakan kata kaku "aku", "kamu", "kau", "diriku", "kepadamu" untuk dialog kasual! Ganti jadi GUE / LU!
 
-3. HARAM BAHASA BAKU / FORMAL / KBBI KAKU (BLACKLIST MUTLAK):
+3. VULGAR MAKSIMAL NO SENSOR & TONE MILITER / POLITIK:
+   - Tanpa sensor sedikit pun! Umpatan jalanan luar angkasa dan militer diterjemahkan apa adanya secara brutal dan mengalir (shit, fuck, motherfucker, asshole, dick, bastard -> bangsat, anjing, keparat, bajingan, kontol, taik, sialan).
+   - KHUSUS CHRISJEN AVASARALA: Karakternya terkenal sangat vulgar, bermulut kotor, sinis, dan tak kenal ampun. Dialog Avasarala WAJIB tajam, ceplas-ceplos, penuh umpatan berbobot tanpa diperhalus!
+   - KHUSUS BOBBIE (GUNNERY SGT ROBERTA DRAPER): Gaya bicara marinir Mars yang garang, lugas, disiplin tempur, dan intimidatif.
+   - KHUSUS AMOS BURTON: Pembunuh dingin berhati santai, gaya ngomongnya cuek, pragmatis, dan santai walau sedang meremukkan tulang musuh.
+
+4. HARAM BAHASA BAKU / FORMAL / KBBI KAKU (BLACKLIST MUTLAK):
    - Dilarang keras memakai bahasa makalah/KBBI sastra kaku: ("adalah", "tatkala", "terpendar", "kian", "kendati demikian", "merupakan", "tak kunjung", "berada dalam situasi", "mengindikasikan", "beliau", "berujar", "berkata").
    - BANNED KATA KAKU SEREMPET KBBI: DILARANG memakai kata "mencicit", "menukas", "menimpali", "tersenyum simpul", "bergumam", "meracau", "mendengus"!
    - ANTI-REPETISI VERBA: Variasikan kata kerja aksi dan dialog secara dinamis sesuai naskah asli (bisik, seru, nyamber, nyolot, nyeletuk, motong omongan, senyum miring, nyengir, ngedumel, ngoceh, dengus kesel, hela napas).
 
-4. ATURAN MUTLAK FORMAT DIALOG (WAJIB NAMA LENGKAP: "..."):
+5. ATURAN MUTLAK FORMAT DIALOG (WAJIB NAMA LENGKAP: "..."):
    - DILARANG KERAS mengeluarkan dialog tanpa nama pembicara!
    - Setiap baris tuturan langsung WAJIB diawali format: Nama Lengkap: "..."
-   - DAFTAR NAMA LENGKAP TOKOH THE EXPANSE:
+   - DAFTAR NAMA LENGKAP TOKOH THE EXPANSE (BOOK 1 & 2):
      * James Holden -> Selalu gunakan: James Holden: "..."
      * Naomi Nagata -> Selalu gunakan: Naomi Nagata: "..."
      * Amos Burton -> Selalu gunakan: Amos Burton: "..."
      * Alex Kamal -> Selalu gunakan: Alex Kamal: "..."
-     * Joe Miller -> Selalu gunakan: Joe Miller: "..."
-     * Julie Mao -> Selalu gunakan: Julie Mao: "..."
+     * Bobbie Draper / Roberta Draper -> Selalu gunakan: Bobbie Draper: "..."
      * Chrisjen Avasarala -> Selalu gunakan: Chrisjen Avasarala: "..."
+     * Praxidike Meng / Prax -> Selalu gunakan: Prax Meng: "..."
+     * Clarissa Mao / Peaches -> Selalu gunakan: Clarissa Mao: "..."
+     * Joe Miller -> Selalu gunakan: Joe Miller: "..."
      * Fred Johnson -> Selalu gunakan: Fred Johnson: "..."
-     * Shed Garvey -> Selalu gunakan: Shed Garvey: "..."
-     * Ade Nygaard -> Selalu gunakan: Ade Nygaard: "..."
-     * Shaddid -> Selalu gunakan: Kapten Shaddid: "..."
-     * Anderson Dawes -> Selalu gunakan: Anderson Dawes: "..."
-     * Havelock -> Selalu gunakan: Dimitri Havelock: "..."
-     * Muss -> Selalu gunakan: Octavia Muss: "..."
+     * Sadavir Errinwright -> Selalu gunakan: Sadavir Errinwright: "..."
+     * Cotyar Ghazi -> Selalu gunakan: Cotyar Ghazi: "..."
+     * Jules-Pierre Mao -> Selalu gunakan: Jules-Pierre Mao: "..."
+     * Mei Meng -> Selalu gunakan: Mei Meng: "..."
+     * Strickland -> Selalu gunakan: Dr. Strickland: "..."
+     * Soren -> Selalu gunakan: Soren: "..."
+     * Julie Mao -> Selalu gunakan: Julie Mao: "..."
 
-5. ISTILAH TEKNIS LUAR ANGKASA & BAHASA BELTER (LOANWORDS):
-   - Pertahankan istilah fiksi ilmiah keras: Epstein Drive, PDC (Point Defense Cannon), railgun, high-g burn, thrust gravity, spin gravity, crash couch, EVA suit, airlock, reaction control thrusters.
+6. ISTILAH TEKNIS LUAR ANGKASA & BAHASA BELTER (LOANWORDS):
+   - Pertahankan istilah fiksi ilmiah keras: Epstein Drive, PDC (Point Defense Cannon), railgun, high-g burn, thrust gravity, spin gravity, crash couch, EVA suit, airlock, reaction control thrusters, juice (koktail obat anti-g).
    - Pertahankan bahasa Belter (Lang Belta): beratna, sa-sa ke, bosmang, inyalowda, welwalla, sheng beserta penjelasan singkat jika perlu.
 ${explanationRule}
 
