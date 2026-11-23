@@ -38,7 +38,18 @@ Dilarang keras menyisakan dialog tanpa nama pembicara atau hanya menggunakan tan
 
 ---
 
-## 3. ENGINE & SINKRONISASI OTOMATIS GITHUB
+## 3. DYNAMIC ON-THE-FLY LORE & ENTITY DISCOVERY
+
+Bagaimana jika di pertengahan novel (misal Bab 20 atau 30) tiba-tiba muncul tokoh baru atau jurus/teknologi baru yang belum tercakup di analisis awal (*pre-translation profiling*)?
+
+Engine kami menggunakan mekanisme **Dynamic Entity Discovery (`entity_appender.py`)**:
+1. **Speaker Detection**: Setiap kali AI menerjemahkan dialog `Nama Tokoh Baru: "..."`, parser mengecek apakah nama tersebut sudah ada di profil YAML.
+2. **Auto-Append**: Jika belum ada, sistem secara otomatis mendaftarkan nama tersebut ke file `config/profiles/<nama_novel>.yaml`.
+3. **Cross-Chapter Memory**: Begitu tercatat di YAML, seluruh bab berikutnya (Bab 21, 22, dst.) otomatis membaca profil yang sudah diperbarui, menjamin konsistensi panggilan nama hingga akhir buku tanpa halusinasi!
+
+---
+
+## 4. ENGINE & SINKRONISASI OTOMATIS GITHUB
 
 Repositori resmi: `https://github.com/pangestuyoga081/antigravity-novel-engine`
 
