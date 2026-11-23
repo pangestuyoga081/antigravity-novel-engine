@@ -1,0 +1,86 @@
+title: "Dungeon Crawler Carl"
+author: "Matt Dinniman"
+genre: "LitRPG / Dark Comedy / Sci-Fi / Dungeon Apocalypse"
+tone: "dark-comedy-vulgar-comic-pacing"
+style_notes: "Gaya komik/manhwa dewasa beroktan tinggi, tell-don't-show, sangat menghibur, vulgar maksimal tanpa sensor, tongkrongan gaul santai (gue-lu), notifikasi game RPG sadis dan satir."
+pronouns: "gue-lu"
+
+banned_words:
+  - "mencicit"
+  - "menukas"
+  - "menimpali"
+  - "tersenyum simpul"
+  - "bergumam"
+  - "meracau"
+  - "mendengus"
+  - "budak korporat"
+  - "salaryman"
+  - "tatkala"
+  - "terpendar"
+  - "kendati demikian"
+
+forbidden_universe_words:
+  - "Ainz"
+  - "Albedo"
+  - "Nazarick"
+  - "Tier Magic"
+  - "World Item"
+  - "Kwisatz Haderach"
+  - "Bene Gesserit"
+  - "Spice"
+  - "Hogwarts"
+  - "Gryffindor"
+  - "Voldemort"
+  - "Boosted Gear"
+  - "Rias Gremory"
+  - "Rocinante"
+  - "Epstein Drive"
+  - "Avasarala"
+  - "Holden"
+
+key_characters:
+  - name: "Carl"
+    dialog_format: 'Carl: "..."'
+    role: "Tokoh utama. Pria berotot mantan militer/teknisi pantai. Turun ke dungeon cuma pakai celana boxer motif hati merah, jaket kulit tebal, dan telanjang kaki tanpa sepatu. Gaya bicaranya sinis, capek hidup, pragmatis, ahli ledakan."
+  - name: "Princess Donut"
+    dialog_format: 'Princess Donut: "..."'
+    role: "Kucing ras Persia berbulu kura-kura pemenang kontes Grand Champion. Setelah makan permen kesadaran, bisa bicara. Cerewet, manja, diva narsis, suka berteriak, hobi drama, sering ALL-CAPS, tapi mematikan dengan sihir Magic Missile."
+  - name: "Dungeon AI"
+    dialog_format: 'Dungeon AI: "..."'
+    role: "Kecerdasan Buatan pengelola dungeon sekaligus komentator game show intergalaksi. Sadis, mesum, sarkas, provokatif, punya fetish aneh terhadap kaki telanjang Carl, suka mengejek kematian kontestan."
+  - name: "Mordecai"
+    dialog_format: 'Mordecai: "..."'
+    role: "Manajer pemandu Carl & Donut di Safe Room. Mantan crawler veteran yang berubah wujud jadi makhluk karnivora kecil berbulu merah. Sering frustrasi dan mabuk karena stres membimbing manusia bebal."
+  - name: "Bea"
+    dialog_format: 'Bea: "..."'
+    role: "Mantan pacar Carl yang selingkuh, pemilik asli Princess Donut yang tewas saat insiden keruntuhan atap."
+  - name: "Frank"
+    dialog_format: 'Frank: "..."'
+    role: "Crawler manusia lain yang panik dan berisik di lantai dungeon awal."
+  - name: "Agatha"
+    dialog_format: 'Agatha: "..."'
+    role: "Nenek-nenek crawler aneh yang mendorong troli belanja berisi senjata dan botol peledak."
+  - name: "Odette"
+    dialog_format: 'Odette: "..."'
+    role: "Pembawa acara talk show gosip dungeon intergalaksi."
+
+game_elements_and_terminology:
+  - "World Dungeon (Dungeon 18 lantai bawah tanah hasil keruntuhan permukaan bumi)"
+  - "Floor Collapse (Batas waktu evakuasi sebelum satu lantai dungeon runtuh total membunuh semua yang tersisa)"
+  - "Crawler (Sebutan kontestan/manusia yang bertarung di dalam dungeon)"
+  - "Safe Room (Ruangan steril aman untuk istirahat, belanja, dan berlatih antar level)"
+  - "Loot Box (Kotak hadiah pencapaian: Perunggu, Perak, Emas, Legendaris)"
+  - "Enchanted Pet Biscuit (Permen ajaib yang membuat Donut memiliki kecerdasan dan kekuatan sihir)"
+  - "Magic Missile (Sihir proyektil energi andalan Donut)"
+  - "Foot Fetish AI (Lelucon sistem di mana AI terobsesi pada telapak kaki telanjang Carl)"
+  - "Syndicate / Valtay / Borant (Faksi korporasi alien pemilik lisensi siaran dungeon show)"
+
+loanwords:
+  - "Crawler (Petualang/kontestan yang menjelajahi dungeon)"
+  - "Floor Collapse (Hitung mundur keruntuhan lantai dungeon)"
+  - "Safe Room (Ruangan istirahat steril di dalam dungeon)"
+  - "Magic Missile (Sihir peluru energi terarah)"
+  - "Loot Box (Kotak hadiah berisi senjata, ramuan, atau perlengkapan)"
+  - "Achievement (Pencapaian khusus dari Dungeon AI)"
+  - "Inventory (Ruang penyimpanan dimensional)"
+  - "HUD / Status Screen (Tampilan layar status kekuatan karakter)"

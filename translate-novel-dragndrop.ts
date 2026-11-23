@@ -27,7 +27,7 @@ interface Chapter {
   text: string;
 }
 
-type StyleMode = 'dxd' | 'konosuba' | 'warhammer' | 'hobbit' | 'overlord' | 'mushoku' | 'dune' | 'metro' | 'expanse' | 'harrypotter' | 'comic_history' | 'default';
+type StyleMode = 'carl' | 'dxd' | 'konosuba' | 'warhammer' | 'hobbit' | 'overlord' | 'mushoku' | 'dune' | 'metro' | 'expanse' | 'harrypotter' | 'comic_history' | 'default';
 
 function parseSSEorJSON(raw: string): string {
   let full = '';
@@ -959,6 +959,60 @@ Naskah Asli:
 ${text}`;
   }
 
+  if (styleMode === 'carl') {
+    return `Tuliskan kembali SELURUH alur adegan cerita Dungeon Crawler Carl berikut dalam Bahasa Indonesia bergaya MANHWA / KOMIK DUNGEON APOCALYPSE MODERN, SANGAT MENGHIBUR, KOMEDI GELAP KOCAK, ENAK DIBACA AWAM, SUPER SANTAI TONGKRONGAN (GUE - LU), VULGAR MAKSIMAL NO SENSOR, TELL-DON'T-SHOW, LUGAS, dan TO-THE-POINT!
+Target pembaca: Pembaca awam penyuka komik/manhwa dungeon crawler aksi brutal nan kocak (seperti Solo Leveling tapi versi komedi gelap R-rated, gila, liar, dan tanpa sensor sama sekali).
+
+DILARANG KERAS MEMBUAT RINGKASAN/RANGKUMAN:
+- Tuliskan kembali SELURUH narasi dan percakapan adegan secara LENGKAP, UTUH, dan MENGALIR dari awal sampai akhir tanpa memotong peristiwa atau detail cerita!
+- Dilarang membuat kalimat pembuka atau penutup template seperti "Berikut adalah terjemahan...", "Ringkasan...", dll.
+
+ATURAN WAJIB & MUTLAK:
+1. GAYA KOMIK & TELL-DON'T-SHOW (NAGIH & BIKIN BETAH):
+   - Gunakan pendekatan TELL-DON'T-SHOW yang lincah: aksi serba cepat, visual, punchy, dan langsung ke inti ketegangan serta humor gilanya.
+   - Narasi Carl dirombak menjadi obrolan santai, sinis, capek hidup, tapi badass. Carl terjun ke dungeon apocalypse cuma pakai celana boxer hati merah, jaket kulit tebal, dan telanjang kaki tanpa sepatu!
+
+2. SUDUT PANDANG & PRONOUNS (BANNED KATA AKU-KAMU):
+   - Monolog batin Carl, narasi, dan percakapan antar manusia / teman: WAJIB gunakan GUE - LU!
+   - BANNED TOTAL: DILARANG menggunakan kata kaku "aku", "kamu", "kau", "diriku", "kepadamu" untuk dialog informal! Ganti jadi GUE / LU!
+
+3. VULGAR MAKSIMAL NO SENSOR & KOMEDI GELAP:
+   - Terjemahkan umpatan jalanan, makian, dan kepanikan tanpa disensor (shit, fuck, motherfucker, goddammit, asshole, bitch, bastard, dick -> bangsat, anjing, keparat, bajingan, kontol, taik, sialan, jahanam).
+   - KHUSUS PRINCESS DONUT: Kucing Persia juara kontes yang sekarang bisa bicara. Nadanya diva sombong, lebay, manja, narsis, sering histeris dalam huruf kapital (ALL-CAPS), menganggap Carl bawahannya, tapi sangat setia.
+   - KHUSUS DUNGEON AI / SYSTEM ANNOUNCER: Komentator game intergalaksi yang sadis, ngeselin, mesum, sarkas, dan punya fetish aneh terhadap kaki telanjang Carl.
+   - KHUSUS NOTIFIKASI GAME / ACHIEVEMENT / STATS: Buat kotak teks jelas dan rapi:
+     [PEMBERITAHUAN DUNGEON: PENCAPAIAN DIBUKA!]
+     [Item: ...]
+     [Hadiah: ...]
+
+4. HARAM BAHASA BAKU / FORMAL / KBBI KAKU (BLACKLIST MUTLAK):
+   - Dilarang keras memakai bahasa makalah/KBBI sastra kaku: ("adalah", "tatkala", "terpendar", "kian", "kendati demikian", "merupakan", "tak kunjung", "berada dalam situasi", "mengindikasikan", "beliau", "berujar", "berkata").
+   - BANNED KATA KAKU SEREMPET KBBI: DILARANG memakai kata "mencicit", "menukas", "menimpali", "tersenyum simpul", "bergumam", "meracau", "mendengus"!
+   - ANTI-REPETISI VERBA: Variasikan kata kerja aksi dan dialog secara dinamis sesuai naskah asli (bisik, seru, nyamber, nyolot, nyeletuk, motong omongan, senyum miring, nyengir, ngedumel, ngoceh, dengus kesel, hela napas).
+
+5. ATURAN MUTLAK FORMAT DIALOG (WAJIB NAMA LENGKAP: "..."):
+   - DILARANG KERAS mengeluarkan dialog tanpa nama pembicara!
+   - Setiap baris tuturan langsung WAJIB diawali format: Nama Lengkap: "..."
+   - DAFTAR NAMA LENGKAP TOKOH DUNGEON CRAWLER CARL:
+     * Carl -> Selalu gunakan: Carl: "..."
+     * Princess Donut -> Selalu gunakan: Princess Donut: "..."
+     * Dungeon AI -> Selalu gunakan: Dungeon AI: "..."
+     * Mordecai -> Selalu gunakan: Mordecai: "..."
+     * Agatha -> Selalu gunakan: Agatha: "..."
+     * Frank -> Selalu gunakan: Frank: "..."
+     * Bea -> Selalu gunakan: Bea: "..."
+     * Odette -> Selalu gunakan: Odette: "..."
+     * Borant Announcer -> Selalu gunakan: Announcer: "..."
+
+6. ISTILAH GAME / LITRPG (LOANWORDS):
+   - Pertahankan istilah game aslinya: Crawler, Safe Room, Floor Collapse, Loot Box, Magic Missile, Inventory, HUD, Stats, Achievement, Boss, Minion.
+${explanationRule}
+
+Naskah Asli:
+
+${text}`;
+  }
+
   if (styleMode === 'expanse') {
     return `Tuliskan kembali SELURUH alur adegan fiksi ilmiah The Expanse berikut dalam Bahasa Indonesia bergaya KOMIK / WEBTOON MODERN, SANGAT MENGHIBUR, ENAK DIBACA AWAM, SUPER SANTAI TONGKRONGAN (GUE - LU), VULGAR MAKSIMAL NO SENSOR, TELL-DON'T-SHOW, LUGAS, dan TO-THE-POINT!
 Target pembaca: Pembaca awam yang bukan kutu buku sastra tebal, tapi pengin cerita fiksi ilmiah serasa nonton serial aksi luar angkasa Hollywood atau baca komik sci-fi dewasa yang nagih, intens, dan bikin betah dari bab ke bab.
@@ -1531,7 +1585,8 @@ async function main() {
   const isExpanse = /expanse|leviathan\s*wakes|caliban|abaddon|cibola|nemesis\s*games|babylon|persepolis|tiamat/i.test(targetFile);
   const isHarryPotter = /harry\s*potter|batu\s*bertuah|kamar\s*rahasia|tawanan\s*azkaban|piala\s*api|orde\s*phoenix|pangeran\s*berdarah|relikui\s*kematian/i.test(targetFile);
   const isLapidus = /history\s*of\s*islamic\s*societies|lapidus/i.test(targetFile);
-  const styleMode: StyleMode = isLapidus ? 'comic_history' : (isDxd ? 'dxd' : (isHarryPotter ? 'harrypotter' : (isExpanse ? 'expanse' : (isMetro ? 'metro' : (isDune ? 'dune' : (isKonosuba ? 'konosuba' : (isWarhammer ? 'warhammer' : (isHobbit ? 'hobbit' : (isOverlord ? 'overlord' : (isMushoku ? 'mushoku' : 'default'))))))))));
+  const isCarl = /dungeon\s*crawler\s*carl|matt\s*dinniman|princess\s*donut/i.test(targetFile);
+  const styleMode: StyleMode = isCarl ? 'carl' : (isLapidus ? 'comic_history' : (isDxd ? 'dxd' : (isHarryPotter ? 'harrypotter' : (isExpanse ? 'expanse' : (isMetro ? 'metro' : (isDune ? 'dune' : (isKonosuba ? 'konosuba' : (isWarhammer ? 'warhammer' : (isHobbit ? 'hobbit' : (isOverlord ? 'overlord' : (isMushoku ? 'mushoku' : 'default')))))))))));
 
   if (!fs.existsSync(cacheDir)) {
     fs.mkdirSync(cacheDir, { recursive: true });
@@ -1544,6 +1599,7 @@ async function main() {
   console.log(`⚡ Concurrency  : ${CONFIG.concurrency} Workers | Model: ${CONFIG.model}`);
   
   let styleDesc = 'Laga Aksi Luwes (Tell-Don\'t-Show, To-The-Point)';
+  if (styleMode === 'carl') styleDesc = 'Dungeon Crawler Carl (Komedi Gelap LitRPG, No Sensor, Tell-Don\'t-Show, Gaul Gue-Lu, Notifikasi Game Sadis & Satir)';
   if (styleMode === 'harrypotter') styleDesc = 'Harry Potter Gaul Sihir Remake (No-Sensor, Gaul Tongkrongan Asrama Gryffindor Gue-Lu, Dialog Wajib Bernama Lengkap, Nol Kata Kaku)';
   if (styleMode === 'expanse') styleDesc = 'Hard Sci-Fi Space Opera The Expanse (No Sensor, Gaul Luar Angkasa Gue-Lu, Dialog Lengkap Bernama, Istilah Belter & Propulsi Presisi)';
   if (styleMode === 'metro') styleDesc = 'Sci-Fi Survival Post-Apokaliptik Metro 2033 (Tell-Don\'t-Show, Tegang & Gaul Stalker, Peta Terowongan)';
