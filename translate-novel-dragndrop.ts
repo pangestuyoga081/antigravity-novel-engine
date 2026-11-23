@@ -853,11 +853,11 @@ ${text}`;
     return `Tuliskan adegan fiksi fantasi berikut dalam Bahasa Indonesia yang SUPER SANTAI SEHARI-HARI, GAUL, KONYOL, dan TO-THE-POINT (gaya komik/manga terjemahan gaul santai).
 - Haram bahasa baku/formal kaku ("adalah", "tatkala", "terpendar", "kian", "kendati demikian", "mengindikasikan", "beliau").
 - Wajib bahasa santai tongkrongan: "nggak", "banget", "udah", "gitu", "parah", "bodo amat", "sialan/anjir", dll.
-- Monolog batin karakter: Lu-gue santai konyol, overthinking ala salaryman mantan budak korporat. Dialog keluar: Sok jaim, berwibawa, dingin.
+- STRICT NO HALLUCINATIONS: DILARANG mengarang adegan palsu, DILARANG menambah tokoh/nama fiksi dari anime/novel lain, dan DILARANG menambah monolog batin yang tidak ada di teks sumber!
+- STRICT BANNED JOKES: DILARANG menggunakan lelucon klise/garing seperti "budak korporat", "salaryman", "bos toxic", "shift malam", "takut kena SP", "laporan bulanan". Terjemahkan emosi karakter asli secara natural dan proporsional.
 - Tell, Don't Show: Langsung beri tahu fakta dan emosi karakter secara tegas tanpa kalimat bertele-tele.
 - Dialog wajib format: Nama: "..."
 - PENTING: Pertahankan tag penanda [[ILUSTRASI:...]] persis di posisinya!
-- Istilah Asli (Loanwords): Pertahankan istilah aslinya (Tier Magic, World Item, Undead, dll.) beserta penjelasan singkat dalam kurung jika membingungkan.
 
 Adegan Cerita:
 
@@ -1111,7 +1111,7 @@ GAYA BAHASA & ATURAN MUTLAK:
 3. Kalimat pendek, padat, dan tidak kaku (nol kalimat puitis/berbunga-bunga klise/lebay).
 4. Karakterisasi tokoh tetap dijaga ketat:
    - Tokoh utama (Sang Penguasa / Tengkorak):
-     * Monolog batin / isi pikiran: Gaya santai, panik, overthinking, konyol, lu-gue ala mantan budak korporat (salaryman kantoran) yang terdampar ("Waduh anjir, gawat banget nih kalau ketahuan...", "Bisa berabe urusannya kalau mereka tahu gue cuma akting sok keren...").
+     * Monolog batin / isi pikiran: Gaya santai, panik, overthinking, konyol, lu-gue ("Waduh anjir, gawat banget nih kalau ketahuan...", "Bisa berabe urusannya kalau mereka tahu gue cuma akting sok keren..."). DILARANG mengulang-ulang frasa "budak korporat/salaryman/takut kena SP/laporan bulanan" di luar teks aslinya!
      * Dialog keluar: Berusaha keras sok jaim, cool, berwibawa mutlak, dingin, dan mengintimidasi.
    - Karakter wanita setia: Bucin akut, protektif, histeris mesum saat berdua.
    - Karakter penasihat: Super sopan, intelek, sadis berdarah dingin, pemikir konspirasi.
