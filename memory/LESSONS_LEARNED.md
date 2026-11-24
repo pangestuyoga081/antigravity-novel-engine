@@ -49,3 +49,8 @@
   (1) Haram menyuntikkan karakter teks ke dalam `<a>` tautan istilah/tokoh; gunakan border-bottom dotted CSS murni.
   (2) Wajib menyisipkan `&nbsp;` eksplisit di antara badge faksi dan nama pembicara.
   (3) Regex dialog harus fleksibel menangkap narasi pasca-kutip: `r"^([^:\n]+?):\s*([\"“].*)$"` dan mengonversi pasangan kutip ke entitas tipografi `&#8220;...&#8221;`.
+
+### 9. Eliminasi Redundansi Judul di Isi Pop-Up Modal
+- **Masalah**: Pop-up e-reader menampilkan judul dua kali secara bertumpuk (header: `cewek Tsundere`, isi: `• cewek Tsundere: tipe cewek...`).
+- **Penyebab**: Tag `<aside>` membungkus teks dengan `<strong>&bull; {title}:</strong> {desc}` padahal browser/e-reader sudah otomatis mengekstrak `{title}` dari teks link sebagai header modal.
+- **Aturan**: Tag `<aside>` HANYA boleh memuat teks deskripsi murni `{html.escape(desc)}` tanpa mengulang `{title}`. Tampilan pop-up menjadi ringkas, fokus, dan tidak repetitif.

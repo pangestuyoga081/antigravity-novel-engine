@@ -513,7 +513,8 @@ def text_to_html(body_text, lore_map=None, available_images=None):
         cast_cards = []
         for c_name, c_faction, c_desc in semantic_cast:
             badge = get_faction_badge(c_faction)
-            cast_cards.append(f'<div class="cast-card">{badge}<strong>{html.escape(c_name)}</strong><br/><span style="font-size:0.85em; color:#64748b;">{html.escape(c_desc)}</span></div>')
+            badge_sp = f"{badge}&nbsp;" if badge else ""
+            cast_cards.append(f'<div class="cast-card">{badge_sp}<strong>{html.escape(c_name)}</strong><br/><span style="font-size:0.85em; color:#64748b;">{html.escape(c_desc)}</span></div>')
         cast_header = f"""<details class="chapter-cast">
 <summary>👥 Tokoh Penting di Bab Ini ({len(semantic_cast)} Tokoh)</summary>
 <div class="cast-grid">{"".join(cast_cards)}</div>
@@ -526,7 +527,8 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             for spk in sorted(key_speakers):
                 role_desc = lore_map.get(spk, "Karakter Penting")
                 badge = get_faction_badge(spk)
-                cast_cards.append(f'<div class="cast-card">{badge}<strong>{spk}</strong><br/><span style="font-size:0.85em; color:#64748b;">{html.escape(role_desc)}</span></div>')
+                badge_sp = f"{badge}&nbsp;" if badge else ""
+                cast_cards.append(f'<div class="cast-card">{badge_sp}<strong>{spk}</strong><br/><span style="font-size:0.85em; color:#64748b;">{html.escape(role_desc)}</span></div>')
             cast_header = f"""<details class="chapter-cast">
 <summary>👥 Tokoh Penting di Bab Ini ({len(key_speakers)} Tokoh Utama)</summary>
 <div class="cast-grid">{"".join(cast_cards)}</div>
@@ -537,8 +539,8 @@ def text_to_html(body_text, lore_map=None, available_images=None):
         html_parts.append('<div class="footnotes-section">')
         html_parts.append('<h4 style="font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; color: #0284c7; margin-bottom: 0.8em;">Glosarium &amp; Karakter Bab Ini:</h4>')
         for fn_id, fn_ref_id, title, desc in footnotes:
-            # Gunakan span biasa tanpa tag <a href> back-link agar reader tidak mental ke awal bab
-            html_parts.append(f'<aside id="{fn_id}" class="footnote" epub:type="footnote"><strong>&bull; {title}:</strong> {html.escape(desc)}</aside>')
+            # Tidak perlu mengulang judul term di dalam aside karena reader (Moon+ dll) sudah menampilkan judul di header modal pop-up
+            html_parts.append(f'<aside id="{fn_id}" class="footnote" epub:type="footnote">{html.escape(desc)}</aside>')
         html_parts.append('</div>')
         
     return (cast_header + "\n" + "\n".join(html_parts)) if cast_header else "\n".join(html_parts)
