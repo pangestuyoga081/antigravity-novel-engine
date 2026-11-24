@@ -6,51 +6,37 @@ import html
 
 CSS_CONTENT = """@charset "utf-8";
 body {
-    margin: 5% 8%;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 5% 7%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.8;
-    color: #2b2b2b;
-    background-color: #fafafa;
+    color: inherit;
+    background-color: transparent;
     text-align: justify;
 }
-@media (prefers-color-scheme: dark) {
-    body {
-        color: #d1d5db;
-        background-color: #111827;
-    }
-    h1, h2, h3 {
-        color: #f3f4f6;
-    }
-    .speaker {
-        color: #38bdf8;
-    }
-    .game-box {
-        background-color: #030712;
-        border-color: #0284c7;
-        color: #7dd3fc;
-    }
-}
-h1, h2, h3 {
+h1, h2, h3, h4 {
     text-align: center;
-    color: #1a1a1a;
+    color: inherit;
     margin-top: 1.5em;
-    margin-bottom: 1em;
+    margin-bottom: 0.8em;
     font-weight: 700;
 }
 p {
     margin: 0.8em 0;
     text-indent: 1.5em;
+    color: inherit;
+    background-color: transparent;
 }
 p.dialogue {
     text-indent: 0;
-    margin-left: 0.5em;
+    margin-left: 0.4em;
     font-weight: 500;
 }
 .speaker {
     font-weight: 700;
-    color: #8b3a00;
+    color: #0284c7;
 }
-/* Pop-up Lore / Footnote Interaktif */
+
+/* Pop-up Lore / Footnote Interaktif (Theme-Agnostic) */
 .lore-ref {
     color: inherit;
     text-decoration: underline dotted #0284c7;
@@ -61,38 +47,46 @@ p.dialogue {
     color: #0284c7;
 }
 .lore-tag {
-    font-size: 0.75em;
+    font-size: 0.72em;
     vertical-align: super;
-    background-color: rgba(2, 132, 199, 0.15);
+    background-color: rgba(2, 132, 199, 0.18);
     color: #0284c7;
     border-radius: 3px;
     padding: 0 4px;
     margin-left: 2px;
+    font-weight: 700;
+}
+
+/* Bagian Catatan Kaki / Glosarium di Bawah Bab */
+.footnotes-section {
+    margin-top: 2.5em;
+    border-top: 1px dashed rgba(148, 163, 184, 0.4);
+    padding-top: 1em;
 }
 aside[epub\\:type="footnote"], aside.footnote {
-    margin: 0.8em 0;
-    padding: 0.6em 1em;
-    font-size: 0.85em;
+    margin: 0.6em 0;
+    padding: 0.5em 0.8em;
+    font-size: 0.88em;
     line-height: 1.5;
-    background: #f0f9ff;
+    background-color: rgba(2, 132, 199, 0.06);
     border-left: 3px solid #0284c7;
     border-radius: 4px;
+    color: inherit;
 }
-@media (prefers-color-scheme: dark) {
-    aside[epub\\:type="footnote"], aside.footnote {
-        background: #082f49;
-        color: #bae6fd;
-    }
+aside.footnote strong {
+    color: #0284c7;
 }
+
 .game-box {
     margin: 1.2em 0;
     padding: 0.8em 1.2em;
-    background-color: #f8fafc;
-    border: 1px solid #cbd5e1;
+    background-color: rgba(148, 163, 184, 0.08);
+    border: 1px solid rgba(148, 163, 184, 0.3);
     border-left: 4px solid #0284c7;
     border-radius: 6px;
     font-size: 0.9em;
     font-weight: 600;
+    color: inherit;
 }
 .illustration-container {
     text-align: center;
@@ -115,7 +109,8 @@ aside[epub\\:type="footnote"], aside.footnote {
     height: auto;
     margin: 1em auto;
 }
-/* Faction Badge & Character Avatar */
+
+/* Faction Badge & Character Avatar (Agnostic Semitransparent) */
 .faction-badge {
     display: inline-flex;
     align-items: center;
@@ -130,38 +125,23 @@ aside[epub\\:type="footnote"], aside.footnote {
     white-space: nowrap;
     line-height: 1.4;
 }
-.badge-spartan { background-color: rgba(185, 28, 28, 0.15); color: #b91c1c; border: 1px solid rgba(185, 28, 28, 0.35); }
-.badge-metro { background-color: rgba(51, 65, 85, 0.12); color: #334155; border: 1px solid rgba(51, 65, 85, 0.3); }
-.badge-redline { background-color: rgba(220, 38, 38, 0.15); color: #dc2626; border: 1px solid rgba(220, 38, 38, 0.35); }
-.badge-hanza { background-color: rgba(202, 138, 4, 0.15); color: #a16207; border: 1px solid rgba(202, 138, 4, 0.35); }
-.badge-carl { background-color: rgba(219, 39, 119, 0.15); color: #be185d; border: 1px solid rgba(219, 39, 119, 0.35); }
-.badge-donut { background-color: rgba(147, 51, 234, 0.15); color: #7e22ce; border: 1px solid rgba(147, 51, 234, 0.35); }
-.badge-ai { background-color: rgba(2, 132, 199, 0.15); color: #0369a1; border: 1px solid rgba(2, 132, 199, 0.35); }
-
-@media (prefers-color-scheme: dark) {
-    .badge-spartan { background-color: rgba(239, 68, 68, 0.2); color: #fca5a5; border-color: rgba(239, 68, 68, 0.4); }
-    .badge-metro { background-color: rgba(148, 163, 184, 0.18); color: #cbd5e1; border-color: rgba(148, 163, 184, 0.35); }
-    .badge-redline { background-color: rgba(248, 113, 113, 0.2); color: #fecaca; border-color: rgba(248, 113, 113, 0.4); }
-    .badge-hanza { background-color: rgba(250, 204, 21, 0.2); color: #fef08a; border-color: rgba(250, 204, 21, 0.4); }
-    .badge-carl { background-color: rgba(244, 114, 182, 0.2); color: #fbcfe8; border-color: rgba(244, 114, 182, 0.4); }
-    .badge-donut { background-color: rgba(192, 132, 252, 0.2); color: #e9d5ff; border-color: rgba(192, 132, 252, 0.4); }
-    .badge-ai { background-color: rgba(56, 189, 248, 0.2); color: #bae6fd; border-color: rgba(56, 189, 248, 0.4); }
-}
+.badge-spartan { background-color: rgba(239, 68, 68, 0.18); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.35); }
+.badge-metro { background-color: rgba(148, 163, 184, 0.18); color: #64748b; border: 1px solid rgba(148, 163, 184, 0.35); }
+.badge-redline { background-color: rgba(220, 38, 38, 0.18); color: #dc2626; border: 1px solid rgba(220, 38, 38, 0.35); }
+.badge-hanza { background-color: rgba(234, 179, 8, 0.18); color: #ca8a04; border: 1px solid rgba(234, 179, 8, 0.35); }
+.badge-carl { background-color: rgba(236, 72, 153, 0.18); color: #db2777; border: 1px solid rgba(236, 72, 153, 0.35); }
+.badge-donut { background-color: rgba(168, 85, 247, 0.18); color: #9333ea; border: 1px solid rgba(168, 85, 247, 0.35); }
+.badge-ai { background-color: rgba(2, 132, 199, 0.18); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.35); }
 
 /* Interactive Chapter Cast Drawer */
 .chapter-cast {
     margin: 1.5em 0 2em 0;
     padding: 0.8em 1.2em;
-    background-color: #f1f5f9;
-    border: 1px solid #cbd5e1;
+    background-color: rgba(148, 163, 184, 0.08);
+    border: 1px solid rgba(148, 163, 184, 0.25);
     border-radius: 8px;
     font-size: 0.85em;
-}
-@media (prefers-color-scheme: dark) {
-    .chapter-cast {
-        background-color: #0f172a;
-        border-color: #334155;
-    }
+    color: inherit;
 }
 .chapter-cast summary {
     font-weight: 700;
@@ -177,29 +157,10 @@ aside[epub\\:type="footnote"], aside.footnote {
 }
 .cast-card {
     padding: 6px 10px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: rgba(148, 163, 184, 0.06);
+    border: 1px solid rgba(148, 163, 184, 0.15);
     border-radius: 6px;
-}
-@media (prefers-color-scheme: dark) {
-    .cast-card {
-        background: rgba(30, 41, 59, 0.7);
-        border-color: rgba(255, 255, 255, 0.05);
-    }
-}
-
-/* Metro Route Map Styling */
-.metro-map-container {
-    text-align: center;
-    margin: 1.5em auto;
-    padding: 1em;
-    max-width: 100%;
-}
-.metro-map-container svg {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
+    color: inherit;
 }
 """
 
@@ -343,6 +304,9 @@ def text_to_html(body_text, lore_map=None, available_images=None):
         if img_match:
             img_file = img_match.group(1).strip()
             base_img = os.path.basename(img_file)
+            # Abaikan potongan peta rute agar alur membaca tidak terpotong
+            if "map_route" in base_img.lower():
+                continue
             # Hanya render tag <img> jika file gambarnya benar-benar ada di dalam arsip gambar EPUB
             if base_img in available_images:
                 html_parts.append(f'<div class="illustration-container"><img src="../images/{base_img}" alt="Ilustrasi" /></div>')
@@ -471,10 +435,11 @@ def text_to_html(body_text, lore_map=None, available_images=None):
 
     # Append interactive footnotes at end of chapter if any
     if footnotes:
-        html_parts.append('<div class="footnotes-section" style="margin-top: 2.5em; border-top: 1px solid #e2e8f0; padding-top: 1em;">')
-        html_parts.append('<h4 style="font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin-bottom: 0.8em;">Glosarium &amp; Karakter Bab Ini:</h4>')
+        html_parts.append('<div class="footnotes-section">')
+        html_parts.append('<h4 style="font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; color: #0284c7; margin-bottom: 0.8em;">Glosarium &amp; Karakter Bab Ini:</h4>')
         for fn_id, fn_ref_id, title, desc in footnotes:
-            html_parts.append(f'<aside id="{fn_id}" class="footnote" epub:type="footnote"><strong><a href="#{fn_ref_id}" style="color: #0284c7; text-decoration: none;">&uarr; {title}</a>:</strong> {html.escape(desc)}</aside>')
+            # Gunakan span biasa tanpa tag <a href> back-link agar reader tidak mental ke awal bab
+            html_parts.append(f'<aside id="{fn_id}" class="footnote" epub:type="footnote"><strong>&bull; {title}:</strong> {html.escape(desc)}</aside>')
         html_parts.append('</div>')
         
     return (cast_header + "\n" + "\n".join(html_parts)) if cast_header else "\n".join(html_parts)
