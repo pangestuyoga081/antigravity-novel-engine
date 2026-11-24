@@ -63,3 +63,15 @@
   (2) Jika kata berhuruf kapital (Title-Case/Akronim), telusuri kata kapital berurutan ke belakang (`Sacred Gear`, `VDNKh`).
   (3) Jika kata berformat markdown bintang (`*term*`), ambil murni teks di dalam bintang.
   (4) Kata-kata sebelum term wajib diisolasi sebagai lead-in di luar tag link `<a>`.
+
+### 11. Moon+ Reader Footnote Decorator & Speaker Label Isolation
+- **Masalah**: Muncul tanda tanya superscript `?` di setiap nama speaker dialog (`Pyotr?:`, `Andrey?:`, `Artyom?:`) dan header pop-up (`Andrey?`).
+- **Penyebab**: Compiler membungkus setiap nama speaker dialog dalam `<a href="..." epub:type="noteref">`. E-reader (terutama Moon+ Reader) otomatis menyuntikkan icon `?` pada elemen ber-`epub:type="noteref"` yang teksnya bukan berupa angka catatan kaki. Selain itu, mengubah nama speaker di setiap kalimat dialog menjadi tautan footnote sangat mengotori alur baca.
+- **Aturan**:
+  (1) Nama speaker dalam dialog (`Speaker: "..."`) WAJIB murni teks penanda dialog tebal (plus badge faksi), HARAM dibungkus menjadi tautan footnote. Karakter kunci bab sudah diwadahi secara elegan di Cast Drawer atas bab.
+  (2) Untuk tautan istilah/glosarium dalam narasi (`lore-ref`), HAPUS atribut `epub:type="noteref"` dari tag `<a>` (gunakan `<a id="{fnref}" href="#{fn}" class="lore-ref">{term}</a>`). Pertahankan `epub:type="footnote"` hanya pada elemen target `<aside>` agar modal pop-up tetap aktif tanpa memicu dekorasi icon `?` di layar pembaca.
+
+### 12. Karantina Aset Gambar Antar-Buku
+- **Masalah**: EPUB Metro 2033 membengkak dan memicu error `HTTP 500: Reassembly byte limit exceeded` karena gambar ilustrasi berwarna High School DxD ikut terkemas ke dalam Metro 2033.
+- **Penyebab**: Compiler memindai direktori `High School DxD` secara serakah tanpa memeriksa `base_name` buku yang sedang dirakit.
+- **Aturan**: Direktori gambar khusus suatu waralaba/judul HANYA boleh diakses jika nama buku yang sedang dirakit secara spesifik memuat kata kunci buku tersebut (`if "dxd" in base_name.lower()`). Isolasi ini menurunkan ukuran EPUB Metro 2033 dari 1.68 MB menjadi 0.86 MB, menjamin kelancaran unduhan di bawah limit proxy 2 MB.

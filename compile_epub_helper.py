@@ -342,7 +342,10 @@ def text_to_html(body_text, lore_map=None, available_images=None):
     STOP_WORDS = {
         'ke', 'di', 'dari', 'pada', 'buat', 'untuk', 'sama', 'dan', 'atau', 'yang', 'si', 'para',
         'bawa', 'pake', 'pakai', 'seorang', 'jual', 'setrum', 'hasil', 'satu', 'tiap', 'ada', 'itu',
-        'ini', 'kan', 'lah', 'pun', 'amat', 'juga', 'tentang', 'oleh', 'lewat', 'menuju', 'persis', 'kayak'
+        'ini', 'kan', 'lah', 'pun', 'amat', 'juga', 'tentang', 'oleh', 'lewat', 'menuju', 'persis',
+        'kayak', 'kek', 'bikin', 'buat', 'jadikan', 'jadi', 'alias', 'cewek', 'cowok', 'tipe',
+        'mirip', 'seperti', 'ala', 'kaum', 'faksi', 'kelompok', 'pasukan', 'suara', 'jam', 'kata',
+        'nama', 'sebut', 'punya', 'senjata', 'jenis', 'prajurit', 'anggota', 'orang'
     }
     glossary_paren_pat = re.compile(
         r'((?:[A-Za-z0-9_\*\-\.]+(?:\s+[A-Za-z0-9_\*\-\.]+){0,3})\s*)\(([^)]{3,120})\)'
@@ -419,11 +422,15 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             else:
                 # 2. Cek apakah ada urutan kata Berhuruf Kapital (Title-Case/Akronim) di posisi akhir
                 # Contoh: "punya Sacred Gear" -> lead_in: "punya ", raw_term: "Sacred Gear"
+                # "bersuara cewek Tsundere" -> lead_in: "bersuara cewek ", raw_term: "Tsundere"
                 cap_words = []
                 i = len(words) - 1
                 while i >= 0:
                     w = words[i]
                     clean_w = re.sub(r'[^a-zA-Z0-9]', '', w)
+                    clean_w_lower = clean_w.lower()
+                    if clean_w_lower in STOP_WORDS:
+                        break
                     if clean_w and (clean_w[0].isupper() or clean_w.isupper()):
                         cap_words.insert(0, w)
                         i -= 1
@@ -436,9 +443,16 @@ def text_to_html(body_text, lore_map=None, available_images=None):
                     raw_term = ' '.join(cap_words)
                 else:
                     # 3. Jika semua kata huruf kecil ("bikin harem", "alias bloodlust"), ambil HANYA kata terakhir
-                    lead_in = words[:-1]
+                    # dan pastikan kata penghubung sebelumnya tidak ikut terserap
+                    last_w = words[-1]
+                    clean_last = re.sub(r'[^a-zA-Z0-9]', '', last_w).lower()
+                    if clean_last in STOP_WORDS and len(words) > 1:
+                        raw_term = words[-1]
+                        lead_in = words[:-1]
+                    else:
+                        lead_in = words[:-1]
+                        raw_term = words[-1]
                     prefix = (' '.join(lead_in) + ' ') if lead_in else ''
-                    raw_term = words[-1]
 
             clean_term = raw_term.replace('*', '').strip()
             clean_desc = desc_text.replace('*', '').strip()
@@ -446,7 +460,8 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             fn_id = f"fn_{fn_counter}"
             fn_ref_id = f"fnref_{fn_counter}"
             footnotes.append((fn_id, fn_ref_id, clean_term, clean_desc))
-            res = f'{prefix}<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref" epub:type="noteref">{raw_term}</a>'
+            # Hapus epub:type="noteref" dari tag <a> agar Moon+ Reader tidak memunculkan icon superscript tanda tanya '?'
+            res = f'{prefix}<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref">{raw_term}</a>'
             fn_counter += 1
             return res
 
@@ -467,7 +482,7 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             # Baru jalankan konversi penjelasan kurung ke tooltip (agar tag <a> tidak terkena escape)
             dial = glossary_paren_pat.sub(extract_and_convert_paren, dial)
             
-            # Cari apakah speaker cocok di lore_map (nama lengkap, kata pertama/nama panggilan, atau alias)
+            # Cari apakah speaker cocok di lore_map
             matched_lore_desc = lore_map.get(spk)
             if not matched_lore_desc:
                 spk_first = re.sub(r'[^a-zA-Z0-9]', '', spk.split()[0]) if spk.split() else ""
@@ -478,14 +493,9 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             badge_html = get_faction_badge(spk)
             badge_prefix = f"{badge_html}&nbsp;" if badge_html else ""
             
-            # Check if speaker has tooltip (pop-up interaktif anti-mental, deduplicated per speaker)
+            # Nama speaker dalam dialog TIDAK dibungkus tautan footnote agar bebas tanda tanya '?'
+            # Pengenalan karakter sudah disajikan secara rapi di Cast Drawer pada pembuka setiap bab.
             spk_disp = spk
-            if matched_lore_desc:
-                spk_fn_id = f"fn_spk_{re.sub(r'[^a-zA-Z0-9]', '_', spk.lower())}"
-                if not any(f[0] == spk_fn_id for f in footnotes):
-                    footnotes.append((spk_fn_id, f"fnref_{fn_counter}", spk, matched_lore_desc))
-                    fn_counter += 1
-                spk_disp = f'<a href="#{spk_fn_id}" class="lore-ref speaker-ref" epub:type="noteref">{spk}</a>'
 
             html_parts.append(f'<p class="dialogue">{badge_prefix}<span class="speaker">{spk_disp}:</span> {dial}</p>')
             continue
@@ -503,7 +513,8 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             if len(term) >= 4 and not any(term == sp[2] for sp in footnotes if sp[2] == term):
                 fn_id = f"fn_{fn_counter}"
                 fn_ref_id = f"fnref_{fn_counter}"
-                replacement = f'<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref" epub:type="noteref">{term}</a>'
+                # Hapus epub:type="noteref" dari <a> agar Moon+ Reader tidak menambahkan superscript tanda tanya '?'
+                replacement = f'<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref">{term}</a>'
                 
                 # Regex anti-nested: jangan pernah membungkus teks yang sudah ada di dalam tag <a ...>
                 pat = re.compile(r'(<a\b[^>]*>.*?</a>)|(\b' + re.escape(term) + r'\b)', re.DOTALL)
@@ -590,10 +601,13 @@ def main():
     search_dirs = [
         os.path.join(base_dir, "illustrations", base_name),
         os.path.join(base_dir, "illustrations", base_name.replace(" ", "_")),
-        os.path.join(base_dir, "High School DxD", "build_epub_vol_01", "OEBPS", "images"),
-        os.path.join(base_dir, "build_epub_vol_01", "OEBPS", "images"),
-        os.path.join(os.path.dirname(base_dir), "High School DxD", "build_epub_vol_01", "OEBPS", "images"),
     ]
+    if "dxd" in base_name.lower():
+        search_dirs.extend([
+            os.path.join(base_dir, "High School DxD", "build_epub_vol_01", "OEBPS", "images"),
+            os.path.join(base_dir, "build_epub_vol_01", "OEBPS", "images"),
+            os.path.join(os.path.dirname(base_dir), "High School DxD", "build_epub_vol_01", "OEBPS", "images"),
+        ])
     for sdir in search_dirs:
         if os.path.isdir(sdir):
             for root, _, files in os.walk(sdir):
@@ -708,7 +722,9 @@ def main():
         xhtml_files.append(("metro_map_full.xhtml", "Peta Lengkap Metro Moskwa", metro_maps_xhtml))
 
     # Galeri Ilustrasi Berwarna Pembuka (Khusus DxD atau Light Novel Berwarna)
-    dxd_color_images = [img for img in ["HSDxD_vol_01_004.jpg", "HSDxD_vol_01_005-006.jpg", "HSDxD_vol_01_007.jpg"] if img in images_data]
+    dxd_color_images = []
+    if "dxd" in base_name.lower():
+        dxd_color_images = [img for img in ["HSDxD_vol_01_004.jpg", "HSDxD_vol_01_005-006.jpg", "HSDxD_vol_01_007.jpg"] if img in images_data]
     if dxd_color_images:
         gallery_html = ['<div class="color-gallery"><h1>Galeri Ilustrasi Berwarna</h1>']
         for ci in dxd_color_images:
