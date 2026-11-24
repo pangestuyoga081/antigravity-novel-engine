@@ -405,26 +405,44 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             nonlocal fn_counter
             full_pre = match.group(1).rstrip()
             desc_text = match.group(2).strip()
-            
-            words = full_pre.split()
-            lead_in = []
-            term_words = []
-            if len(words) > 2:
-                lead_in.extend(words[:-2])
-                words = words[-2:]
-            for i, w in enumerate(words):
-                clean_w = re.sub(r'[^a-zA-Z0-9]', '', w).lower()
-                if clean_w in STOP_WORDS and i < len(words) - 1:
-                    lead_in.append(w)
+
+            words = full_pre.strip().split()
+            if not words:
+                return match.group(0)
+
+            # 1. Cek jika segmen terakhir bertanda bintang: *term* atau **term**
+            full_str = full_pre.rstrip()
+            star_m = re.search(r'(\*{1,2}[^*]+\*{1,2})$', full_str)
+            if star_m:
+                raw_term = star_m.group(1)
+                prefix = full_str[:star_m.start()]
+            else:
+                # 2. Cek apakah ada urutan kata Berhuruf Kapital (Title-Case/Akronim) di posisi akhir
+                # Contoh: "punya Sacred Gear" -> lead_in: "punya ", raw_term: "Sacred Gear"
+                cap_words = []
+                i = len(words) - 1
+                while i >= 0:
+                    w = words[i]
+                    clean_w = re.sub(r'[^a-zA-Z0-9]', '', w)
+                    if clean_w and (clean_w[0].isupper() or clean_w.isupper()):
+                        cap_words.insert(0, w)
+                        i -= 1
+                    else:
+                        break
+                
+                if cap_words:
+                    lead_in = words[:i+1]
+                    prefix = (' '.join(lead_in) + ' ') if lead_in else ''
+                    raw_term = ' '.join(cap_words)
                 else:
-                    term_words = words[i:]
-                    break
-            raw_term = ' '.join(term_words) if term_words else full_pre.strip()
-            prefix = (' '.join(lead_in) + ' ') if lead_in else ''
-            
+                    # 3. Jika semua kata huruf kecil ("bikin harem", "alias bloodlust"), ambil HANYA kata terakhir
+                    lead_in = words[:-1]
+                    prefix = (' '.join(lead_in) + ' ') if lead_in else ''
+                    raw_term = words[-1]
+
             clean_term = raw_term.replace('*', '').strip()
             clean_desc = desc_text.replace('*', '').strip()
-            
+
             fn_id = f"fn_{fn_counter}"
             fn_ref_id = f"fnref_{fn_counter}"
             footnotes.append((fn_id, fn_ref_id, clean_term, clean_desc))

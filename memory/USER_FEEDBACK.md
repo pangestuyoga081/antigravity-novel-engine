@@ -6,6 +6,7 @@ Format: Tanggal | Keluhan User | Akar Masalah | Solusi & Fix | Status
 
 | Tanggal | Keluhan User | Akar Masalah | Solusi & Fix | Status |
 |---|---|---|---|---|
+| 2026-11-24 | Tooltip paren serakah mengambil kata sebelumnya (contoh: 'bikin harem', 'alias bloodlust') | Regex paren mengambil 2-4 kata sebelum kurung tanpa membedakan kata kerja/partikel bahasa | Perbarui parser term: jika huruf kecil ambil HANYA 1 kata terakhir; jika Title-Case ambil kata kapital; jika bintang ambil isi bintang | DONE |
 | 2026-11-24 | Redundansi judul di dalam pop-up modal ("gak perlu dikasih lagi blablabla: dibawahnya kan udah ada yang diatas") & badge nempel di drawer | Isi tag `<aside>` mengulang `<strong>&bull; {title}:</strong>` padahal header modal pop-up e-reader sudah otomatis menampilkan judul term; badge di drawer kartu tokoh tidak punya pemisah `&nbsp;` | Hapus pengulangan judul di dalam `<aside>` sehingga isi modal bersih hanya teks definisi; tambahkan `&nbsp;` pada kartu drawer tokoh | DONE |
 | 2026-11-24 | Permintaan scan riwayat chat menyeluruh & pembaruan memori | Sesi panjang membutuhkan konsolidasi memori lintas sesi agar seluruh keputusan tersimpan permanen | Scan seluruh transcript, audit 7 ADR, perbarui golden sample DxD, dan sinkronkan profil buku | DONE |
 | 2026-11-24 | Kualitas gambar novel DxD jangan dikompresi ("apa adanya aja tuh gambar") | User menghendaki kualitas gambar asli dan tajam tanpa degradasi kompresi JPEG | Matikan kompresi paksa gambar; biarkan aset gambar asli dikemas utuh sesuai instruksi user | DONE |

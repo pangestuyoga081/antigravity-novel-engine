@@ -54,3 +54,12 @@
 - **Masalah**: Pop-up e-reader menampilkan judul dua kali secara bertumpuk (header: `cewek Tsundere`, isi: `• cewek Tsundere: tipe cewek...`).
 - **Penyebab**: Tag `<aside>` membungkus teks dengan `<strong>&bull; {title}:</strong> {desc}` padahal browser/e-reader sudah otomatis mengekstrak `{title}` dari teks link sebagai header modal.
 - **Aturan**: Tag `<aside>` HANYA boleh memuat teks deskripsi murni `{html.escape(desc)}` tanpa mengulang `{title}`. Tampilan pop-up menjadi ringkas, fokus, dan tidak repetitif.
+
+### 10. Ekstraksi Term Penjelasan Kurung Presisi Tinggi (Anti-Greedy)
+- **Masalah**: Link tooltip mengambil kata kerja/partikel sebelum istilah (contoh: `bikin harem`, `alias bloodlust`, `cewek Tsundere`).
+- **Penyebab**: Parser regex memotong 2-4 kata sebelum kurung secara buta konteks tanpa memeriksa jenis kata.
+- **Aturan**:
+  (1) Jika kata berhuruf kecil semua, ambil HANYA kata terakhir sebagai term (`bikin` -> lead-in, `harem` -> term).
+  (2) Jika kata berhuruf kapital (Title-Case/Akronim), telusuri kata kapital berurutan ke belakang (`Sacred Gear`, `VDNKh`).
+  (3) Jika kata berformat markdown bintang (`*term*`), ambil murni teks di dalam bintang.
+  (4) Kata-kata sebelum term wajib diisolasi sebagai lead-in di luar tag link `<a>`.
