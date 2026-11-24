@@ -187,6 +187,20 @@ aside[epub\\:type="footnote"], aside.footnote {
         border-color: rgba(255, 255, 255, 0.05);
     }
 }
+
+/* Metro Route Map Styling */
+.metro-map-container {
+    text-align: center;
+    margin: 1.5em auto;
+    padding: 1em;
+    max-width: 100%;
+}
+.metro-map-container svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
 """
 
 def load_lore_dict(base_dir, base_name):
@@ -354,12 +368,19 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             fn_counter += 1
             return res
 
-        p = glossary_paren_pat.sub(extract_and_convert_paren, p)
-
         spk_match = re.match(r"^([^:]+?):\s*\"(.*)\"$", p)
         if spk_match:
-            spk = html.escape(spk_match.group(1))
-            dial = html.escape(spk_match.group(2))
+            raw_spk = spk_match.group(1)
+            raw_dial = spk_match.group(2)
+
+            spk = html.escape(raw_spk)
+            # Escape HTML karakter di dalam dialog dulu
+            dial = html.escape(raw_dial)
+            # Konversi format bold dan italic markdown di dalam dialog
+            dial = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", dial)
+            dial = re.sub(r"\*(.*?)\*", r"<em>\1</em>", dial)
+            # Baru jalankan konversi penjelasan kurung ke tooltip (agar tag <a> tidak terkena escape)
+            dial = glossary_paren_pat.sub(extract_and_convert_paren, dial)
             
             # Hanya tambahkan ke cast drawer jika karakter penting di lore_map
             if spk in lore_map:
@@ -382,6 +403,8 @@ def text_to_html(body_text, lore_map=None, available_images=None):
         esc_p = html.escape(p)
         esc_p = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", esc_p)
         esc_p = re.sub(r"\*(.*?)\*", r"<em>\1</em>", esc_p)
+        # Baru jalankan konversi penjelasan kurung ke tooltip narasi
+        esc_p = glossary_paren_pat.sub(extract_and_convert_paren, esc_p)
 
         # Inject lore references into narrative for unique terms (limit 1 per term per chapter)
         for term, desc in lore_map.items():
@@ -481,8 +504,8 @@ def main():
 
     xhtml_files = []
 
-    # Galeri Peta Pembuka (Khusus Hobbit jika ada file petanya)
-    if "00003.jpeg" in images_data or "00021.jpeg" in images_data:
+    # Galeri Peta Pembuka (Khusus Hobbit jika benar-benar novel The Hobbit)
+    if "hobbit" in base_name.lower() and ("00003.jpeg" in images_data or "00021.jpeg" in images_data):
         maps_html = ['<div class="color-gallery"><h1>Peta &amp; Ilustrasi Middle-earth</h1>']
         if "00003.jpeg" in images_data:
             maps_html.append('<div class="illustration-container"><img src="../images/00003.jpeg" alt="Peta Thror" /><p><em>Peta Thror (Thror\'s Map) dengan Tulisan Rune Rahasia</em></p></div>')
