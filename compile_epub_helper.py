@@ -46,15 +46,13 @@ p.dialogue {
 .lore-ref:hover {
     color: #0284c7;
 }
-.lore-tag {
-    font-size: 0.72em;
-    vertical-align: super;
-    background-color: rgba(2, 132, 199, 0.18);
+.speaker-ref {
     color: #0284c7;
-    border-radius: 3px;
-    padding: 0 4px;
-    margin-left: 2px;
+    text-decoration: underline dotted rgba(2, 132, 199, 0.45);
     font-weight: 700;
+}
+.speaker-ref:hover {
+    color: #38bdf8;
 }
 
 /* Bagian Catatan Kaki / Glosarium di Bawah Bab */
@@ -391,21 +389,24 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             fn_id = f"fn_{fn_counter}"
             fn_ref_id = f"fnref_{fn_counter}"
             footnotes.append((fn_id, fn_ref_id, clean_term, clean_desc))
-            res = f'{prefix}<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref" epub:type="noteref">{raw_term}<span class="lore-tag">?</span></a>'
+            res = f'{prefix}<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref" epub:type="noteref">{raw_term}</a>'
             fn_counter += 1
             return res
 
-        spk_match = re.match(r"^([^:]+?):\s*\"(.*)\"$", p)
+        # Cek apakah baris ini adalah dialog: Speaker: "..." (dengan atau tanpa narasi lanjutan di akhir)
+        spk_match = re.match(r"^([^:\n]+?):\s*([\"“].*)$", p)
         if spk_match:
-            raw_spk = spk_match.group(1)
-            raw_dial = spk_match.group(2)
+            raw_spk = spk_match.group(1).strip()
+            raw_rest = spk_match.group(2).strip()
 
             spk = html.escape(raw_spk)
-            # Escape HTML karakter di dalam dialog dulu
-            dial = html.escape(raw_dial)
+            # Escape teks dialog dan narasi bawaan
+            dial = html.escape(raw_rest)
             # Konversi format bold dan italic markdown di dalam dialog
             dial = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", dial)
             dial = re.sub(r"\*(.*?)\*", r"<em>\1</em>", dial)
+            # Konversi quotes biasa &quot; menjadi tipografi rapi &#8220; dan &#8221;
+            dial = re.sub(r'&quot;(.*?)&quot;', r'&#8220;\1&#8221;', dial)
             # Baru jalankan konversi penjelasan kurung ke tooltip (agar tag <a> tidak terkena escape)
             dial = glossary_paren_pat.sub(extract_and_convert_paren, dial)
             
@@ -418,6 +419,7 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             if matched_lore_desc:
                 chapter_speakers.add(spk)
             badge_html = get_faction_badge(spk)
+            badge_prefix = f"{badge_html}&nbsp;" if badge_html else ""
             
             # Check if speaker has tooltip (pop-up interaktif anti-mental, deduplicated per speaker)
             spk_disp = spk
@@ -426,9 +428,9 @@ def text_to_html(body_text, lore_map=None, available_images=None):
                 if not any(f[0] == spk_fn_id for f in footnotes):
                     footnotes.append((spk_fn_id, f"fnref_{fn_counter}", spk, matched_lore_desc))
                     fn_counter += 1
-                spk_disp = f'<a href="#{spk_fn_id}" class="lore-ref" epub:type="noteref">{spk}<span class="lore-tag">?</span></a>'
+                spk_disp = f'<a href="#{spk_fn_id}" class="lore-ref speaker-ref" epub:type="noteref">{spk}</a>'
 
-            html_parts.append(f'<p class="dialogue">{badge_html}<span class="speaker">{spk_disp}:</span> &#8220;{dial}&#8221;</p>')
+            html_parts.append(f'<p class="dialogue">{badge_prefix}<span class="speaker">{spk_disp}:</span> {dial}</p>')
             continue
             
         esc_p = html.escape(p)
@@ -447,7 +449,7 @@ def text_to_html(body_text, lore_map=None, available_images=None):
                 footnotes.append((fn_id, fn_ref_id, term, desc))
                 # Replace only first occurrence
                 pattern = re.compile(r'\b' + re.escape(term) + r'\b')
-                replacement = f'<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref" epub:type="noteref">{term}<span class="lore-tag">?</span></a>'
+                replacement = f'<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref" epub:type="noteref">{term}</a>'
                 esc_p = pattern.sub(replacement, esc_p, count=1)
                 fn_counter += 1
 

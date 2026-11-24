@@ -38,3 +38,14 @@
 - **Masalah**: Nama tokoh dialog (`Pyotr: "..."`) tidak terhubung ke tooltip glosarium.
 - **Penyebab**: Nama entri profil ditulis formal (`Pyotr Andreevich`), sedangkan dialog naskah menggunakan nama panggilan santai.
 - **Aturan**: Parser profil lore wajib otomatis meregistrasikan kata pertama (`cname.split()[0]`) dan list aliases ke kamus lore, dan compiler dialog harus memiliki fallback matching kata pertama.
+
+### 8. Tipografi Tautan Pop-Up & Robust Dialogue Parsing
+- **Masalah**: Muncul tanda tanya `?` di nama tokoh dan judul pop-up (`Andrey?`), badge faksi menempel ke nama (`RANGERArtyom`), dan kalimat dialog dengan atribusi narasi di belakang tanda kutip gagal terdeteksi sebagai dialog.
+- **Penyebab**:
+  (1) Tag `<span class="lore-tag">?</span>` berada di dalam tag `<a>` sehingga diindeks sebagai bagian teks link oleh e-reader.
+  (2) Margin CSS badge di-collapse saat bersanding dengan inline span di WebKit mobile reader.
+  (3) Regex `r"^([^:]+?):\s*\"(.*)\"$"` mewajibkan kutip penutup di akhir baris persis (`$`).
+- **Aturan**:
+  (1) Haram menyuntikkan karakter teks ke dalam `<a>` tautan istilah/tokoh; gunakan border-bottom dotted CSS murni.
+  (2) Wajib menyisipkan `&nbsp;` eksplisit di antara badge faksi dan nama pembicara.
+  (3) Regex dialog harus fleksibel menangkap narasi pasca-kutip: `r"^([^:\n]+?):\s*([\"“].*)$"` dan mengonversi pasangan kutip ke entitas tipografi `&#8220;...&#8221;`.
