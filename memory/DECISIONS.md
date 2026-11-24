@@ -21,3 +21,23 @@
 - **Tanggal**: 2026-11-24
 - **Konteks**: File YAML statis tidak mampu menangkap tokoh baru yang muncul di pertengahan cerita (Bab 2+).
 - **Keputusan**: Modul `update_living_profile.py` otomatis mengevolusi file konfigurasi profil YAML setiap kali Pass 1 menemukan entitas baru.
+
+### ADR-004: Kebijakan Resolusi Gambar (Uncompressed Original vs Proxy Optimization)
+- **Tanggal**: 2026-11-24
+- **Konteks**: Batas proxy web viewer (2 MB) memicu kompresi gambar otomatis, namun user secara eksplisit meminta kualitas gambar dipertahankan apa adanya ("udah gak usah di kompresi gapapa apa adanya aja tuh gambar").
+- **Keputusan**: Kualitas visual asli adalah prioritas bila diminta user. Pipeline gambar mendukung flag opt-in kompresi bila perlu melewati batas proxy, namun secara default membiarkan gambar asli tetap tajam dan utuh bila diinginkan user.
+
+### ADR-005: Eliminasi Karakter Penanda Visual dalam Tautan Interaktif EPUB
+- **Tanggal**: 2026-11-24
+- **Konteks**: Karakter teks seperti `<span class="lore-tag">?</span>` yang ditaruh di dalam tag `<a>` bocor ke judul jendela pop-up modal Moon+ Reader menjadi `Andrey?` atau `Pyotr?`.
+- **Keputusan**: Tautan `<a>` untuk tokoh dan glosarium HANYA memuat teks nama murni. Indikator interaktif sepenuhnya dikontrol via CSS (`text-decoration: underline dotted #0284c7;`).
+
+### ADR-006: Pemisahan Eksplisit Badge Faksi dan Nama Pembicara (`&nbsp;`)
+- **Tanggal**: 2026-11-24
+- **Konteks**: Tag `<span class="faction-badge">` dan `<span class="speaker">` menempel tanpa spasi (`RANGERArtyom`) pada engine reader mobile akibat collapse margin pada inline elements.
+- **Keputusan**: Wajib menyisipkan `&nbsp;` di antara badge faksi dan span speaker di seluruh template HTML output.
+
+### ADR-007: Fleksibilitas Parser Dialog Ber-Atribusi Naratif
+- **Tanggal**: 2026-11-24
+- **Konteks**: Naskah novel sering kali memuat narasi setelah dialog penutup (contoh: `Andrey: "Bagus deh!" sindir Andrey sinis.`). Pola regex yang mewajibkan `$` di akhir tanda petik menyebabkan baris tersebut gagal terdeteksi sebagai dialog.
+- **Keputusan**: Gunakan regex fleksibel `r"^([^:\n]+?):\s*([\"“].*)$"` dan konversi pasangan petik menjadi entitas tipografi `&#8220;...&#8221;`.

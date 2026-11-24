@@ -130,6 +130,11 @@ aside.footnote strong {
 .badge-carl { background-color: rgba(236, 72, 153, 0.18); color: #db2777; border: 1px solid rgba(236, 72, 153, 0.35); }
 .badge-donut { background-color: rgba(168, 85, 247, 0.18); color: #9333ea; border: 1px solid rgba(168, 85, 247, 0.35); }
 .badge-ai { background-color: rgba(2, 132, 199, 0.18); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.35); }
+.badge-dragon { background-color: rgba(239, 68, 68, 0.18); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.35); }
+.badge-gremory { background-color: rgba(225, 29, 72, 0.18); color: #e11d48; border: 1px solid rgba(225, 29, 72, 0.35); }
+.badge-fallen { background-color: rgba(147, 51, 234, 0.18); color: #a855f7; border: 1px solid rgba(147, 51, 234, 0.35); }
+.badge-healer { background-color: rgba(16, 185, 129, 0.18); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.35); }
+.badge-exorcist { background-color: rgba(234, 179, 8, 0.18); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.35); }
 
 /* Interactive Chapter Cast Drawer */
 .chapter-cast {
@@ -209,7 +214,24 @@ def load_lore_dict(base_dir, base_name):
                 y_clean = yf.lower().replace("_", " ").replace("-", " ")
                 b_clean = base_name.lower().replace("_", " ").replace("-", " ")
                 if any(w in b_clean for w in ["metro", "expanse", "carl", "dxd", "dune", "hobbit"]) and any(w in y_clean for w in ["metro", "expanse", "carl", "dxd", "dune", "hobbit"]):
-                    if ("2034" in b_clean and "2034" in y_clean) or ("2033" in b_clean and "2033" in y_clean) or ("carl" in b_clean and "carl" in y_clean) or ("caliban" in b_clean and "2" in y_clean):
+                    if "metro" in b_clean:
+                        if ("2034" in b_clean and "2034" in y_clean) or ("2033" in b_clean and "2033" in y_clean):
+                            target_yaml = os.path.join(engine_profiles, yf)
+                            break
+                    elif "expanse" in b_clean:
+                        if ("caliban" in b_clean and "2" in y_clean) or ("leviathan" in b_clean and "1" in y_clean):
+                            target_yaml = os.path.join(engine_profiles, yf)
+                            break
+                    elif "dxd" in b_clean and "dxd" in y_clean:
+                        target_yaml = os.path.join(engine_profiles, yf)
+                        break
+                    elif "carl" in b_clean and "carl" in y_clean:
+                        target_yaml = os.path.join(engine_profiles, yf)
+                        break
+                    elif "dune" in b_clean and "dune" in y_clean:
+                        target_yaml = os.path.join(engine_profiles, yf)
+                        break
+                    elif "hobbit" in b_clean and "hobbit" in y_clean:
                         target_yaml = os.path.join(engine_profiles, yf)
                         break
 
@@ -282,6 +304,23 @@ def get_faction_badge(speaker_name):
         return '<span class="faction-badge badge-spartan">🔴 MMC MARS</span>'
     if any(w in spk_low for w in ["avasarala"]):
         return '<span class="faction-badge badge-hanza">🌐 UN EARTH</span>'
+    # Faksi High School DxD
+    if any(w in spk_low for w in ["issei", "ise"]):
+        return '<span class="faction-badge badge-dragon">🐉 RED DRAGON</span>'
+    if any(w in spk_low for w in ["rias", "gremory"]):
+        return '<span class="faction-badge badge-gremory">👑 GREMORY</span>'
+    if any(w in spk_low for w in ["akeno"]):
+        return '<span class="faction-badge badge-fallen">⚡ PRIESTESS</span>'
+    if any(w in spk_low for w in ["asia"]):
+        return '<span class="faction-badge badge-healer">✨ HEALER</span>'
+    if any(w in spk_low for w in ["koneko"]):
+        return '<span class="faction-badge badge-dragon">🐾 ROOK</span>'
+    if any(w in spk_low for w in ["kiba"]):
+        return '<span class="faction-badge badge-spartan">⚔️ KNIGHT</span>'
+    if any(w in spk_low for w in ["yuuma", "raynare", "dohnaseek", "kalawarner", "mitteltelt"]):
+        return '<span class="faction-badge badge-fallen">🪶 FALLEN ANGEL</span>'
+    if any(w in spk_low for w in ["freed"]):
+        return '<span class="faction-badge badge-exorcist">✝️ EXORCIST</span>'
     return ""
 
 def text_to_html(body_text, lore_map=None, available_images=None):
@@ -443,15 +482,28 @@ def text_to_html(body_text, lore_map=None, available_images=None):
         # Urutkan berdasarkan panjang teks terpanjang lebih dahulu agar tidak terjadi tabrakan substring
         sorted_terms = sorted(lore_map.items(), key=lambda x: len(x[0]), reverse=True)
         for term, desc in sorted_terms:
-            if len(term) >= 4 and term in esc_p and not any(term == sp[2] for sp in footnotes if sp[2] == term):
+            if len(term) >= 4 and not any(term == sp[2] for sp in footnotes if sp[2] == term):
                 fn_id = f"fn_{fn_counter}"
                 fn_ref_id = f"fnref_{fn_counter}"
-                footnotes.append((fn_id, fn_ref_id, term, desc))
-                # Replace only first occurrence
-                pattern = re.compile(r'\b' + re.escape(term) + r'\b')
                 replacement = f'<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref" epub:type="noteref">{term}</a>'
-                esc_p = pattern.sub(replacement, esc_p, count=1)
-                fn_counter += 1
+                
+                # Regex anti-nested: jangan pernah membungkus teks yang sudah ada di dalam tag <a ...>
+                pat = re.compile(r'(<a\b[^>]*>.*?</a>)|(\b' + re.escape(term) + r'\b)', re.DOTALL)
+                replaced = False
+                def repl_cb(m):
+                    nonlocal replaced
+                    if m.group(1):
+                        return m.group(1) # Pertahankan link yang sudah ada
+                    if not replaced:
+                        replaced = True
+                        return replacement
+                    return m.group(0)
+                
+                new_esc_p = pat.sub(repl_cb, esc_p)
+                if replaced:
+                    esc_p = new_esc_p
+                    footnotes.append((fn_id, fn_ref_id, term, desc))
+                    fn_counter += 1
 
         html_parts.append(f"<p>{esc_p}</p>")
 
@@ -517,7 +569,10 @@ def main():
     # Selalu muat juga gambar dari folder illustrations terkait jika ada
     search_dirs = [
         os.path.join(base_dir, "illustrations", base_name),
-        os.path.join(base_dir, "illustrations", base_name.replace(" ", "_"))
+        os.path.join(base_dir, "illustrations", base_name.replace(" ", "_")),
+        os.path.join(base_dir, "High School DxD", "build_epub_vol_01", "OEBPS", "images"),
+        os.path.join(base_dir, "build_epub_vol_01", "OEBPS", "images"),
+        os.path.join(os.path.dirname(base_dir), "High School DxD", "build_epub_vol_01", "OEBPS", "images"),
     ]
     for sdir in search_dirs:
         if os.path.isdir(sdir):
@@ -632,6 +687,21 @@ def main():
 </html>"""
         xhtml_files.append(("metro_map_full.xhtml", "Peta Lengkap Metro Moskwa", metro_maps_xhtml))
 
+    # Galeri Ilustrasi Berwarna Pembuka (Khusus DxD atau Light Novel Berwarna)
+    dxd_color_images = [img for img in ["HSDxD_vol_01_004.jpg", "HSDxD_vol_01_005-006.jpg", "HSDxD_vol_01_007.jpg"] if img in images_data]
+    if dxd_color_images:
+        gallery_html = ['<div class="color-gallery"><h1>Galeri Ilustrasi Berwarna</h1>']
+        for ci in dxd_color_images:
+            gallery_html.append(f'<div class="illustration-container"><img src="../images/{ci}" alt="Ilustrasi Berwarna" /></div>')
+        gallery_html.append('</div>')
+        dxd_gallery_xhtml = f"""<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head><title>Galeri Ilustrasi Berwarna</title><link rel="stylesheet" type="text/css" href="../css/stylesheet.css"/></head>
+<body>{"".join(gallery_html)}</body>
+</html>"""
+        xhtml_files.append(("color_gallery.xhtml", "Galeri Ilustrasi Berwarna", dxd_gallery_xhtml))
+
     # Load Lore Dictionary for Interactive Pop-ups
     lore_map = load_lore_dict(base_dir, base_name)
     if lore_map:
@@ -672,21 +742,25 @@ def main():
             referenced_images.update(found)
         
         # Selalu sertakan cover image jika ada
+        if "DxDLN01.jpg" in images_data:
+            referenced_images.add("DxDLN01.jpg")
         if "00001.jpeg" in images_data:
             referenced_images.add("00001.jpeg")
         if "page_001_Image1.jpg" in images_data:
             referenced_images.add("page_001_Image1.jpg")
         for bn in images_data:
-            if any(k in bn.lower() for k in ["cover", "cvi", "cvt"]):
+            if any(k in bn.lower() for k in ["cover", "cvi", "cvt", "dxdln"]):
                 referenced_images.add(bn)
 
+        # Cek apakah kompresi gambar diaktifkan secara eksplisit (--compress)
+        # Sesuai preferensi user: jika tidak dipassing --compress, gambar dipertahankan apa adanya (full original quality)
+        do_compress = "--compress" in sys.argv
         manifest_images = []
         for bn, bdata in images_data.items():
             if bn not in referenced_images:
                 continue
-            # Kompresi gambar on-the-fly agar resolusi tajam dan total ukuran EPUB di bawah limit 2 MB
-            compressed_bdata = compress_image_data(bdata, max_w=1200, quality=75)
-            z.writestr(f"OEBPS/images/{bn}", compressed_bdata, compress_type=zipfile.ZIP_DEFLATED)
+            final_bdata = compress_image_data(bdata, max_w=1200, quality=75) if do_compress else bdata
+            z.writestr(f"OEBPS/images/{bn}", final_bdata, compress_type=zipfile.ZIP_DEFLATED)
             item_id = f"img_{bn.replace('.', '_')}"
             if bn.lower().endswith((".jpeg", ".jpg")):
                 media_type = "image/jpeg"
@@ -729,15 +803,23 @@ def main():
             book_title = "Metro 2033 (Terjemahan ID-Direct)"
             author = "Dmitry Glukhovsky"
             book_uid = "urn:uuid:metro-2033-id-direct-dmitry-glukhovsky"
+        elif "dxd" in base_name.lower():
+            vol_m = re.search(r'(\d+)', base_name)
+            v_num = f"{int(vol_m.group(1)):02d}" if vol_m else "01"
+            book_title = f"High School DxD Volume {v_num} (Terjemahan ID-Direct)"
+            author = "Ichiei Ishibumi"
+            book_uid = f"urn:uuid:high-school-dxd-vol-{v_num}-ichiei-ishibumi"
         else:
             book_title = f"{base_name} (Terjemahan ID-Direct)"
             author = "Penulis"
             book_uid = f"urn:uuid:{re.sub(r'[^a-zA-Z0-9]+', '-', base_name.lower())}"
 
         # Cover image ID
-        cover_id = "img_00001_jpeg" if "00001.jpeg" in images_data else (
-            "img_page_001_Image1_jpg" if "page_001_Image1.jpg" in images_data else (
-                manifest_images[0] if manifest_images else "item_1"
+        cover_id = "img_DxDLN01_jpg" if "DxDLN01.jpg" in images_data else (
+            "img_00001_jpeg" if "00001.jpeg" in images_data else (
+                "img_page_001_Image1_jpg" if "page_001_Image1.jpg" in images_data else (
+                    manifest_images[0] if manifest_images else "item_1"
+                )
             )
         )
         if isinstance(cover_id, str) and cover_id.startswith('<item id="'):

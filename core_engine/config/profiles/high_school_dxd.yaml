@@ -1,4 +1,5 @@
 title: "High School DxD"
+author: "Ichiei Ishibumi"
 genre: "supernatural-ecchi"
 tone: "uncensored-raw-colloquial"
 pronouns: "gue-lu"
@@ -16,6 +17,7 @@ banned_words:
   - "budak korporat"
   - "salaryman"
   - "takut kena SP"
+  - "kendati demikian"
 forbidden_universe_words:
   - "Ainz"
   - "Momonga"
@@ -25,21 +27,64 @@ forbidden_universe_words:
   - "Rudeus"
   - "Paul Atreides"
   - "Kwisatz Haderach"
-characters:
-  - "Issei Hyoudou"
-  - "Rias Gremory"
-  - "Akeno Himejima"
-  - "Asia Argento"
-  - "Koneko Toujou"
-  - "Kiba Yuuto"
-  - "Xenovia Quarta"
-  - "Irina Shidou"
-  - "Azazel"
-  - "Sirzechs Lucifer"
+  - "Artyom"
+  - "Spartan"
+  - "VDNKh"
+key_characters:
+  - name: Issei Hyoudou
+    dialog_format: 'Issei Hyoudou: "..."'
+    role: Siswa SMA mesum pemilik Sacred Gear naga merah Boosted Gear, pelayan pion Iblis Rias Gremory
+    aliases: ["Issei", "Ise", "Hyoudou-kun"]
+  - name: Rias Gremory
+    dialog_format: 'Rias Gremory: "..."'
+    role: Ketua Klub Penelitian Ilmu Gaib (ORC), iblis bangsawan berdarah murni Klan Gremory, master Issei
+    aliases: ["Rias", "Buchou", "Rias-Buchou"]
+  - name: Akeno Himejima
+    dialog_format: 'Akeno Himejima: "..."'
+    role: Wakil Ketua ORC berjuluk Ratu Petir (Queen of Lightning), iblis berdarah campuran berwatak sadis-binal
+    aliases: ["Akeno", "Akeno-san"]
+  - name: Asia Argento
+    dialog_format: 'Asia Argento: "..."'
+    role: Mantan biarawati suci pemilik Sacred Gear penyembuh Twilight Healing, pelayan gajah Iblis Rias
+    aliases: ["Asia", "Asia-chan"]
+  - name: Koneko Toujou
+    dialog_format: 'Koneko Toujou: "..."'
+    role: Gadis mungil berwajah datar bertubuh badak (Benteng / Rook), maskot bertelinga kucing ORC
+    aliases: ["Koneko", "Koneko-chan", "Shirone"]
+  - name: Kiba Yuuto
+    dialog_format: 'Kiba Yuuto: "..."'
+    role: Ksatria tampan pujaan siswi Akademi Kuoh, pengguna sihir pedang suci-iblis (Kuda / Knight)
+    aliases: ["Kiba", "Yuuto"]
+  - name: Raynare
+    dialog_format: 'Raynare: "..."'
+    role: Malaikat Jatuh yang menyamar jadi Yuuma Amano demi membunuh Issei dan merebut Sacred Gear miliknya
+    aliases: ["Yuuma Amano", "Yuuma", "Yuuma-chan"]
+  - name: Freed Sellzen
+    dialog_format: 'Freed Sellzen: "..."'
+    role: Pendeta pembelot gila pembantai iblis bersenjatakan pistol suci dan pedang cahaya
+    aliases: ["Freed"]
+  - name: Dohnaseek
+    dialog_format: 'Dohnaseek: "..."'
+    role: Malaikat Jatuh bertopi fedora bawahan Raynare
+    aliases: ["Dohnaseek"]
+  - name: Matsuda
+    dialog_format: 'Matsuda: "..."'
+    role: Sohib mesum Issei berkepala plontos anggota Trio Mesum Akademi Kuoh
+    aliases: ["Matsuda"]
+  - name: Motohama
+    dialog_format: 'Motohama: "..."'
+    role: Sohib mesum Issei berkacamata pengamat ukuran toket siswi Akademi Kuoh
+    aliases: ["Motohama"]
+locations_and_factions:
+  - Akademi Kuoh (Sekolah swasta bekas sekolah putri yang kini menerima murid laki-laki, wilayah teritorial keluarga Iblis Gremory)
+  - Klub Penelitian Ilmu Gaib / ORC (Occult Research Club, kedok perkumpulan markas iblis bawahan Rias Gremory)
+  - Grigori / Malaikat Jatuh (Organisasi malaikat yang terbuang dari surga karena nafsu dan dosa duniawi, dipimpin Azazel)
+  - Fraksi Iblis / Underworld (Peradaban 72 Pilar Iblis Bangsawan di Dunia Bawah yang kini menggunakan sistem pion catur)
+  - Gereja Vatikan (Organisasi suci pemburu iblis dan pengguna pedang suci Excalibur)
 loanwords:
-  - term: "Sacred Gear"
-    explanation: "senjata legendaris pemberian Tuhan yang bersemayam dalam jiwa manusia"
-  - term: "Balance Breaker"
-    explanation: "wujud evolusi puncak terkuat dari Sacred Gear"
-  - term: "Rating Game"
-    explanation: "turnamen catur tempur resmi antar fraksi iblis bangsawan"
+  - Sacred Gear (Senjata artefak ilahi berkekuatan magis yang bersemayam di dalam jiwa manusia)
+  - Boosted Gear (Sacred Gear terlarang berwujud sarung tangan naga merah pelipat ganda daya tempur milik Issei)
+  - Twilight Healing (Sacred Gear legendaris mampu menyembuhkan manusia, iblis, maupun malaikat milik Asia)
+  - Balance Breaker (Wujud evolusi puncak terkuat dari Sacred Gear yang membuka potensi kehancuran tanpa batas)
+  - Evil Piece (Set 16 bidak catur ajaib ciptaan Ajuka Beelzebub untuk merekrut manusia menjadi pelayan iblis)
+  - Rating Game (Kompetisi strategi catur hidup antar bangsawan iblis Dunia Bawah)
