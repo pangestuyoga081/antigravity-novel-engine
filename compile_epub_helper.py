@@ -282,6 +282,18 @@ def text_to_html(body_text, lore_map=None):
     chapter_speakers = set()
     fn_counter = 1
 
+    # Pola penangkapan penjelasan dalam kurung dari model LLM:
+    # Contoh: flamethrower (senjata pelontar api penghangus infeksi) atau Jalur Melingkar (Circle Line)
+    # Tujuannya: hapus kurung berantakan dari naskah dan jadikan Tooltip Pop-up yang bersih dan konsisten!
+    STOP_WORDS = {
+        'ke', 'di', 'dari', 'pada', 'buat', 'untuk', 'sama', 'dan', 'atau', 'yang', 'si', 'para',
+        'bawa', 'pake', 'pakai', 'seorang', 'jual', 'setrum', 'hasil', 'satu', 'tiap', 'ada', 'itu',
+        'ini', 'kan', 'lah', 'pun', 'amat', 'juga', 'tentang', 'oleh', 'lewat', 'menuju', 'persis', 'kayak'
+    }
+    glossary_paren_pat = re.compile(
+        r'((?:[A-Za-z0-9_\*\-\.]+(?:\s+[A-Za-z0-9_\*\-\.]+){0,3})\s*)\(([^)]{3,120})\)'
+    )
+
     for p in paragraphs:
         p = p.strip()
         if not p:
@@ -306,6 +318,40 @@ def text_to_html(body_text, lore_map=None):
             html_parts.append(f'<h3 style="text-align:center; margin:1.2em 0 0.6em 0; color:#0284c7; font-weight:700;">{h_text}</h3>')
             continue
             
+        # Bersihkan penjelasan dalam kurung ganda dan konversi menjadi Tooltip interaktif
+        def extract_and_convert_paren(match):
+            nonlocal fn_counter
+            full_pre = match.group(1).rstrip()
+            desc_text = match.group(2).strip()
+            
+            words = full_pre.split()
+            lead_in = []
+            term_words = []
+            if len(words) > 2:
+                lead_in.extend(words[:-2])
+                words = words[-2:]
+            for i, w in enumerate(words):
+                clean_w = re.sub(r'[^a-zA-Z0-9]', '', w).lower()
+                if clean_w in STOP_WORDS and i < len(words) - 1:
+                    lead_in.append(w)
+                else:
+                    term_words = words[i:]
+                    break
+            raw_term = ' '.join(term_words) if term_words else full_pre.strip()
+            prefix = (' '.join(lead_in) + ' ') if lead_in else ''
+            
+            clean_term = raw_term.replace('*', '').strip()
+            clean_desc = desc_text.replace('*', '').strip()
+            
+            fn_id = f"fn_{fn_counter}"
+            fn_ref_id = f"fnref_{fn_counter}"
+            footnotes.append((fn_id, fn_ref_id, clean_term, clean_desc))
+            res = f'{prefix}<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref" epub:type="noteref">{raw_term}<span class="lore-tag">?</span></a>'
+            fn_counter += 1
+            return res
+
+        p = glossary_paren_pat.sub(extract_and_convert_paren, p)
+
         spk_match = re.match(r"^([^:]+?):\s*\"(.*)\"$", p)
         if spk_match:
             spk = html.escape(spk_match.group(1))
