@@ -272,9 +272,11 @@ def get_faction_badge(speaker_name):
         return '<span class="faction-badge badge-hanza">🌐 UN EARTH</span>'
     return ""
 
-def text_to_html(body_text, lore_map=None):
+def text_to_html(body_text, lore_map=None, available_images=None):
     if lore_map is None:
         lore_map = {}
+    if available_images is None:
+        available_images = set()
 
     paragraphs = body_text.split("\n")
     html_parts = []
@@ -301,9 +303,11 @@ def text_to_html(body_text, lore_map=None):
             
         img_match = re.match(r"^\[\[ILUSTRASI:(.*?)\]\]$", p)
         if img_match:
-            img_file = img_match.group(1)
+            img_file = img_match.group(1).strip()
             base_img = os.path.basename(img_file)
-            html_parts.append(f'<div class="illustration-container"><img src="../images/{base_img}" alt="Ilustrasi" /></div>')
+            # Hanya render tag <img> jika file gambarnya benar-benar ada di dalam arsip gambar EPUB
+            if base_img in available_images:
+                html_parts.append(f'<div class="illustration-container"><img src="../images/{base_img}" alt="Ilustrasi" /></div>')
             continue
 
         if p.startswith("[PEMBERITAHUAN") or p.startswith("[ACHIEVEMENT") or (p.startswith("[") and p.endswith("]")):
@@ -568,7 +572,7 @@ def main():
     for idx, ch in enumerate(chapters):
         fname = f"chapter_{idx+1:02d}.xhtml"
         title_esc = html.escape(ch["title"])
-        body_html = text_to_html(ch["body"], lore_map)
+        body_html = text_to_html(ch["body"], lore_map, set(images_data.keys()))
 
         doc_xhtml = f"""<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
