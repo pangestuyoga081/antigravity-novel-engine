@@ -164,6 +164,35 @@ aside.footnote strong {
 }
 """
 
+def compress_image_data(bdata, max_w=1200, quality=75):
+    """
+    Kompresi gambar menggunakan PIL agar resolusi tetap tajam di mobile
+    namun ukuran file arsip EPUB total tetap di bawah limit 2 MB (2,097,152 bytes).
+    """
+    try:
+        from PIL import Image
+        import io
+        img = Image.open(io.BytesIO(bdata))
+        fmt = img.format if img.format else "JPEG"
+        if img.mode in ("RGBA", "P") and fmt.upper() in ("PNG", "WEBP"):
+            out_io = io.BytesIO()
+            if img.width > max_w:
+                ratio = max_w / img.width
+                img = img.resize((max_w, int(img.height * ratio)), Image.Resampling.LANCZOS)
+            img.save(out_io, format=fmt, optimize=True)
+            res = out_io.getvalue()
+            return res if len(res) < len(bdata) else bdata
+        else:
+            if img.width > max_w:
+                ratio = max_w / img.width
+                img = img.resize((max_w, int(img.height * ratio)), Image.Resampling.LANCZOS)
+            out_io = io.BytesIO()
+            img.convert("RGB").save(out_io, format="JPEG", quality=quality, optimize=True)
+            res = out_io.getvalue()
+            return res if len(res) < len(bdata) else bdata
+    except Exception:
+        return bdata
+
 def load_lore_dict(base_dir, base_name):
     """
     Muat profil YAML dari folder core_engine/config/profiles
@@ -197,7 +226,17 @@ def load_lore_dict(base_dir, base_name):
                     cname = c.get("name", "")
                     crole = c.get("role", "")
                     if cname and crole:
-                        lore_map[cname] = f"👤 {crole}"
+                        desc = f"👤 {crole}"
+                        lore_map[cname] = desc
+                        # Auto-registrasi kata pertama / nama panggilan (misal: 'Pyotr Andreevich' -> 'Pyotr')
+                        first_word = re.sub(r'[^a-zA-Z0-9]', '', cname.split()[0]) if cname.split() else ""
+                        if len(first_word) >= 3 and first_word not in lore_map:
+                            lore_map[first_word] = desc
+                        # Registrasi aliases jika ada
+                        for alias in c.get("aliases", []):
+                            alias_clean = alias.strip()
+                            if alias_clean and alias_clean not in lore_map:
+                                lore_map[alias_clean] = desc
 
                 # Loanwords / Terms
                 for lw in data.get("loanwords", []):
@@ -370,20 +409,24 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             # Baru jalankan konversi penjelasan kurung ke tooltip (agar tag <a> tidak terkena escape)
             dial = glossary_paren_pat.sub(extract_and_convert_paren, dial)
             
-            # Hanya tambahkan ke cast drawer jika karakter penting di lore_map
-            if spk in lore_map:
+            # Cari apakah speaker cocok di lore_map (nama lengkap, kata pertama/nama panggilan, atau alias)
+            matched_lore_desc = lore_map.get(spk)
+            if not matched_lore_desc:
+                spk_first = re.sub(r'[^a-zA-Z0-9]', '', spk.split()[0]) if spk.split() else ""
+                matched_lore_desc = lore_map.get(spk_first)
+            
+            if matched_lore_desc:
                 chapter_speakers.add(spk)
             badge_html = get_faction_badge(spk)
             
-            # Check if speaker has tooltip
+            # Check if speaker has tooltip (pop-up interaktif anti-mental, deduplicated per speaker)
             spk_disp = spk
-            if spk in lore_map:
-                fn_id = f"fn_{fn_counter}"
-                fn_ref_id = f"fnref_{fn_counter}"
-                fn_desc = lore_map[spk]
-                footnotes.append((fn_id, fn_ref_id, spk, fn_desc))
-                spk_disp = f'<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref" epub:type="noteref">{spk}<span class="lore-tag">?</span></a>'
-                fn_counter += 1
+            if matched_lore_desc:
+                spk_fn_id = f"fn_spk_{re.sub(r'[^a-zA-Z0-9]', '_', spk.lower())}"
+                if not any(f[0] == spk_fn_id for f in footnotes):
+                    footnotes.append((spk_fn_id, f"fnref_{fn_counter}", spk, matched_lore_desc))
+                    fn_counter += 1
+                spk_disp = f'<a href="#{spk_fn_id}" class="lore-ref" epub:type="noteref">{spk}<span class="lore-tag">?</span></a>'
 
             html_parts.append(f'<p class="dialogue">{badge_html}<span class="speaker">{spk_disp}:</span> &#8220;{dial}&#8221;</p>')
             continue
@@ -395,7 +438,9 @@ def text_to_html(body_text, lore_map=None, available_images=None):
         esc_p = glossary_paren_pat.sub(extract_and_convert_paren, esc_p)
 
         # Inject lore references into narrative for unique terms (limit 1 per term per chapter)
-        for term, desc in lore_map.items():
+        # Urutkan berdasarkan panjang teks terpanjang lebih dahulu agar tidak terjadi tabrakan substring
+        sorted_terms = sorted(lore_map.items(), key=lambda x: len(x[0]), reverse=True)
+        for term, desc in sorted_terms:
             if len(term) >= 4 and term in esc_p and not any(term == sp[2] for sp in footnotes if sp[2] == term):
                 fn_id = f"fn_{fn_counter}"
                 fn_ref_id = f"fnref_{fn_counter}"
@@ -618,11 +663,35 @@ def main():
         z.writestr("META-INF/container.xml", container_xml, compress_type=zipfile.ZIP_DEFLATED)
         z.writestr("OEBPS/css/stylesheet.css", CSS_CONTENT, compress_type=zipfile.ZIP_DEFLATED)
 
+        # Hanya kemas gambar yang benar-benar dirujuk di dokumen XHTML atau berkas cover/peta pembuka
+        referenced_images = set()
+        for _, _, xbody in xhtml_files:
+            found = re.findall(r'images/([^"\'\s>]+)', xbody)
+            referenced_images.update(found)
+        
+        # Selalu sertakan cover image jika ada
+        if "00001.jpeg" in images_data:
+            referenced_images.add("00001.jpeg")
+        if "page_001_Image1.jpg" in images_data:
+            referenced_images.add("page_001_Image1.jpg")
+        for bn in images_data:
+            if any(k in bn.lower() for k in ["cover", "cvi", "cvt"]):
+                referenced_images.add(bn)
+
         manifest_images = []
         for bn, bdata in images_data.items():
-            z.writestr(f"OEBPS/images/{bn}", bdata, compress_type=zipfile.ZIP_DEFLATED)
+            if bn not in referenced_images:
+                continue
+            # Kompresi gambar on-the-fly agar resolusi tajam dan total ukuran EPUB di bawah limit 2 MB
+            compressed_bdata = compress_image_data(bdata, max_w=1200, quality=75)
+            z.writestr(f"OEBPS/images/{bn}", compressed_bdata, compress_type=zipfile.ZIP_DEFLATED)
             item_id = f"img_{bn.replace('.', '_')}"
-            media_type = "image/jpeg" if bn.lower().endswith((".jpeg", ".jpg")) else "image/png"
+            if bn.lower().endswith((".jpeg", ".jpg")):
+                media_type = "image/jpeg"
+            elif bn.lower().endswith(".gif"):
+                media_type = "image/gif"
+            else:
+                media_type = "image/png"
             manifest_images.append(f'<item id="{item_id}" href="images/{bn}" media-type="{media_type}"/>')
 
         manifest_items = []

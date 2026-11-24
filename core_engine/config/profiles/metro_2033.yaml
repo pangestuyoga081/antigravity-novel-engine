@@ -45,6 +45,7 @@ key_characters:
   dialog_format: 'Hunter: "..."'
   role: Sosok pria botak berotot tegap berjaket kulit, stalker legendaris Ordo Spartan
 - name: Sukhoi
+  aliases: ["Paman Sasha", "Sasha"]
   dialog_format: 'Sukhoi: "..."'
   role: Ayah angkat Artyom sekaligus perwira senior pengawas pos jaga VDNKh. Pria
     rasional yang meragukan takdir dan mitos monster terowongan.
@@ -57,11 +58,13 @@ key_characters:
   role: Sosok mistis pengelana terowongan yang menyebut dirinya reinkarnasi Genghis
     Khan. Memahami rahasia spiritual dan anomali gaib di dasar Metro.
 - name: Melnik
+  aliases: ["Kolonel Melnik"]
   dialog_format: 'Kolonel Melnik: "..."'
   role: Pemimpin Ordo Spartan (Rangers) di stasiun Polis. Perwira perang bertangan
     besi penjaga benteng terakhir peradaban umat manusia.
 - name: Pyotr Andreevich
-  dialog_format: 'Pyotr Andreevich: "..."'
+  aliases: ["Pyotr", "Komandan Pyotr"]
+  dialog_format: 'Pyotr: "..."'
   role: Komandan senior regu jaga pos 450 meter VDNKh
 - name: Andrey
   dialog_format: 'Andrey: "..."'

@@ -28,3 +28,13 @@
 - **Masalah**: Karakter yang muncul di pertengahan cerita (Bab 2+) tidak memiliki badge faksi atau penjelasan tooltip.
 - **Penyebab**: File profil YAML bersifat statis.
 - **Aturan**: Setiap bab yang selesai di-scout WAJIB memicu `update_living_profile.py` untuk mendaftarkan tokoh, faksi, dan istilah baru ke file YAML disk secara otomatis.
+
+### 6. Batas Transfer Proxy & Kompresi Aset EPUB
+- **Masalah**: Unduhan gagal di HP dengan `HTTP 500: Reassembly byte limit exceeded (2097152 bytes)`.
+- **Penyebab**: Arsip EPUB membengkak di atas 2 MB karena menumpuk file gambar tak terpakai dan resolusi asli kamera/render tanpa kompresi.
+- **Aturan**: Compiler EPUB wajib menerapkan filter gambar berbasis referensi naskah nyata (hanya yang dipakai yang di-pack) dan melakukan kompresi otomatis via PIL (max width 1200px, JPEG quality 75). Target ukuran EPUB akhir harus selalu < 2.0 MB.
+
+### 7. Resolusi Nama Tokoh Multi-Kata & Alias
+- **Masalah**: Nama tokoh dialog (`Pyotr: "..."`) tidak terhubung ke tooltip glosarium.
+- **Penyebab**: Nama entri profil ditulis formal (`Pyotr Andreevich`), sedangkan dialog naskah menggunakan nama panggilan santai.
+- **Aturan**: Parser profil lore wajib otomatis meregistrasikan kata pertama (`cname.split()[0]`) dan list aliases ke kamus lore, dan compiler dialog harus memiliki fallback matching kata pertama.
