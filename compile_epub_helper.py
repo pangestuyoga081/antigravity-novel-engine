@@ -467,8 +467,9 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             fn_id = f"fn_{fn_counter}"
             fn_ref_id = f"fnref_{fn_counter}"
             footnotes.append((fn_id, fn_ref_id, clean_term, clean_desc))
-            # Hapus epub:type="noteref" dari tag <a> agar Moon+ Reader tidak memunculkan icon superscript tanda tanya '?'
-            res = f'{prefix}<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref">{raw_term}</a>'
+            # Standar EPUB 3: epub:type="noteref" WAJIB ada agar reader (Moon+, Apple Books, Kobo)
+            # menampilkan pop-up modal dan TIDAK melompat (jump) ke akhir bab!
+            res = f'{prefix}<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref" epub:type="noteref">{raw_term}</a>'
             fn_counter += 1
             return res
 
@@ -502,14 +503,14 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             badge_prefix = f"{badge_html}&nbsp;" if badge_html else ""
             
             # Nama speaker dalam dialog BISA DIKLIK (pop-up modal interaktif) jika ada di lore_map!
-            # TANPA epub:type="noteref" pada tag <a> sehingga Moon+ Reader TIDAK memunculkan icon superscript '?'
+            # epub:type="noteref" WAJIB disertakan agar reader membuka pop-up modal dan tidak mental ke halaman akhir bab.
             spk_disp = spk
             if matched_lore_desc:
                 spk_fn_id = f"fn_spk_{re.sub(r'[^a-zA-Z0-9]', '_', spk.lower())}"
                 if not any(f[0] == spk_fn_id for f in footnotes):
                     footnotes.append((spk_fn_id, f"fnref_{fn_counter}", spk, matched_lore_desc))
                     fn_counter += 1
-                spk_disp = f'<a href="#{spk_fn_id}" class="lore-ref speaker-ref">{spk}</a>'
+                spk_disp = f'<a href="#{spk_fn_id}" class="lore-ref speaker-ref" epub:type="noteref">{spk}</a>'
 
             html_parts.append(f'<p class="dialogue">{badge_prefix}<span class="speaker">{spk_disp}:</span> {dial}</p>')
             continue
@@ -527,8 +528,8 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             if len(term) >= 4 and not any(term == sp[2] for sp in footnotes if sp[2] == term):
                 fn_id = f"fn_{fn_counter}"
                 fn_ref_id = f"fnref_{fn_counter}"
-                # Hapus epub:type="noteref" dari <a> agar Moon+ Reader tidak menambahkan superscript tanda tanya '?'
-                replacement = f'<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref">{term}</a>'
+                # epub:type="noteref" WAJIB agar pop-up interaktif aktif
+                replacement = f'<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref" epub:type="noteref">{term}</a>'
                 
                 # Regex anti-nested: jangan pernah membungkus teks yang sudah ada di dalam tag <a ...>
                 pat = re.compile(r'(<a\b[^>]*>.*?</a>)|(\b' + re.escape(term) + r'\b)', re.DOTALL)

@@ -64,12 +64,12 @@
   (3) Jika kata berformat markdown bintang (`*term*`), ambil murni teks di dalam bintang.
   (4) Kata-kata sebelum term wajib diisolasi sebagai lead-in di luar tag link `<a>`.
 
-### 11. Moon+ Reader Footnote Decorator & Speaker Label Isolation
-- **Masalah**: Muncul tanda tanya superscript `?` di setiap nama speaker dialog (`Pyotr?:`, `Andrey?:`, `Artyom?:`) dan header pop-up (`Andrey?`).
-- **Penyebab**: Compiler membungkus setiap nama speaker dialog dalam `<a href="..." epub:type="noteref">`. E-reader (terutama Moon+ Reader) otomatis menyuntikkan icon `?` pada elemen ber-`epub:type="noteref"` yang teksnya bukan berupa angka catatan kaki. Selain itu, mengubah nama speaker di setiap kalimat dialog menjadi tautan footnote sangat mengotori alur baca.
+### 11. Standar Pop-Up Modal EPUB 3 vs Navigasi Loncat Halaman (Anti-Mental)
+- **Masalah**: Saat nama karakter atau istilah diklik di Moon+ Reader, layar malah melompat ke halaman paling akhir bab (halaman 52/52 kosong dengan panah kembali biru).
+- **Penyebab**: Atribut `epub:type="noteref"` sempat dihapus dari tag `<a>`. Di e-reader (khususnya Moon+ Reader), tag `<a>` tanpa `epub:type="noteref"` dianggap sebagai anchor navigasi URL biasa, sehingga reader melakukan jump scroll ke posisi target `<aside>` di akhir bab alih-alih menampilkan pop-up modal. (Tanda tanya `?` di sesi terdahulu ternyata berasal dari injeksi tag `<span class="lore-tag">?</span>` di kode Python lama, bukan dari `noteref`).
 - **Aturan**:
-  (1) Nama speaker dalam dialog (`Speaker: "..."`) WAJIB murni teks penanda dialog tebal (plus badge faksi), HARAM dibungkus menjadi tautan footnote. Karakter kunci bab sudah diwadahi secara elegan di Cast Drawer atas bab.
-  (2) Untuk tautan istilah/glosarium dalam narasi (`lore-ref`), HAPUS atribut `epub:type="noteref"` dari tag `<a>` (gunakan `<a id="{fnref}" href="#{fn}" class="lore-ref">{term}</a>`). Pertahankan `epub:type="footnote"` hanya pada elemen target `<aside>` agar modal pop-up tetap aktif tanpa memicu dekorasi icon `?` di layar pembaca.
+  (1) Seluruh tautan pembicara dialog dan istilah narasi WAJIB menyertakan atribut `epub:type="noteref"` pada tag `<a>` dan merujuk ke target `<aside epub:type="footnote">`.
+  (2) Jangan pernah menyuntikkan karakter teks penanda seperti `<span class="lore-tag">?</span>` ke dalam tag `<a>`. Tautan harus berisi murni teks nama atau istilah. Dengan ini, reader otomatis membuka pop-up modal mengambang secara instan tanpa me-refresh atau melompat halaman.
 
 ### 12. Karantina Aset Gambar Antar-Buku
 - **Masalah**: EPUB Metro 2033 membengkak dan memicu error `HTTP 500: Reassembly byte limit exceeded` karena gambar ilustrasi berwarna High School DxD ikut terkemas ke dalam Metro 2033.
