@@ -296,6 +296,7 @@ def text_to_html(body_text, lore_map=None, available_images=None):
     html_parts = []
     footnotes = []
     chapter_speakers = set()
+    semantic_cast = []
     fn_counter = 1
 
     # Pola penangkapan penjelasan dalam kurung dari model LLM:
@@ -313,6 +314,23 @@ def text_to_html(body_text, lore_map=None, available_images=None):
     for p in paragraphs:
         p = p.strip()
         if not p:
+            continue
+
+        # Tangkap tag semantik [CAST: Nama | Faksi | Deskripsi]
+        cast_match = re.match(r"^\[CAST:\s*(.*?)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\]$", p, re.I)
+        if cast_match:
+            c_name = cast_match.group(1).strip()
+            c_faction = cast_match.group(2).strip().lower()
+            c_desc = cast_match.group(3).strip()
+            semantic_cast.append((c_name, c_faction, c_desc))
+            continue
+
+        # Tangkap tag semantik [GLOSSARY: Istilah | Penjelasan]
+        gloss_match = re.match(r"^\[GLOSSARY:\s*(.*?)\s*\|\s*(.*?)\s*\]$", p, re.I)
+        if gloss_match:
+            g_term = gloss_match.group(1).strip()
+            g_desc = gloss_match.group(2).strip()
+            lore_map[g_term] = g_desc
             continue
             
         img_match = re.match(r"^\[\[ILUSTRASI:(.*?)\]\]$", p)
@@ -420,17 +438,27 @@ def text_to_html(body_text, lore_map=None, available_images=None):
 
         html_parts.append(f"<p>{esc_p}</p>")
 
-    # Top Cast Drawer if chapter has multiple speakers
+    # Top Cast Drawer if chapter has multiple speakers or semantic cast
     cast_header = ""
-    # Filter hanya karakter yang memang ada di lore map (bukan figuran acak)
-    key_speakers = [spk for spk in chapter_speakers if spk in lore_map]
-    if len(key_speakers) >= 2:
+    if semantic_cast:
         cast_cards = []
-        for spk in sorted(key_speakers):
-            role_desc = lore_map.get(spk, "Karakter Penting")
-            badge = get_faction_badge(spk)
-            cast_cards.append(f'<div class="cast-card">{badge}<strong>{spk}</strong><br/><span style="font-size:0.85em; color:#64748b;">{html.escape(role_desc)}</span></div>')
+        for c_name, c_faction, c_desc in semantic_cast:
+            badge = get_faction_badge(c_faction)
+            cast_cards.append(f'<div class="cast-card">{badge}<strong>{html.escape(c_name)}</strong><br/><span style="font-size:0.85em; color:#64748b;">{html.escape(c_desc)}</span></div>')
         cast_header = f"""<details class="chapter-cast">
+<summary>👥 Tokoh Penting di Bab Ini ({len(semantic_cast)} Tokoh)</summary>
+<div class="cast-grid">{"".join(cast_cards)}</div>
+</details>"""
+    else:
+        # Fallback lama: Filter hanya karakter yang memang ada di lore map (bukan figuran acak)
+        key_speakers = [spk for spk in chapter_speakers if spk in lore_map]
+        if len(key_speakers) >= 2:
+            cast_cards = []
+            for spk in sorted(key_speakers):
+                role_desc = lore_map.get(spk, "Karakter Penting")
+                badge = get_faction_badge(spk)
+                cast_cards.append(f'<div class="cast-card">{badge}<strong>{spk}</strong><br/><span style="font-size:0.85em; color:#64748b;">{html.escape(role_desc)}</span></div>')
+            cast_header = f"""<details class="chapter-cast">
 <summary>👥 Tokoh Penting di Bab Ini ({len(key_speakers)} Tokoh Utama)</summary>
 <div class="cast-grid">{"".join(cast_cards)}</div>
 </details>"""

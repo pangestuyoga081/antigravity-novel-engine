@@ -1,0 +1,75 @@
+title: "Metro 2033"
+author: "Dmitry Glukhovsky"
+genre: "Post-Apocalyptic / Sci-Fi Survival / Psychological Horror"
+tone: "post-apocalyptic-gritty-tense"
+style_notes: "Gaya komik/novel survival beroktan tinggi, tell-don't-show, sangat mencekam dan menghibur, no sensor, tongkrongan gaul santai (gue-lu) antar prajurit garis depan dan stalker, pop-up lore dan tokoh interaktif."
+pronouns: "gue-lu"
+
+banned_words:
+  - "mencicit"
+  - "menukas"
+  - "menimpali"
+  - "tersenyum simpul"
+  - "bergumam"
+  - "meracau"
+  - "mendengus"
+  - "budak korporat"
+  - "salaryman"
+  - "tatkala"
+  - "terpendar"
+  - "kendati demikian"
+
+forbidden_universe_words:
+  - "Ainz"
+  - "Albedo"
+  - "Nazarick"
+  - "Tier Magic"
+  - "World Item"
+  - "Kwisatz Haderach"
+  - "Bene Gesserit"
+  - "Spice"
+  - "Hogwarts"
+  - "Gryffindor"
+  - "Voldemort"
+  - "Boosted Gear"
+  - "Rias Gremory"
+  - "Rocinante"
+  - "Epstein Drive"
+  - "Carl"
+  - "Princess Donut"
+
+key_characters:
+  - name: "Artyom"
+    dialog_format: 'Artyom: "..."'
+    role: "Pemuda 20 tahun dari Stasiun VDNKh, yatim piatu yang dibesarkan oleh Sukhoi. Terpilih mengemban misi hidup-mati melintasi seluruh jaringan Metro demi menyelamatkan stasiun asalnya."
+  - name: "Hunter"
+    dialog_format: 'Hunter: "..."'
+    role: "Stalker legendaris Ordo Spartan. Pemburu mutan yang dingin, kejam, tanpa ampun, dan mempercayakan nasib stasiun kepada Artyom sebelum menghilang di lorong utara."
+  - name: "Sukhoi"
+    dialog_format: 'Sukhoi: "..."'
+    role: "Ayah angkat Artyom sekaligus perwira senior pengawas pos jaga VDNKh. Pria rasional yang meragukan takdir dan mitos monster terowongan."
+  - name: "Bourbon"
+    dialog_format: 'Bourbon: "..."'
+    role: "Pedagang pasar gelap dan penjahat terowongan yang menyewa jasa Artyom untuk menembus stasiun hantu Sukharevskaya."
+  - name: "Khan"
+    dialog_format: 'Khan: "..."'
+    role: "Sosok mistis pengelana terowongan yang menyebut dirinya reinkarnasi Genghis Khan. Memahami rahasia spiritual dan anomali gaib di dasar Metro."
+  - name: "Melnik"
+    dialog_format: 'Kolonel Melnik: "..."'
+    role: "Pemimpin Ordo Spartan (Rangers) di stasiun Polis. Perwira perang bertangan besi penjaga benteng terakhir peradaban umat manusia."
+
+locations_and_factions:
+  - "VDNKh (Stasiun benteng paling utara Metro, terkenal dengan teh jamur olahan dan babi ternak, kini diserang makhluk The Dark Ones)"
+  - "Polis (Pusat kebudayaan, ilmu pengetahuan, dan dewan tertinggi Metro di bawah perpustakaan negara)"
+  - "Hanza / Hanseatic League (Aliansi stasiun jalur lingkar kaya penguasa ekonomi dan perdagangan Metro)"
+  - "Spartan Order / Rangers (Pasukan elit penjaga peradaban manusia dari ancaman mutan dan faksi garis keras)"
+  - "Red Line / Garis Merah (Faksi komunis fanatik penguasa Jalur Sokolnicheskaya yang ingin membangkitkan Uni Soviet)"
+  - "Fourth Reich (Faksi fasis neo-Nazi rasis di Metro yang memburu siapa pun yang tidak berdarah murni)"
+
+loanwords:
+  - "Stalker (Penjelajah nekat berkostum proteksi yang naik ke permukaan bumi beracun untuk mencari suplai)"
+  - "The Dark Ones / Homines Novi (Makhluk mutan telepati berkulit hitam dari permukaan Moskow yang meneror pikiran manusia)"
+  - "Drazina (Troli rel manual atau bermesin bensin pengangkut barang di terowongan Metro)"
+  - "Peluru 5.45mm Militer (Mata uang resmi dan paling berharga di seluruh Metro)"
+  - "Filter Masker Gas (Tabung penyaring udara radioaktif dan spora beracun yang masa pakainya terbatas)"
+  - "Geiger Counter (Alat pendeteksi tingkat radiasi ionisasi)"
