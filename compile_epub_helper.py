@@ -232,17 +232,31 @@ def load_lore_dict(base_dir, base_name):
 def get_faction_badge(speaker_name):
     spk_low = speaker_name.lower()
     if any(w in spk_low for w in ["hunter", "miller"]):
-        return '<span class="faction-badge badge-spartan">Spartan</span>'
-    if any(w in spk_low for w in ["homer", "nikolai", "sasha", "ahmed"]):
-        return '<span class="faction-badge badge-metro">Metro</span>'
+        return '<span class="faction-badge badge-spartan">⚔️ SPARTAN</span>'
+    if any(w in spk_low for w in ["homer", "nikolai"]):
+        return '<span class="faction-badge badge-metro">📜 METRO</span>'
+    if any(w in spk_low for w in ["sasha"]):
+        return '<span class="faction-badge badge-metro">🕯️ SURVIVOR</span>'
+    if any(w in spk_low for w in ["ahmed"]):
+        return '<span class="faction-badge badge-metro">🛡️ SEVASTOPOL</span>'
     if any(w in spk_low for w in ["leonid", "komunis", "red line"]):
-        return '<span class="faction-badge badge-redline">Red Line</span>'
+        return '<span class="faction-badge badge-redline">🚩 RED LINE</span>'
+    if any(w in spk_low for w in ["hanza"]):
+        return '<span class="faction-badge badge-hanza">💰 HANZA</span>'
+    if any(w in spk_low for w in ["artyom"]):
+        return '<span class="faction-badge badge-spartan">🎖️ RANGER</span>'
     if any(w in spk_low for w in ["carl"]):
-        return '<span class="faction-badge badge-carl">Crawler</span>'
+        return '<span class="faction-badge badge-carl">💥 CRAWLER</span>'
     if any(w in spk_low for w in ["donut"]):
-        return '<span class="faction-badge badge-donut">Diva Cat</span>'
+        return '<span class="faction-badge badge-donut">👑 DIVA CAT</span>'
     if any(w in spk_low for w in ["ai", "announcer", "dungeon"]):
-        return '<span class="faction-badge badge-ai">System</span>'
+        return '<span class="faction-badge badge-ai">🤖 SYSTEM</span>'
+    if any(w in spk_low for w in ["holden"]):
+        return '<span class="faction-badge badge-metro">🚀 ROCINANTE</span>'
+    if any(w in spk_low for w in ["bobbie"]):
+        return '<span class="faction-badge badge-spartan">🔴 MMC MARS</span>'
+    if any(w in spk_low for w in ["avasarala"]):
+        return '<span class="faction-badge badge-hanza">🌐 UN EARTH</span>'
     return ""
 
 def text_to_html(body_text, lore_map=None):
