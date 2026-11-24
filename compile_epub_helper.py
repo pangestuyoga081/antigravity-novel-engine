@@ -323,6 +323,12 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             c_faction = cast_match.group(2).strip().lower()
             c_desc = cast_match.group(3).strip()
             semantic_cast.append((c_name, c_faction, c_desc))
+            # Daftarkan nama cast ke lore_map agar otomatis punya tooltip pop-up
+            lore_map[c_name] = c_desc
+            # Jika nama memiliki variasi (misal 'Pyotr Andreevich' -> daftarkan juga 'Pyotr')
+            first_word = c_name.split()[0]
+            if len(first_word) >= 3 and first_word not in lore_map:
+                lore_map[first_word] = c_desc
             continue
 
         # Tangkap tag semantik [GLOSSARY: Istilah | Penjelasan]
@@ -549,7 +555,7 @@ def main():
         xhtml_files.append(("maps.xhtml", "Peta Middle-earth", maps_xhtml))
 
     # Interactive Route Map (SVG Khusus Metro 2034: Jalur Sevastopolskaya - Tulskaya)
-    if "2034" in base_name or "metro" in base_name.lower():
+    if "2034" in base_name:
         metro_route_svg = """<div class="metro-map-container">
 <h2>🚇 PETA JALUR TEROWONGAN METRO 2034: SEVASTOPOLSKAYA SECTOR</h2>
 <p style="font-size:0.85em; color:#94a3b8; margin-bottom:1.5em;">Jalur Serpukhovsko-Timiryazevskaya (Garis Abu-Abu Selatan) &bull; Klik stasiun untuk info situasi pertahanan</p>
