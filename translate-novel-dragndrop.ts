@@ -1193,30 +1193,49 @@ ${text}`;
   }
 
   if (styleMode === 'metro') {
-    return `Tuliskan kembali SELURUH alur adegan cerita sci-fi post-apocalyptic Metro 2033 berikut dalam Bahasa Indonesia yang SUPER SANTAI SEHARI-HARI, GAUL, CEPLAS-CEPLOS, SURAM/TEGANG, KASAR PRAJURIT, dan TO-THE-POINT — setara dengan komik/manga survival aksi, webtoon thriller distopia, atau novel laga populer.
+    return `Tuliskan kembali SELURUH alur adegan cerita sci-fi survival post-apocalyptic Metro (2033 & 2034) berikut dalam Bahasa Indonesia yang SUPER SANTAI SEHARI-HARI, TONGKRONGAN GAUL PRAJURIT (GUE - LU), CEPLAS-CEPLOS, SURAM/TEGANG, NO SENSOR, TELL-DON'T-SHOW, dan TO-THE-POINT — setara dengan komik/manga survival aksi militer atau webtoon thriller distopia beroktan tinggi!
+Target pembaca: Pembaca awam yang menyukai ketegangan survival bawah tanah, intrik antar-stasiun, bahaya mutan dan radiasi, tanpa bahasa sastra bertele-tele yang bikin ngantuk.
 
 DILARANG KERAS MEMBUAT RINGKASAN/RANGKUMAN:
 - Tuliskan kembali SELURUH narasi dan percakapan adegan secara LENGKAP, UTUH, dan MENGALIR dari awal sampai akhir tanpa memotong peristiwa atau detail cerita!
 - Dilarang membuat kalimat pembuka atau penutup template seperti "Berikut adalah terjemahan...", "Ringkasan cerita...", dll.
 
-HARAM TOTAL BAHASA BAKU / FORMAL / KBBI KAKU:
-- Dilarang keras memakai bahasa makalah/KBBI sastra kaku ("adalah", "tatkala", "terpendar", "kian", "kendati demikian", "merupakan", "tak kunjung", "berada dalam situasi", "mengindikasikan", "beliau", "tiada").
-- Narator dan dialog WAJIB memakai bahasa tongkrongan santai sehari-hari: "nggak/ngga", "banget", "udah", "gitu", "bocah", "parah", "bodo amat", "kepo", "gila", "sialan/anjir/brengsek/kampret/tai", "mager", "pusing pala", dll.
-- Boleh ceplas-ceplos, bahasa ngawur, kata kasar, makian, dan umpatan santai prajurit/stalker selama pas dengan emosi adegan dan karakternya!
+ATURAN WAJIB & MUTLAK:
+1. SUDUT PANDANG & PRONOUNS (BANNED KATA AKU-KAMU):
+   - Percakapan antar prajurit perbatasan, stalker, pengungsi, maupun monolog batin: WAJIB gunakan GUE - LU secara luwes!
+   - BANNED TOTAL: DILARANG menggunakan kata kaku "aku", "kamu", "kau", "diriku", "kepadamu" untuk dialog informal! Ganti jadi GUE / LU!
 
-GAYA BAHASA & ATURAN MUTLAK:
-1. Narasi Tegang & Atmosfer Survival Kelam tapi Mengalir Renyah: Dunia bawah tanah Metro Moskwa yang gelap, dingin, sesak, dan berbahaya diceritakan dengan gaya lugas, to-the-point, dan bikin pembaca ketagihan tanpa bikin ngantuk.
-2. Tell, Don't Show: Langsung sampaikan situasi, bahaya mutan, dan kepanikan karakter secara gamblang tanpa muter-muter.
-3. Karakterisasi Tokoh:
-   - Artyom: Pemuda 20-an tahun dari VDNKh. Monolog batin lu-gue santai, takut tapi penasaran, overthinking saat jaga pos atau masuk terowongan gelap ("Anjir, suara apa lagi tuh barusan...", "Kalau senter gue mati kelar hidup gue").
-   - Hunter / Bourbon / Khan / Miller: Kasar, blak-blakan, gaya prajurit/stalker berpengalaman, perokok berat, ceplas-ceplos ("Bocah, jalan di belakang gue", "Jangan banyak bacot kalau mau idup").
-   - Warga stasiun / Prajurit: Santai, minum teh jamur, judi peluru militer kaliber 5.45mm.
-4. Format Dialog Wajib: Nama: "..." (misal Artyom: "...", Hunter: "...", Bourbon: "...", Khan: "...", Miller: "...").
-5. PENTING: Pertahankan tag penanda [[ILUSTRASI:...]] persis di posisi adegannya tanpa diubah atau dihapus!
-6. Istilah Asli Semesta Metro 2033 (Loanwords): Pertahankan istilah aslinya (Stalker, Dark Ones / Si Hitam, Hanza, Fourth Reich, Red Line, Polis, VDNKh, Exhibition, Ranger, Shambler, Bastard gun, Metro-2 / D-6, Peluru Militer pra-perang).
+2. VULGAR MAKSIMAL NO SENSOR & TONE MILITER / SURVIVAL:
+   - Terjemahkan umpatan prajurit dan jalanan terowongan apa adanya tanpa disensor (shit, fuck, damn, bastard, asshole -> bangsat, anjing, keparat, bajingan, taik, sialan, jahanam).
+   - KHUSUS HUNTER: Stalker legendaris Spartan yang dingin, kejam, tanpa basa-basi, dihantui trauma batin, dan berbicara singkat mengintimidasi.
+   - KHUSUS HOMER (NIKOLAI IVANOVICH): Orang tua mantan masinis kereta yang bijak, melankolis, dan terobsesi mencatat sejarah terakhir manusia.
+   - KHUSUS SASHA: Gadis muda 16 tahun yang berani, emosional, dan tulus.
+
+3. HARAM TOTAL BAHASA BAKU / FORMAL / KBBI KAKU:
+   - Dilarang keras memakai bahasa makalah/KBBI sastra kaku ("adalah", "tatkala", "terpendar", "kian", "kendati demikian", "merupakan", "tak kunjung", "berada dalam situasi", "mengindikasikan", "beliau", "tiada").
+   - BANNED KATA KAKU SEREMPET KBBI: DILARANG memakai kata "mencicit", "menukas", "menimpali", "tersenyum simpul", "bergumam", "meracau", "mendengus"!
+   - ANTI-REPETISI VERBA: Variasikan kata kerja aksi dan dialog secara dinamis sesuai naskah asli (bisik, seru, nyamber, nyolot, nyeletuk, motong omongan, senyum miring, nyengir, ngedumel, ngoceh, dengus kesel, hela napas).
+
+4. FORMAT DIALOG WAJIB NAMA LENGKAP (Nama: "..."):
+   - DILARANG KERAS mengeluarkan dialog tanpa nama pembicara!
+   - Setiap baris tuturan langsung WAJIB diawali format: Nama: "..."
+   - DAFTAR TOKOH METRO 2034:
+     * Hunter -> Selalu gunakan: Hunter: "..."
+     * Homer / Nikolai Ivanovich -> Selalu gunakan: Homer: "..."
+     * Sasha -> Selalu gunakan: Sasha: "..."
+     * Leonid -> Selalu gunakan: Leonid: "..."
+     * Ahmed -> Selalu gunakan: Ahmed: "..."
+     * Kolonel Miller -> Selalu gunakan: Kolonel Miller: "..."
+     * Artyom -> Selalu gunakan: Artyom: "..."
+
+5. PENTING: Pertahankan tag penanda [[ILUSTRASI:...]] persis di posisinya!
+6. ISTILAH ASLI SEMESTA METRO (LOANWORDS):
+   - Pertahankan istilah khas: Stalker, Sevastopolskaya, Tulskaya, Polis, Hanza, Spartan Order, Drazina (troli rel), Peluru Militer 5.45mm, Filter Masker Gas, Geiger Counter, Dark Ones.
 ${explanationRule}
 
-Adegan Cerita:\n\n${text}`;
+Naskah Asli:
+
+${text}`;
   }
 
   if (styleMode === 'dune') {
@@ -1581,7 +1600,7 @@ async function main() {
   const isOverlord = /overlord|ainz|nazarick|momonga/i.test(targetFile);
   const isMushoku = /mushoku|rudeus|greyrat/i.test(targetFile);
   const isDune = /dune|frank\s*herbert|arrakis|atreides/i.test(targetFile);
-  const isMetro = /metro\s*2033|glukhovsky|artyom|vdnkh/i.test(targetFile);
+  const isMetro = /metro\s*(2033|2034|2035)|glukhovsky|artyom|vdnkh|sevastopol|hunter|homer/i.test(targetFile);
   const isExpanse = /expanse|leviathan\s*wakes|caliban|abaddon|cibola|nemesis\s*games|babylon|persepolis|tiamat/i.test(targetFile);
   const isHarryPotter = /harry\s*potter|batu\s*bertuah|kamar\s*rahasia|tawanan\s*azkaban|piala\s*api|orde\s*phoenix|pangeran\s*berdarah|relikui\s*kematian/i.test(targetFile);
   const isLapidus = /history\s*of\s*islamic\s*societies|lapidus/i.test(targetFile);

@@ -1,0 +1,80 @@
+title: "Metro 2034"
+author: "Dmitry Glukhovsky"
+genre: "Post-Apocalyptic / Sci-Fi Survival / Dark Psychological Thriller"
+tone: "post-apocalyptic-gritty-tense"
+style_notes: "Gaya komik/novel survival beroktan tinggi, tell-don't-show, sangat mencekam dan menghibur, no sensor, tongkrongan gaul santai (gue-lu) antar stalker dan prajurit garis depan, pop-up lore dan tokoh interaktif."
+pronouns: "gue-lu"
+
+banned_words:
+  - "mencicit"
+  - "menukas"
+  - "menimpali"
+  - "tersenyum simpul"
+  - "bergumam"
+  - "meracau"
+  - "mendengus"
+  - "budak korporat"
+  - "salaryman"
+  - "tatkala"
+  - "terpendar"
+  - "kendati demikian"
+
+forbidden_universe_words:
+  - "Ainz"
+  - "Albedo"
+  - "Nazarick"
+  - "Tier Magic"
+  - "World Item"
+  - "Kwisatz Haderach"
+  - "Bene Gesserit"
+  - "Spice"
+  - "Hogwarts"
+  - "Gryffindor"
+  - "Voldemort"
+  - "Boosted Gear"
+  - "Rias Gremory"
+  - "Rocinante"
+  - "Epstein Drive"
+  - "Carl"
+  - "Princess Donut"
+
+key_characters:
+  - name: "Hunter"
+    dialog_format: 'Hunter: "..."'
+    role: "Stalker legendaris Ordo Spartan. Selamat dari sarang The Dark Ones di 2033 namun berubah menjadi pria dingin, kejam, tanpa ampun, dan dihantui trauma batin berat."
+  - name: "Homer"
+    dialog_format: 'Homer: "..."'
+    role: "Nikolai Ivanovich. Mantan masinis kereta metro tua di Sevastopolskaya. Sosok bijak nan melankolis yang bertekad menulis epos sejarah terakhir peradaban manusia sebelum punah."
+  - name: "Sasha"
+    dialog_format: 'Sasha: "..."'
+    role: "Gadis remaja berusia 16 tahun, putri dari mantan Komandan Kolonel stasiun Avtozavodskaya yang diasingkan ke stasiun mati Kolomenskaya."
+  - name: "Leonid"
+    dialog_format: 'Leonid: "..."'
+    role: "Musisi keliling sekaligus pemberontak idealis berjiwa anarkis. Putra dari petinggi faksi Red Line (Garis Merah Komunis) yang melarikan diri."
+  - name: "Ahmed"
+    dialog_format: 'Ahmed: "..."'
+    role: "Prajurit penjaga pos terdepan benteng Sevastopolskaya."
+  - name: "Artyom"
+    dialog_format: 'Artyom: "..."'
+    role: "Pahlawan VDNKh dari novel pertama yang kini menetap di Polis setelah menghancurkan sarang The Dark Ones."
+  - name: "Miller"
+    dialog_format: 'Kolonel Miller: "..."'
+    role: "Pemimpin Ordo Spartan yang bertangan besi menjaga ketertiban stasiun Polis."
+
+locations_and_factions:
+  - "Sevastopolskaya (Stasiun benteng paling selatan Moskow, penghasil listrik utama dari turbin air bawah tanah)"
+  - "Tulskaya (Stasiun perbatasan kritis yang tiba-tiba memutus kontak dan menutup pintu kedap air akibat wabah mematikan)"
+  - "Nagornaya (Stasiun mati tak bertuan yang dipenuhi radiasi dan sarang mutan predator)"
+  - "Nakhimovsky Prospekt (Stasiun gelap sarang monster terbang berbahaya)"
+  - "Polis (Pusat kebudayaan, ilmu pengetahuan, dan dewan tertinggi Metro di bawah perpustakaan negara)"
+  - "Hanza / Hanseatic League (Aliansi stasiun jalur lingkar kaya penguasa ekonomi dan perdagangan Metro)"
+  - "Spartan Order / Rangers (Pasukan elit penjaga peradaban manusia dari ancaman mutan dan faksi garis keras)"
+
+loanwords:
+  - "Stalker (Penjelajah nekat berkostum proteksi yang naik ke permukaan bumi beracun untuk mencari suplai)"
+  - "Drazina (Troli rel manual atau bermesin bensin pengangkut barang di terowongan Metro)"
+  - "Peluru 5.45mm Militer (Mata uang resmi dan paling berharga di seluruh Metro)"
+  - "Filter Masker Gas (Tabung penyaring udara radioaktif dan spora beracun yang masa pakainya terbatas)"
+  - "Geiger Counter (Alat pendeteksi tingkat radiasi ionisasi)"
+  - "The Dark Ones / Homines Novi (Makhluk mutan telepati berkulit hitam dari permukaan Moskow)"
+  - "Grip / Pneumatic Rifle (Senapan angin buatan montir stasiun pelontar gotri besi)"
