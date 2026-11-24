@@ -115,6 +115,65 @@ aside[epub\\:type="footnote"], aside.footnote {
     height: auto;
     margin: 1em auto;
 }
+/* Faction Badge & Character Avatar */
+.faction-badge {
+    display: inline-block;
+    font-size: 0.72em;
+    padding: 2px 6px;
+    margin-right: 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+}
+.badge-spartan { background-color: #991b1b; color: #fef2f2; border: 1px solid #dc2626; }
+.badge-metro { background-color: #1e293b; color: #94a3b8; border: 1px solid #475569; }
+.badge-redline { background-color: #7f1d1d; color: #fee2e2; border: 1px solid #b91c1c; }
+.badge-hanza { background-color: #854d0e; color: #fef9c3; border: 1px solid #ca8a04; }
+.badge-carl { background-color: #be185d; color: #fdf2f8; border: 1px solid #db2777; }
+.badge-donut { background-color: #6b21a8; color: #faf5ff; border: 1px solid #9333ea; }
+.badge-ai { background-color: #0369a1; color: #f0f9ff; border: 1px solid #0284c7; }
+
+/* Interactive Chapter Cast Drawer */
+.chapter-cast {
+    margin: 1.5em 0 2em 0;
+    padding: 0.8em 1.2em;
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.85em;
+}
+@media (prefers-color-scheme: dark) {
+    .chapter-cast {
+        background-color: #0f172a;
+        border-color: #334155;
+    }
+}
+.chapter-cast summary {
+    font-weight: 700;
+    cursor: pointer;
+    color: #0284c7;
+    outline: none;
+}
+.cast-grid {
+    margin-top: 0.8em;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+}
+.cast-card {
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+}
+@media (prefers-color-scheme: dark) {
+    .cast-card {
+        background: rgba(30, 41, 59, 0.7);
+        border-color: rgba(255, 255, 255, 0.05);
+    }
+}
 """
 
 def load_lore_dict(base_dir, base_name):
@@ -170,6 +229,22 @@ def load_lore_dict(base_dir, base_name):
 
     return lore_map
 
+def get_faction_badge(speaker_name):
+    spk_low = speaker_name.lower()
+    if any(w in spk_low for w in ["hunter", "miller"]):
+        return '<span class="faction-badge badge-spartan">Spartan</span>'
+    if any(w in spk_low for w in ["homer", "nikolai", "sasha", "ahmed"]):
+        return '<span class="faction-badge badge-metro">Metro</span>'
+    if any(w in spk_low for w in ["leonid", "komunis", "red line"]):
+        return '<span class="faction-badge badge-redline">Red Line</span>'
+    if any(w in spk_low for w in ["carl"]):
+        return '<span class="faction-badge badge-carl">Crawler</span>'
+    if any(w in spk_low for w in ["donut"]):
+        return '<span class="faction-badge badge-donut">Diva Cat</span>'
+    if any(w in spk_low for w in ["ai", "announcer", "dungeon"]):
+        return '<span class="faction-badge badge-ai">System</span>'
+    return ""
+
 def text_to_html(body_text, lore_map=None):
     if lore_map is None:
         lore_map = {}
@@ -177,6 +252,7 @@ def text_to_html(body_text, lore_map=None):
     paragraphs = body_text.split("\n")
     html_parts = []
     footnotes = []
+    chapter_speakers = set()
     fn_counter = 1
 
     for p in paragraphs:
@@ -200,6 +276,8 @@ def text_to_html(body_text, lore_map=None):
         if spk_match:
             spk = html.escape(spk_match.group(1))
             dial = html.escape(spk_match.group(2))
+            chapter_speakers.add(spk)
+            badge_html = get_faction_badge(spk)
             
             # Check if speaker has tooltip
             spk_disp = spk
@@ -211,7 +289,7 @@ def text_to_html(body_text, lore_map=None):
                 spk_disp = f'<a id="{fn_ref_id}" href="#{fn_id}" class="lore-ref" epub:type="noteref">{spk}<span class="lore-tag">?</span></a>'
                 fn_counter += 1
 
-            html_parts.append(f'<p class="dialogue"><span class="speaker">{spk_disp}:</span> &#8220;{dial}&#8221;</p>')
+            html_parts.append(f'<p class="dialogue">{badge_html}<span class="speaker">{spk_disp}:</span> &#8220;{dial}&#8221;</p>')
             continue
             
         esc_p = html.escape(p)
@@ -232,6 +310,19 @@ def text_to_html(body_text, lore_map=None):
 
         html_parts.append(f"<p>{esc_p}</p>")
 
+    # Top Cast Drawer if chapter has multiple speakers
+    cast_header = ""
+    if len(chapter_speakers) >= 2:
+        cast_cards = []
+        for spk in sorted(chapter_speakers):
+            role_desc = lore_map.get(spk, "Karakter Bab Ini")
+            badge = get_faction_badge(spk)
+            cast_cards.append(f'<div class="cast-card">{badge}<strong>{spk}</strong><br/><span style="font-size:0.85em; color:#64748b;">{html.escape(role_desc)}</span></div>')
+        cast_header = f"""<details class="chapter-cast">
+<summary>👥 Tokoh yang Hadir di Bab Ini ({len(chapter_speakers)} Karakter)</summary>
+<div class="cast-grid">{"".join(cast_cards)}</div>
+</details>"""
+
     # Append interactive footnotes at end of chapter if any
     if footnotes:
         html_parts.append('<div class="footnotes-section" style="margin-top: 2.5em; border-top: 1px solid #e2e8f0; padding-top: 1em;">')
@@ -240,7 +331,7 @@ def text_to_html(body_text, lore_map=None):
             html_parts.append(f'<aside id="{fn_id}" class="footnote" epub:type="footnote"><strong><a href="#{fn_ref_id}" style="color: #0284c7; text-decoration: none;">&uarr; {title}</a>:</strong> {html.escape(desc)}</aside>')
         html_parts.append('</div>')
         
-    return "\n".join(html_parts)
+    return (cast_header + "\n" + "\n".join(html_parts)) if cast_header else "\n".join(html_parts)
 
 def main():
     if len(sys.argv) < 4:
@@ -317,7 +408,57 @@ def main():
 </html>"""
         xhtml_files.append(("maps.xhtml", "Peta Middle-earth", maps_xhtml))
 
-    # Galeri Peta Pembuka Metro 2033
+    # Interactive Route Map (SVG Khusus Metro 2034: Jalur Sevastopolskaya - Tulskaya)
+    if "2034" in base_name or "metro" in base_name.lower():
+        metro_route_svg = """<div class="metro-map-container">
+<h2>🚇 PETA JALUR TEROWONGAN METRO 2034: SEVASTOPOLSKAYA SECTOR</h2>
+<p style="font-size:0.85em; color:#94a3b8; margin-bottom:1.5em;">Jalur Serpukhovsko-Timiryazevskaya (Garis Abu-Abu Selatan) &bull; Klik stasiun untuk info situasi pertahanan</p>
+<svg viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
+  <line x1="80" y1="120" x2="720" y2="120" stroke="#64748b" stroke-width="8" stroke-linecap="round"/>
+  <!-- Sevastopolskaya -->
+  <g class="station-node">
+    <circle cx="120" cy="120" r="18" fill="#0284c7" stroke="#ffffff" stroke-width="3"/>
+    <text x="120" y="80" fill="#38bdf8" font-size="14" font-weight="bold" text-anchor="middle">Sevastopolskaya</text>
+    <text x="120" y="165" fill="#94a3b8" font-size="11" text-anchor="middle">⚡ Pembangkit Listrik Hidro</text>
+    <text x="120" y="182" fill="#cbd5e1" font-size="10" text-anchor="middle">Benteng Terdepan Selatan</text>
+  </g>
+  <!-- Chertanovskaya -->
+  <g class="station-node">
+    <circle cx="270" cy="120" r="12" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+    <text x="270" y="85" fill="#cbd5e1" font-size="12" text-anchor="middle">Chertanovskaya</text>
+    <text x="270" y="160" fill="#64748b" font-size="10" text-anchor="middle">Pos Pengintai Mati</text>
+  </g>
+  <!-- Nakhimovsky Prospekt -->
+  <g class="station-node">
+    <circle cx="420" cy="120" r="14" fill="#dc2626" stroke="#ffffff" stroke-width="2"/>
+    <text x="420" y="85" fill="#f87171" font-size="12" font-weight="bold" text-anchor="middle">Nakhimovsky</text>
+    <text x="420" y="160" fill="#ef4444" font-size="10" text-anchor="middle">⚠️ Zona Sarang Monster</text>
+  </g>
+  <!-- Nagornaya -->
+  <g class="station-node">
+    <circle cx="560" cy="120" r="12" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+    <text x="560" y="85" fill="#cbd5e1" font-size="12" text-anchor="middle">Nagornaya</text>
+    <text x="560" y="160" fill="#64748b" font-size="10" text-anchor="middle">Stasiun Terlantar</text>
+  </g>
+  <!-- Tulskaya -->
+  <g class="station-node">
+    <circle cx="680" cy="120" r="18" fill="#eab308" stroke="#ffffff" stroke-width="3"/>
+    <text x="680" y="80" fill="#facc15" font-size="14" font-weight="bold" text-anchor="middle">Tulskaya</text>
+    <text x="680" y="165" fill="#ca8a04" font-size="11" text-anchor="middle">🚪 Pintu Air Tertutup</text>
+    <text x="680" y="182" fill="#ef4444" font-size="10" text-anchor="middle">Karantina Wabah Hitam</text>
+  </g>
+</svg>
+<p style="font-size:0.8em; color:#64748b; margin-top:1.5em;">Kafilah mesiu Sevastopolskaya terputus di Tulskaya. Hunter, Homer, dan Ahmed ditugaskan menembus terowongan maut ini.</p>
+</div>"""
+        route_xhtml = f"""<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head><title>Peta Rute Ekspedisi</title><link rel="stylesheet" type="text/css" href="../css/stylesheet.css"/></head>
+<body>{metro_route_svg}</body>
+</html>"""
+        xhtml_files.append(("metro_route_map.xhtml", "Peta Rute Ekspedisi Metro 2034", route_xhtml))
+
+    # Galeri Peta Pembuka Metro 2033 & 2034
     if "map_full_moscow_metro.jpg" in images_data:
         metro_maps_html = [
             '<div class="color-gallery"><h1>Peta Jaringan Metro Moskwa (Tahun 2033)</h1>',
