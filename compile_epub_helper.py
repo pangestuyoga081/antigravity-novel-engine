@@ -117,23 +117,36 @@ aside[epub\\:type="footnote"], aside.footnote {
 }
 /* Faction Badge & Character Avatar */
 .faction-badge {
-    display: inline-block;
-    font-size: 0.72em;
-    padding: 2px 6px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.68em;
+    padding: 1px 6px;
     margin-right: 6px;
     border-radius: 4px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    vertical-align: middle;
+    vertical-align: 0.1em;
+    white-space: nowrap;
+    line-height: 1.4;
 }
-.badge-spartan { background-color: #991b1b; color: #fef2f2; border: 1px solid #dc2626; }
-.badge-metro { background-color: #1e293b; color: #94a3b8; border: 1px solid #475569; }
-.badge-redline { background-color: #7f1d1d; color: #fee2e2; border: 1px solid #b91c1c; }
-.badge-hanza { background-color: #854d0e; color: #fef9c3; border: 1px solid #ca8a04; }
-.badge-carl { background-color: #be185d; color: #fdf2f8; border: 1px solid #db2777; }
-.badge-donut { background-color: #6b21a8; color: #faf5ff; border: 1px solid #9333ea; }
-.badge-ai { background-color: #0369a1; color: #f0f9ff; border: 1px solid #0284c7; }
+.badge-spartan { background-color: rgba(185, 28, 28, 0.15); color: #b91c1c; border: 1px solid rgba(185, 28, 28, 0.35); }
+.badge-metro { background-color: rgba(51, 65, 85, 0.12); color: #334155; border: 1px solid rgba(51, 65, 85, 0.3); }
+.badge-redline { background-color: rgba(220, 38, 38, 0.15); color: #dc2626; border: 1px solid rgba(220, 38, 38, 0.35); }
+.badge-hanza { background-color: rgba(202, 138, 4, 0.15); color: #a16207; border: 1px solid rgba(202, 138, 4, 0.35); }
+.badge-carl { background-color: rgba(219, 39, 119, 0.15); color: #be185d; border: 1px solid rgba(219, 39, 119, 0.35); }
+.badge-donut { background-color: rgba(147, 51, 234, 0.15); color: #7e22ce; border: 1px solid rgba(147, 51, 234, 0.35); }
+.badge-ai { background-color: rgba(2, 132, 199, 0.15); color: #0369a1; border: 1px solid rgba(2, 132, 199, 0.35); }
+
+@media (prefers-color-scheme: dark) {
+    .badge-spartan { background-color: rgba(239, 68, 68, 0.2); color: #fca5a5; border-color: rgba(239, 68, 68, 0.4); }
+    .badge-metro { background-color: rgba(148, 163, 184, 0.18); color: #cbd5e1; border-color: rgba(148, 163, 184, 0.35); }
+    .badge-redline { background-color: rgba(248, 113, 113, 0.2); color: #fecaca; border-color: rgba(248, 113, 113, 0.4); }
+    .badge-hanza { background-color: rgba(250, 204, 21, 0.2); color: #fef08a; border-color: rgba(250, 204, 21, 0.4); }
+    .badge-carl { background-color: rgba(244, 114, 182, 0.2); color: #fbcfe8; border-color: rgba(244, 114, 182, 0.4); }
+    .badge-donut { background-color: rgba(192, 132, 252, 0.2); color: #e9d5ff; border-color: rgba(192, 132, 252, 0.4); }
+    .badge-ai { background-color: rgba(56, 189, 248, 0.2); color: #bae6fd; border-color: rgba(56, 189, 248, 0.4); }
+}
 
 /* Interactive Chapter Cast Drawer */
 .chapter-cast {
@@ -285,12 +298,22 @@ def text_to_html(body_text, lore_map=None):
             esc_box = html.escape(p)
             html_parts.append(f'<div class="game-box">{esc_box}</div>')
             continue
+
+        # Format markdown header di dalam body teks (# BAB 1 / # Pertahanan ...)
+        h_match = re.match(r"^#+\s*(.*)$", p)
+        if h_match:
+            h_text = html.escape(h_match.group(1).strip())
+            html_parts.append(f'<h3 style="text-align:center; margin:1.2em 0 0.6em 0; color:#0284c7; font-weight:700;">{h_text}</h3>')
+            continue
             
         spk_match = re.match(r"^([^:]+?):\s*\"(.*)\"$", p)
         if spk_match:
             spk = html.escape(spk_match.group(1))
             dial = html.escape(spk_match.group(2))
-            chapter_speakers.add(spk)
+            
+            # Hanya tambahkan ke cast drawer jika karakter penting di lore_map
+            if spk in lore_map:
+                chapter_speakers.add(spk)
             badge_html = get_faction_badge(spk)
             
             # Check if speaker has tooltip
@@ -326,14 +349,16 @@ def text_to_html(body_text, lore_map=None):
 
     # Top Cast Drawer if chapter has multiple speakers
     cast_header = ""
-    if len(chapter_speakers) >= 2:
+    # Filter hanya karakter yang memang ada di lore map (bukan figuran acak)
+    key_speakers = [spk for spk in chapter_speakers if spk in lore_map]
+    if len(key_speakers) >= 2:
         cast_cards = []
-        for spk in sorted(chapter_speakers):
-            role_desc = lore_map.get(spk, "Karakter Bab Ini")
+        for spk in sorted(key_speakers):
+            role_desc = lore_map.get(spk, "Karakter Penting")
             badge = get_faction_badge(spk)
             cast_cards.append(f'<div class="cast-card">{badge}<strong>{spk}</strong><br/><span style="font-size:0.85em; color:#64748b;">{html.escape(role_desc)}</span></div>')
         cast_header = f"""<details class="chapter-cast">
-<summary>👥 Tokoh yang Hadir di Bab Ini ({len(chapter_speakers)} Karakter)</summary>
+<summary>👥 Tokoh Penting di Bab Ini ({len(key_speakers)} Tokoh Utama)</summary>
 <div class="cast-grid">{"".join(cast_cards)}</div>
 </details>"""
 
