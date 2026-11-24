@@ -356,28 +356,35 @@ def text_to_html(body_text, lore_map=None, available_images=None):
         if not p:
             continue
 
-        # Tangkap tag semantik [CAST: Nama | Faksi | Deskripsi]
-        cast_match = re.match(r"^\[CAST:\s*(.*?)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\]$", p, re.I)
-        if cast_match:
-            c_name = cast_match.group(1).strip()
-            c_faction = cast_match.group(2).strip().lower()
-            c_desc = cast_match.group(3).strip()
-            semantic_cast.append((c_name, c_faction, c_desc))
-            # Daftarkan nama cast ke lore_map agar otomatis punya tooltip pop-up
-            lore_map[c_name] = c_desc
-            # Jika nama memiliki variasi (misal 'Pyotr Andreevich' -> daftarkan juga 'Pyotr')
-            first_word = c_name.split()[0]
-            if len(first_word) >= 3 and first_word not in lore_map:
-                lore_map[first_word] = c_desc
-            continue
+        # Tangkap tag semantik [CAST: Nama | Faksi | Deskripsi] (bisa 1 atau banyak tag)
+        if "[CAST:" in p.upper():
+            all_casts = re.findall(r"\[CAST:\s*(.*?)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\]", p, re.I)
+            if all_casts:
+                for c_name, c_faction, c_desc in all_casts:
+                    c_name = c_name.strip()
+                    c_faction = c_faction.strip().lower()
+                    c_desc = c_desc.strip()
+                    semantic_cast.append((c_name, c_faction, c_desc))
+                    lore_map[c_name] = c_desc
+                    first_word = c_name.split()[0]
+                    if len(first_word) >= 3 and first_word not in lore_map:
+                        lore_map[first_word] = c_desc
+                p = re.sub(r"\[CAST:\s*.*?\s*\|\s*.*?\s*\|\s*.*?\s*\]", "", p, flags=re.I).strip()
+                if not p:
+                    continue
 
-        # Tangkap tag semantik [GLOSSARY: Istilah | Penjelasan]
-        gloss_match = re.match(r"^\[GLOSSARY:\s*(.*?)\s*\|\s*(.*?)\s*\]$", p, re.I)
-        if gloss_match:
-            g_term = gloss_match.group(1).strip()
-            g_desc = gloss_match.group(2).strip()
-            lore_map[g_term] = g_desc
-            continue
+        # Tangkap tag semantik [GLOSSARY: Istilah | Penjelasan] (bisa 1 atau banyak tag)
+        if "[GLOSSARY:" in p.upper():
+            all_glosses = re.findall(r"\[GLOSSARY:\s*(.*?)\s*\|\s*(.*?)\s*\]", p, re.I)
+            if all_glosses:
+                for g_term, g_desc in all_glosses:
+                    g_term = g_term.strip()
+                    g_desc = g_desc.strip()
+                    if g_term and g_desc:
+                        lore_map[g_term] = g_desc
+                p = re.sub(r"\[GLOSSARY:\s*.*?\s*\|\s*.*?\s*\]", "", p, flags=re.I).strip()
+                if not p:
+                    continue
             
         img_match = re.match(r"^\[\[ILUSTRASI:(.*?)\]\]$", p)
         if img_match:
@@ -466,8 +473,9 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             return res
 
         # Cek apakah baris ini adalah dialog: Speaker: "..." (dengan atau tanpa narasi lanjutan di akhir)
-        spk_match = re.match(r"^([^:\n]+?):\s*([\"“].*)$", p)
-        if spk_match:
+        # Validasi ketat nama speaker: maksimal 35 karakter, maksimal 4 kata, dan tanpa tanda baca narasi (koma/titik)
+        spk_match = re.match(r"^([^:\n]{1,35}?):\s*([\"“].*)$", p)
+        if spk_match and len(spk_match.group(1).strip().split()) <= 4 and not any(punct in spk_match.group(1) for punct in [',', '.', ';', '?', '!']):
             raw_spk = spk_match.group(1).strip()
             raw_rest = spk_match.group(2).strip()
 
@@ -493,9 +501,15 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             badge_html = get_faction_badge(spk)
             badge_prefix = f"{badge_html}&nbsp;" if badge_html else ""
             
-            # Nama speaker dalam dialog TIDAK dibungkus tautan footnote agar bebas tanda tanya '?'
-            # Pengenalan karakter sudah disajikan secara rapi di Cast Drawer pada pembuka setiap bab.
+            # Nama speaker dalam dialog BISA DIKLIK (pop-up modal interaktif) jika ada di lore_map!
+            # TANPA epub:type="noteref" pada tag <a> sehingga Moon+ Reader TIDAK memunculkan icon superscript '?'
             spk_disp = spk
+            if matched_lore_desc:
+                spk_fn_id = f"fn_spk_{re.sub(r'[^a-zA-Z0-9]', '_', spk.lower())}"
+                if not any(f[0] == spk_fn_id for f in footnotes):
+                    footnotes.append((spk_fn_id, f"fnref_{fn_counter}", spk, matched_lore_desc))
+                    fn_counter += 1
+                spk_disp = f'<a href="#{spk_fn_id}" class="lore-ref speaker-ref">{spk}</a>'
 
             html_parts.append(f'<p class="dialogue">{badge_prefix}<span class="speaker">{spk_disp}:</span> {dial}</p>')
             continue
