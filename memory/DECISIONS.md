@@ -41,3 +41,13 @@
 - **Tanggal**: 2026-11-24
 - **Konteks**: Naskah novel sering kali memuat narasi setelah dialog penutup (contoh: `Andrey: "Bagus deh!" sindir Andrey sinis.`). Pola regex yang mewajibkan `$` di akhir tanda petik menyebabkan baris tersebut gagal terdeteksi sebagai dialog.
 - **Keputusan**: Gunakan regex fleksibel `r"^([^:\n]+?):\s*([\"“].*)$"` dan konversi pasangan petik menjadi entitas tipografi `&#8220;...&#8221;`.
+
+### ADR-008: Automated EPUB QA Gate (`EPUBValidator`)
+- **Tanggal**: 2026-11-25
+- **Konteks**: Bug seperti tag `[GLOSSARY:]` bocor, hilangnya `epub:type="noteref"`, atau entitas XML ilegal (`&nbsp;`) baru ketahuan setelah dibuka manual di Moon+ Reader.
+- **Keputusan**: Setiap proses build di `compile_epub_helper.py` otomatis menjalankan `EPUBValidator.validate_epub()` di akhir kompilasi untuk memverifikasi XML well-formedness, keutuhan pop-up `noteref`/`aside`, zero-leak tag semantik, dan validitas label speaker dialog (tanpa membatasi ukuran file).
+
+### ADR-009: Sistem Lore Anti-Spoiler Progresif (`since_chapter` & `roles`)
+- **Tanggal**: 2026-11-25
+- **Konteks**: Kamus lore global dari YAML berisiko membocorkan informasi karakter bab akhir kepada pembaca yang masih berada di bab awal.
+- **Keputusan**: `load_lore_dict()` mendukung `since_chapter` dan `roles` per bab, serta akumulasi lore bab berjalan secara maju (`chapter 1..N`) tanpa pernah bocor mundur ke bab sebelumnya.

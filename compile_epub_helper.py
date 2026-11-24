@@ -196,10 +196,11 @@ def compress_image_data(bdata, max_w=1200, quality=75):
     except Exception:
         return bdata
 
-def load_lore_dict(base_dir, base_name):
+def load_lore_dict(base_dir, base_name, chapter_num=None):
     """
     Muat profil YAML dari folder core_engine/config/profiles
     untuk membangun kamus karakter & glosarium istilah secara dinamis.
+    Mendukung `since_chapter` & `roles` progresif per bab agar bebas spoiler.
     """
     lore_map = {}
     engine_profiles = os.path.join(base_dir, "core_engine", "config", "profiles")
@@ -241,10 +242,19 @@ def load_lore_dict(base_dir, base_name):
                 with open(target_yaml, "r", encoding="utf-8") as f:
                     data = yaml.safe_load(f) or {}
 
-                # Characters
+                # Characters (mendukung since_chapter & progressive roles agar bebas spoiler)
                 for c in data.get("key_characters", []):
+                    since_ch = int(c.get("since_chapter", 1) or 1)
+                    if chapter_num is not None and chapter_num < since_ch:
+                        continue
                     cname = c.get("name", "")
                     crole = c.get("role", "")
+                    prog_roles = c.get("roles")
+                    if isinstance(prog_roles, dict) and chapter_num is not None:
+                        eligible = [int(k) for k in prog_roles.keys() if int(k) <= chapter_num]
+                        if eligible:
+                            best_k = max(eligible)
+                            crole = prog_roles.get(best_k, prog_roles.get(str(best_k), crole))
                     if cname and crole:
                         desc = f"👤 {crole}"
                         lore_map[cname] = desc
@@ -258,16 +268,30 @@ def load_lore_dict(base_dir, base_name):
                             if alias_clean and alias_clean not in lore_map:
                                 lore_map[alias_clean] = desc
 
-                # Loanwords / Terms
+                # Loanwords / Terms (mendukung dict {term, desc, since_chapter} atau string "Term (Desc)")
                 for lw in data.get("loanwords", []):
-                    if "(" in lw and ")" in lw:
+                    if isinstance(lw, dict):
+                        if chapter_num is not None and chapter_num < int(lw.get("since_chapter", 1) or 1):
+                            continue
+                        term = str(lw.get("term", "")).strip()
+                        desc = str(lw.get("desc", "")).strip()
+                        if term and desc:
+                            lore_map[term] = f"📖 {desc}"
+                    elif isinstance(lw, str) and "(" in lw and ")" in lw:
                         term = lw.split("(")[0].strip()
                         desc = lw.split("(")[1].replace(")", "").strip()
                         lore_map[term] = f"📖 {desc}"
 
-                # Locations
+                # Locations (mendukung dict {term, desc, since_chapter} atau string "Term (Desc)")
                 for loc in data.get("locations_and_factions", []):
-                    if "(" in loc and ")" in loc:
+                    if isinstance(loc, dict):
+                        if chapter_num is not None and chapter_num < int(loc.get("since_chapter", 1) or 1):
+                            continue
+                        term = str(loc.get("term", "")).strip()
+                        desc = str(loc.get("desc", "")).strip()
+                        if term and desc:
+                            lore_map[term] = f"🏛️ {desc}"
+                    elif isinstance(loc, str) and "(" in loc and ")" in loc:
                         term = loc.split("(")[0].strip()
                         desc = loc.split("(")[1].replace(")", "").strip()
                         lore_map[term] = f"🏛️ {desc}"
@@ -500,7 +524,7 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             if matched_lore_desc:
                 chapter_speakers.add(spk)
             badge_html = get_faction_badge(spk)
-            badge_prefix = f"{badge_html}&nbsp;" if badge_html else ""
+            badge_prefix = f"{badge_html}&#160;" if badge_html else ""
             
             # Nama speaker dalam dialog BISA DIKLIK (pop-up modal interaktif) jika ada di lore_map!
             # epub:type="noteref" WAJIB disertakan agar reader membuka pop-up modal dan tidak mental ke halaman akhir bab.
@@ -557,7 +581,7 @@ def text_to_html(body_text, lore_map=None, available_images=None):
         cast_cards = []
         for c_name, c_faction, c_desc in semantic_cast:
             badge = get_faction_badge(c_faction)
-            badge_sp = f"{badge}&nbsp;" if badge else ""
+            badge_sp = f"{badge}&#160;" if badge else ""
             cast_cards.append(f'<div class="cast-card">{badge_sp}<strong>{html.escape(c_name)}</strong><br/><span style="font-size:0.85em; color:#64748b;">{html.escape(c_desc)}</span></div>')
         cast_header = f"""<details class="chapter-cast">
 <summary>👥 Tokoh Penting di Bab Ini ({len(semantic_cast)} Tokoh)</summary>
@@ -571,7 +595,7 @@ def text_to_html(body_text, lore_map=None, available_images=None):
             for spk in sorted(key_speakers):
                 role_desc = lore_map.get(spk, "Karakter Penting")
                 badge = get_faction_badge(spk)
-                badge_sp = f"{badge}&nbsp;" if badge else ""
+                badge_sp = f"{badge}&#160;" if badge else ""
                 cast_cards.append(f'<div class="cast-card">{badge_sp}<strong>{spk}</strong><br/><span style="font-size:0.85em; color:#64748b;">{html.escape(role_desc)}</span></div>')
             cast_header = f"""<details class="chapter-cast">
 <summary>👥 Tokoh Penting di Bab Ini ({len(key_speakers)} Tokoh Utama)</summary>
@@ -753,16 +777,25 @@ def main():
 </html>"""
         xhtml_files.append(("color_gallery.xhtml", "Galeri Ilustrasi Berwarna", dxd_gallery_xhtml))
 
-    # Load Lore Dictionary for Interactive Pop-ups
-    lore_map = load_lore_dict(base_dir, base_name)
-    if lore_map:
-        print(f"📖 Terhubung dengan Glosarium Interaktif: {len(lore_map)} entitas/tokoh siap di-link.")
+    # Load Lore Dictionary for Interactive Pop-ups (Progressive Anti-Spoiler)
+    sample_lore = load_lore_dict(base_dir, base_name, chapter_num=1)
+    if sample_lore:
+        print(f"📖 Terhubung dengan Glosarium Interaktif Anti-Spoiler ({len(sample_lore)} entitas awal Bab 1).")
 
+    progressive_lore = {}
     # Bab Cerita
     for idx, ch in enumerate(chapters):
-        fname = f"chapter_{idx+1:02d}.xhtml"
+        ch_num = idx + 1
+        fname = f"chapter_{ch_num:02d}.xhtml"
         title_esc = html.escape(ch["title"])
-        body_html = text_to_html(ch["body"], lore_map, set(images_data.keys()))
+        chapter_lore = load_lore_dict(base_dir, base_name, chapter_num=ch_num)
+        # Gabungkan lore progresif dari bab-bab sebelumnya, lalu biarkan tag bab ini memperbarui
+        merged_lore = {**chapter_lore, **progressive_lore}
+        body_html = text_to_html(ch["body"], merged_lore, set(images_data.keys()))
+        # Simpan istilah baru yang terungkap di bab ini untuk bab berikutnya (tanpa membocorkan ke bab sebelumnya)
+        for k, v in merged_lore.items():
+            if k not in chapter_lore or chapter_lore[k] != v:
+                progressive_lore[k] = v
 
         doc_xhtml = f"""<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
@@ -921,6 +954,24 @@ def main():
 
     sz_mb = os.path.getsize(out_epub) / (1024 * 1024)
     print(f"🎉 SUKSES! EPUB berilustrasi lengkap berhasil dibuat di: {out_epub} ({sz_mb:.2f} MB)")
+
+    # Jalankan Automated EPUB QA Gate
+    try:
+        engine_root = os.path.join(base_dir, "core_engine")
+        if not os.path.isdir(engine_root):
+            engine_root = os.path.join(os.path.dirname(base_dir), "core_engine")
+        if os.path.isdir(engine_root) and os.path.dirname(engine_root) not in sys.path:
+            sys.path.insert(0, os.path.dirname(engine_root))
+        from core_engine.src.qa_gate.validator import EPUBValidator
+        ok, qa_errors, qa_stats = EPUBValidator.validate_epub(out_epub)
+        if ok:
+            print(f"🛡️ QA GATE PASS: {qa_stats['chapters_checked']} XHTML, {qa_stats['noterefs']} noterefs, {qa_stats['asides']} asides, {qa_stats['dialogues']} dialog valid.")
+        else:
+            print(f"⚠️ QA GATE WARNING ({len(qa_errors)} temuan):")
+            for err in qa_errors[:15]:
+                print("   -", err)
+    except Exception as e:
+        print(f"Catatan QA Gate: {e}")
 
 if __name__ == "__main__":
     main()

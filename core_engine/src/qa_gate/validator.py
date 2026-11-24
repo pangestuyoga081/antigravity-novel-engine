@@ -81,3 +81,84 @@ class QAGate:
 
         is_valid = len(errors) == 0
         return is_valid, errors, cleaned_text
+
+
+class EPUBValidator:
+    """
+    Automated QA Gate for compiled EPUB 3 files.
+    Verifies pop-up noteref/footnote integrity, zero raw semantic-tag leaks,
+    clean aside bodies, and dialogue speaker sanity (size-agnostic).
+    """
+
+    RAW_TAG_LEAK_RE = re.compile(r"\[(?:CAST|GLOSSARY|Catatan)\s*:", re.I)
+    LORE_LINK_RE = re.compile(r"<a\b([^>]*class=\"[^\"]*lore-ref[^\"]*\"[^>]*)>(.*?)</a>", re.DOTALL)
+    ASIDE_RE = re.compile(r"<aside\b([^>]*)>(.*?)</aside>", re.DOTALL)
+    SPEAKER_SPAN_RE = re.compile(r"<span class=\"speaker\">(.*?)</span>", re.DOTALL)
+
+    @classmethod
+    def validate_epub(cls, epub_path: str) -> Tuple[bool, List[str], Dict[str, Any]]:
+        import zipfile
+        import xml.etree.ElementTree as ET
+
+        errors: List[str] = []
+        stats = {"chapters_checked": 0, "noterefs": 0, "asides": 0, "dialogues": 0}
+
+        try:
+            with zipfile.ZipFile(epub_path, "r") as z:
+                names = set(z.namelist())
+                for req in ("mimetype", "META-INF/container.xml", "OEBPS/content.opf", "OEBPS/toc.ncx", "OEBPS/nav.xhtml"):
+                    if req not in names:
+                        errors.append(f"Missing core EPUB file: {req}")
+
+                xhtmls = sorted(n for n in names if n.startswith("OEBPS/text/") and n.endswith(".xhtml"))
+                for xname in xhtmls:
+                    raw = z.read(xname).decode("utf-8", errors="replace")
+                    stats["chapters_checked"] += 1
+
+                    # 1. XML well-formedness
+                    try:
+                        ET.fromstring(raw)
+                    except ET.ParseError as e:
+                        errors.append(f"{xname}: Malformed XHTML ({e})")
+
+                    # 2. Zero raw semantic tag leak
+                    leak = cls.RAW_TAG_LEAK_RE.search(raw)
+                    if leak:
+                        errors.append(f"{xname}: Raw tag leaked into XHTML: '{leak.group(0)}'")
+
+                    # 3. Collect all aside IDs and check aside cleanliness
+                    aside_ids = set()
+                    for attrs, body in cls.ASIDE_RE.findall(raw):
+                        stats["asides"] += 1
+                        id_m = re.search(r'id="([^"]+)"', attrs)
+                        if id_m:
+                            aside_ids.add(id_m.group(1))
+                        if "epub:type=\"footnote\"" not in attrs:
+                            errors.append(f"{xname}: <aside> missing epub:type=\"footnote\"")
+                        if "&bull;" in body or "•" in body:
+                            errors.append(f"{xname}: Redundant bullet/title inside <aside>: '{body[:50]}'")
+                        if "href=\"#fnref_" in body:
+                            errors.append(f"{xname}: Forbidden back-link inside <aside> (causes jump bug)")
+
+                    # 4. Check all lore-ref links have epub:type="noteref", valid target, and no '?' tag
+                    for attrs, inner in cls.LORE_LINK_RE.findall(raw):
+                        stats["noterefs"] += 1
+                        if 'epub:type="noteref"' not in attrs:
+                            errors.append(f"{xname}: lore-ref link missing epub:type=\"noteref\" (causes jump bug): '{inner[:40]}'")
+                        if "lore-tag" in inner or ">?<" in inner:
+                            errors.append(f"{xname}: Forbidden '?' lore-tag inside <a>: '{inner[:40]}'")
+                        href_m = re.search(r'href="#([^"]+)"', attrs)
+                        if not href_m or href_m.group(1) not in aside_ids:
+                            errors.append(f"{xname}: Broken footnote target {href_m.group(1) if href_m else 'NONE'} for '{inner[:30]}'")
+
+                    # 5. Dialogue speaker sanity check
+                    for spk_html in cls.SPEAKER_SPAN_RE.findall(raw):
+                        stats["dialogues"] += 1
+                        spk_plain = re.sub(r"<[^>]+>", "", spk_html).strip().rstrip(":")
+                        if len(spk_plain) > 45:
+                            errors.append(f"{xname}: Suspiciously long speaker label ({len(spk_plain)} chars): '{spk_plain[:50]}...'")
+
+        except Exception as e:
+            errors.append(f"Failed to open/read EPUB: {e}")
+
+        return len(errors) == 0, errors, stats

@@ -71,6 +71,11 @@
   (1) Seluruh tautan pembicara dialog dan istilah narasi WAJIB menyertakan atribut `epub:type="noteref"` pada tag `<a>` dan merujuk ke target `<aside epub:type="footnote">`.
   (2) Jangan pernah menyuntikkan karakter teks penanda seperti `<span class="lore-tag">?</span>` ke dalam tag `<a>`. Tautan harus berisi murni teks nama atau istilah. Dengan ini, reader otomatis membuka pop-up modal mengambang secara instan tanpa me-refresh atau melompat halaman.
 
+### 13. Strict XML Entity (`&#160;`) & Automated EPUB QA Gate
+- **Masalah**: Entitas HTML4 `&nbsp;` membuat parser XML ketat (`xml.etree.ElementTree` / validasi EPUB 3) gagal dengan error `undefined entity`, padahal spasi non-breaking dibutuhkan di antara badge faksi dan nama pembicara.
+- **Penyebab**: XHTML EPUB 3 memakai spesifikasi XML murni yang hanya mengenal 5 entitas bawaan (`&amp;`, `&lt;`, `&gt;`, `&quot;`, `&apos;`) serta entitas numerik.
+- **Aturan**: Wajib gunakan `&#160;` (bukan `&nbsp;`) di seluruh output XHTML EPUB 3, dan jalankan `EPUBValidator.validate_epub()` secara otomatis di akhir kompilasi untuk memverifikasi validitas XML, kelengkapan `epub:type="noteref"`, target `<aside>`, bebas tag bocor, dan sanity speaker dialog.
+
 ### 12. Karantina Aset Gambar Antar-Buku
 - **Masalah**: EPUB Metro 2033 membengkak dan memicu error `HTTP 500: Reassembly byte limit exceeded` karena gambar ilustrasi berwarna High School DxD ikut terkemas ke dalam Metro 2033.
 - **Penyebab**: Compiler memindai direktori `High School DxD` secara serakah tanpa memeriksa `base_name` buku yang sedang dirakit.

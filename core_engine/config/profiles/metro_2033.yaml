@@ -42,22 +42,27 @@ key_characters:
   dialog_format: 'Artyom: "..."'
   role: Pemuda 20 tahun yatim piatu penjaga perimeter pos VDNKh
 - name: Hunter
+  since_chapter: 2
   dialog_format: 'Hunter: "..."'
   role: Sosok pria botak berotot tegap berjaket kulit, stalker legendaris Ordo Spartan
 - name: Sukhoi
+  since_chapter: 2
   aliases: ["Paman Sasha", "Sasha"]
   dialog_format: 'Sukhoi: "..."'
   role: Ayah angkat Artyom sekaligus perwira senior pengawas pos jaga VDNKh. Pria
     rasional yang meragukan takdir dan mitos monster terowongan.
 - name: Bourbon
+  since_chapter: 4
   dialog_format: 'Bourbon: "..."'
   role: Pedagang pasar gelap dan penjahat terowongan yang menyewa jasa Artyom untuk
-    menembus stasiun hantu Sukharevskaya.
+    menembus jalur utara menuju jantung Metro.
 - name: Khan
+  since_chapter: 7
   dialog_format: 'Khan: "..."'
-  role: Sosok mistis pengelana terowongan yang menyebut dirinya reinkarnasi Genghis
-    Khan. Memahami rahasia spiritual dan anomali gaib di dasar Metro.
+  role: Sosok mistis pengelana terowongan yang memahami rahasia spiritual dan anomali
+    gaib di dasar Metro.
 - name: Melnik
+  since_chapter: 12
   aliases: ["Kolonel Melnik"]
   dialog_format: 'Kolonel Melnik: "..."'
   role: Pemimpin Ordo Spartan (Rangers) di stasiun Polis. Perwira perang bertangan
