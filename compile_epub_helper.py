@@ -216,7 +216,7 @@ def load_lore_dict(base_dir, base_name, chapter_num=None):
                 b_clean = base_name.lower().replace("_", " ").replace("-", " ")
                 if any(w in b_clean for w in ["metro", "expanse", "carl", "dxd", "dune", "hobbit"]) and any(w in y_clean for w in ["metro", "expanse", "carl", "dxd", "dune", "hobbit"]):
                     if "metro" in b_clean:
-                        if ("2034" in b_clean and "2034" in y_clean) or ("2033" in b_clean and "2033" in y_clean):
+                        if ("2035" in b_clean and "2035" in y_clean) or ("2034" in b_clean and "2034" in y_clean) or ("2033" in b_clean and "2033" in y_clean):
                             target_yaml = os.path.join(engine_profiles, yf)
                             break
                     elif "expanse" in b_clean:
@@ -760,6 +760,22 @@ def main():
 </html>"""
         xhtml_files.append(("metro_map_full.xhtml", "Peta Lengkap Metro Moskwa", metro_maps_xhtml))
 
+    # Galeri Peta Pembuka Khusus Metro 2035 (images/00027.jpg)
+    if "2035" in base_name and "00027.jpg" in images_data:
+        m35_html = [
+            '<div class="color-gallery"><h1>Peta Jaringan Metro Moskwa (Tahun 2035)</h1>',
+            '<div class="illustration-container"><img src="../images/00027.jpg" alt="Peta Lengkap Metro Moskwa 2035" />',
+            '<p><em>Peta Jaringan Terowongan Metro Moskwa di Era Metro 2035</em></p></div>',
+            '</div>'
+        ]
+        m35_xhtml = f"""<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head><title>Peta Lengkap Metro Moskwa (2035)</title><link rel="stylesheet" type="text/css" href="../css/stylesheet.css"/></head>
+<body>{"".join(m35_html)}</body>
+</html>"""
+        xhtml_files.append(("metro_2035_map.xhtml", "Peta Lengkap Metro Moskwa (2035)", m35_xhtml))
+
     # Galeri Ilustrasi Berwarna Pembuka (Khusus DxD atau Light Novel Berwarna)
     dxd_color_images = []
     if "dxd" in base_name.lower():
@@ -884,9 +900,16 @@ def main():
             author = "Frank Herbert"
             book_uid = "urn:uuid:dune-id-direct-frank-herbert"
         elif "metro" in base_name.lower():
-            book_title = "Metro 2033 (Terjemahan ID-Direct)"
+            if "2035" in base_name:
+                book_title = "Metro 2035 (Terjemahan ID-Direct)"
+                book_uid = "urn:uuid:metro-2035-id-direct-dmitry-glukhovsky"
+            elif "2034" in base_name:
+                book_title = "Metro 2034 (Terjemahan ID-Direct)"
+                book_uid = "urn:uuid:metro-2034-id-direct-dmitry-glukhovsky"
+            else:
+                book_title = "Metro 2033 (Terjemahan ID-Direct)"
+                book_uid = "urn:uuid:metro-2033-id-direct-dmitry-glukhovsky"
             author = "Dmitry Glukhovsky"
-            book_uid = "urn:uuid:metro-2033-id-direct-dmitry-glukhovsky"
         elif "dxd" in base_name.lower():
             vol_m = re.search(r'(\d+)', base_name)
             v_num = f"{int(vol_m.group(1)):02d}" if vol_m else "01"

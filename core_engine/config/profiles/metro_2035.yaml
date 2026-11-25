@@ -1,0 +1,92 @@
+title: Metro 2035
+author: Dmitry Glukhovsky
+genre: Post-Apocalyptic / Sci-Fi Survival / Psychological Thriller
+tone: post-apocalyptic-gritty-tense
+style_notes: Gaya komik/novel survival beroktan tinggi, tell-don't-show, sangat mencekam,
+  sinis, emosional, no sensor, tongkrongan gaul santai (gue-lu) antar penghuni terowongan
+  dan prajurit, pop-up lore dan tokoh interaktif.
+pronouns: gue-lu
+banned_words:
+- mencicit
+- menukas
+- menimpali
+- tersenyum simpul
+- bergumam
+- meracau
+- mendengus
+- budak korporat
+- salaryman
+- tatkala
+- terpendar
+- kendati demikian
+forbidden_universe_words:
+- Ainz
+- Albedo
+- Nazarick
+- Tier Magic
+- World Item
+- Kwisatz Haderach
+- Bene Gesserit
+- Spice
+- Hogwarts
+- Gryffindor
+- Voldemort
+- Boosted Gear
+- Rias Gremory
+- Rocinante
+- Epstein Drive
+- Carl
+- Princess Donut
+key_characters:
+- name: Artyom
+  since_chapter: 1
+  dialog_format: 'Artyom: "..."'
+  role: Protagonis mantan Ranger Ordo Spartan yang terobsesi mencari sinyal radio dari dunia luar di atas permukaan Moskow.
+- name: Sukhoi
+  since_chapter: 1
+  aliases: ["Paman Sasha", "Sanseich"]
+  dialog_format: 'Sukhoi: "..."'
+  role: Ayah tiri Artyom dan komandan stasiun VDNKh yang tetap rasional menjaga rakyatnya.
+- name: Anya
+  since_chapter: 2
+  dialog_format: 'Anya: "..."'
+  role: Istri Artyom sekaligus putri Kolonel Melnik; hubungan mereka retak karena obsesi Artyom ke permukaan.
+- name: Homer
+  since_chapter: 2
+  aliases: ["Nikolai Ivanovich"]
+  dialog_format: 'Homer: "..."'
+  role: Penulis sejarah tua dari Sevastopolskaya yang merekam kisah nyata kehidupan di bawah tanah Metro.
+- name: Lyokha
+  since_chapter: 3
+  dialog_format: 'Lyokha: "..."'
+  role: Pedagang kotoran babi dan pemulung licik yang tahu seluk-beluk jalan tikus Metro.
+- name: Sasha
+  since_chapter: 6
+  dialog_format: 'Sasha: "..."'
+  role: Gadis muda dari masa lalu Homer di peristiwa Sevastopolskaya (Metro 2034).
+- name: Letyaga
+  since_chapter: 12
+  dialog_format: 'Letyaga: "..."'
+  role: Prajurit veteran Ordo Spartan yang sinis dan setia kepada teman seperjuangannya.
+- name: Kolonel Melnik
+  since_chapter: 12
+  aliases: ["Melnik", "Miller"]
+  dialog_format: 'Kolonel Melnik: "..."'
+  role: Pemimpin bertangan besi Ordo Spartan (Rangers) yang kini memegang kendali kekuatan militer di Polis.
+locations_and_factions:
+- VDNKh (Stasiun benteng utara penghasil teh jamur dan babi ternak, kampung halaman Artyom)
+- Polis (Pusat pemerintahan, ilmu pengetahuan, dan dewan tertinggi Metro)
+- Hanza / Hanseatic League (Aliansi stasiun-stasiun kaya penguasa jalur lingkar utama Metro)
+- Spartan Order / Rangers (Pasukan militer elit benteng peradaban Metro di bawah komando Melnik)
+- Red Line / Garis Merah (Faksi komunis penguasa Jalur Sokolnicheskaya dengan polisi rahasia yang kejam)
+- Fourth Reich (Faksi fasis neo-Nazi rasis di Metro yang menguasai Pushkinskaya/Chekhovskaya/Tverskaya)
+- Tsvetnoi Boulevard (Stasiun kumuh dan suram tempat pasar gelap serta tempat pelarian kaum buangan)
+- Teatralnaya (Stasiun perbatasan Red Line yang penuh intrik dan kontrol ketat)
+- Bunker D-6 (Instalasi militer rahasia Metro-2 tempat markas Ordo Spartan bermarkas)
+loanwords:
+- Stalker (Penjelajah bersenjata berkostum proteksi yang berani naik ke permukaan Moskow beracun)
+- Filter Masker Gas (Tabung penyaring udara radioaktif yang wajib diganti rutin di permukaan)
+- Geiger Counter (Alat pendeteksi tingkat radiasi ionisasi)
+- Peluru 5.45mm Militer (Mata uang resmi bernilai tinggi sekaligus amunisi standar di Metro)
+- Drazina (Troli rel manual atau bermesin pengangkut orang di terowongan Metro)
+- Metro-2 (Jaringan terowongan rahasia militer peninggalan era Soviet di bawah jalur Metro sipil)

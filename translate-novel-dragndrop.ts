@@ -251,6 +251,7 @@ function extractEpubChapters(epubPath: string): Chapter[] {
   }
 
   const chapters: Chapter[] = [];
+  let pendingIllusts: string[] = [];
   for (const full of targetFiles) {
     if (!fs.existsSync(full)) continue;
     const fname = path.basename(full);
@@ -277,7 +278,19 @@ function extractEpubChapters(epubPath: string): Chapter[] {
       .replace(/\n\s*\n\s*\n/g, '\n\n')
       .trim();
 
+    // Tangkap halaman khusus gambar pembuka bab (misal Metro 2035 split image-only HTML) dan sisipkan ke bab berikutnya
+    const foundIllusts = cleanText.match(/\[\[ILUSTRASI:[^\]]+\]\]/g) || [];
+    const textWithoutIllust = cleanText.replace(/\[\[ILUSTRASI:[^\]]+\]\]/g, '').trim();
+    if (foundIllusts.length > 0 && textWithoutIllust.length <= 200) {
+      pendingIllusts.push(...foundIllusts);
+      continue;
+    }
+
     if (cleanText.length > 200) {
+      if (pendingIllusts.length > 0) {
+        cleanText = pendingIllusts.join('\n') + '\n\n' + cleanText;
+        pendingIllusts = [];
+      }
       const lines = cleanText.split('\n').map(l => l.trim()).filter(l => Boolean(l) && !/^(The\s+Hobbit|Dune|METRO\s+2033|A\s+Game\s+of\s+Thrones)\s*$/i.test(l));
       const firstRealLine = lines[0] || '';
       if (/^(CONTENTS|TABLE OF CONTENTS|LIST OF ILLUSTRATIONS|NOTE ON THE TEXT|WORKS BY|COPYRIGHT|PRAISE FOR)\b/i.test(firstRealLine)) continue;
@@ -1666,11 +1679,13 @@ async function main() {
     for (const ch of chapters) {
       const chapCacheDir = path.join(cacheDir, ch.id);
       if (fs.existsSync(chapCacheDir)) {
+        const scoutFile = path.join(chapCacheDir, '_scout_tags.txt');
+        const scoutTags = fs.existsSync(scoutFile) ? fs.readFileSync(scoutFile, 'utf-8').trim() + '\n\n' : '';
         const chunkFiles = fs.readdirSync(chapCacheDir)
           .filter(f => f.startsWith('chunk_') && f.endsWith('.txt'))
           .sort();
         const parts = chunkFiles.map(cf => fs.readFileSync(path.join(chapCacheDir, cf), 'utf-8'));
-        assembled += `\n\n### ${ch.title}\n\n${parts.join('\n\n')}\n\n`;
+        assembled += `\n\n### ${ch.title}\n${scoutTags}${parts.join('\n\n')}\n\n`;
       }
     }
     fs.writeFileSync(outputFile, assembled.trim() + '\n', 'utf-8');
@@ -1691,6 +1706,34 @@ async function main() {
     const chapCacheDir = path.join(cacheDir, ch.id);
     if (!fs.existsSync(chapCacheDir)) {
       fs.mkdirSync(chapCacheDir, { recursive: true });
+    }
+
+    // Pass 1 Scout: Ekstrak [CAST:] & [GLOSSARY:] per bab jika belum di-cache
+    const scoutFile = path.join(chapCacheDir, '_scout_tags.txt');
+    if (!fs.existsSync(scoutFile)) {
+      try {
+        const sample = ch.text.slice(0, 7000);
+        const scoutPrompt = `Dari cuplikan bab "${ch.title}" berikut, ekstrak tokoh penting & istilah kunci ke format tag berikut SAJA (maks 6 CAST dan 6 GLOSSARY, tanpa spoiler akhir cerita):
+[CAST: Nama Tokoh | faksi | Deskripsi singkat 1 kalimat]
+[GLOSSARY: Istilah atau Lokasi | Penjelasan singkat 1 kalimat]
+Faksi valid: metro, spartan, redline, hanza, mutant, survivor, dragon, gremory, fallen, healer, exorcist, carl, donut, ai.
+Keluarkan HANYA baris tag [CAST: ...] dan [GLOSSARY: ...] tanpa kata pengantar.\n\n${sample}`;
+        const parsedUrl = new URL(CONFIG.proxyUrl);
+        const scoutPayload = JSON.stringify({ model: CONFIG.model, messages: [{ role: 'user', content: scoutPrompt }], temperature: 0.2, stream: false });
+        const scoutRaw = await new Promise<string>((resolve, reject) => {
+          const isHttps = parsedUrl.protocol === 'https:';
+          const req = (isHttps ? https : http).request({
+            hostname: parsedUrl.hostname, port: parsedUrl.port || (isHttps ? 443 : 80), path: parsedUrl.pathname,
+            method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${CONFIG.apiKey}`, 'Content-Length': Buffer.byteLength(scoutPayload) }, timeout: 60000
+          }, res => { let d = ''; res.on('data', c => d += c); res.on('end', () => resolve(d)); });
+          req.on('error', reject); req.write(scoutPayload); req.end();
+        });
+        const scoutLines = parseSSEorJSON(scoutRaw).split('\n').map(l => l.trim()).filter(l => /^\[(CAST|GLOSSARY):/i.test(l));
+        if (scoutLines.length > 0) {
+          fs.writeFileSync(scoutFile, scoutLines.join('\n'), 'utf-8');
+          console.log(`🔎 Pass-1 Scout: ${scoutLines.length} tag [CAST]/[GLOSSARY] diekstrak.`);
+        }
+      } catch {}
     }
 
     const chunks = splitParagraphSafe(ch.text, CONFIG.maxChunkChars);

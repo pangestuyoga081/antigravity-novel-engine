@@ -51,3 +51,8 @@
 - **Tanggal**: 2026-11-25
 - **Konteks**: Kamus lore global dari YAML berisiko membocorkan informasi karakter bab akhir kepada pembaca yang masih berada di bab awal.
 - **Keputusan**: `load_lore_dict()` mendukung `since_chapter` dan `roles` per bab, serta akumulasi lore bab berjalan secara maju (`chapter 1..N`) tanpa pernah bocor mundur ke bab sebelumnya.
+
+### ADR-010: Adaptasi `translate-novel-dragndrop.ts` v2.0 & Default `ag/gemini-3.8-flash-low`
+- **Tanggal**: 2026-11-25
+- **Konteks**: User ingin tetap bisa memakai runner drag & drop yang diadaptasi dengan fitur terbaru engine sambil mengembalikan model default ke `ag/gemini-3.8-flash-low`.
+- **Keputusan**: `translate-novel-dragndrop.ts` di-upgrade agar mendukung split image-only chapter HTML (seperti Metro 2035) dan Pass-1 Scout (`[CAST:]`/`[GLOSSARY:]`), tetap mempertahankan multi-tier adaptive sub-chunking & `ag/gemini-3.8-flash-low` sebagai default.
