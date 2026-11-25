@@ -349,14 +349,14 @@ def get_faction_badge(speaker_name):
     if any(w in spk_low for w in ["freed"]):
         return '<span class="faction-badge badge-exorcist">✝️ EXORCIST</span>'
     # Faksi Overlord
-    if any(w in spk_low for w in ["momonga", "ainz"]):
+    if any(w in spk_low for w in ["momonga", "ainz", "momon"]):
         return '<span class="faction-badge badge-dragon">💀 NAZARICK</span>'
-    if any(w in spk_low for w in ["albedo", "shalltear", "demiurge", "cocytus", "aura", "mare", "sebas"]):
+    if any(w in spk_low for w in ["albedo", "shalltear", "demiurge", "cocytus", "aura", "mare", "sebas", "nabe", "narberal"]):
         return '<span class="faction-badge badge-gremory">🖤 GUARDIAN</span>'
     if any(w in spk_low for w in ["gazef"]):
         return '<span class="faction-badge badge-spartan">⚔️ KINGDOM</span>'
-    if any(w in spk_low for w in ["nigun"]):
-        return '<span class="faction-badge badge-exorcist">✝️ THEOCRACY</span>'
+    if any(w in spk_low for w in ["nigun", "clementine", "khajiit"]):
+        return '<span class="faction-badge badge-exorcist">✝️ ENEMY</span>'
     return ""
 
 def text_to_html(body_text, lore_map=None, available_images=None):

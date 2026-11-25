@@ -87,6 +87,43 @@ key_characters:
   aliases: ["Nigun"]
   dialog_format: 'Nigun: "..."'
   role: Kapten unit elit Sunlight Scripture dari Slane Theocracy yang arogan dan kejam.
+- name: Momon
+  since_chapter: 1
+  dialog_format: 'Momon: "..."'
+  role: Identitas samaran Momonga sebagai petualang misterius berbaju zirah hitam penuh yang bersenjatakan dua pedang besar.
+- name: Narberal Gamma
+  since_chapter: 1
+  aliases: ["Nabe"]
+  dialog_format: 'Nabe: "..."'
+  role: Pelayan tempur Pleiades Nazarick yang menyamar sebagai petualang cantik pendamping Momon; membenci manusia rendahan dengan lidah tajam.
+- name: Nfirea Bareare
+  since_chapter: 1
+  aliases: ["Nfirea"]
+  dialog_format: 'Nfirea: "..."'
+  role: Apoteker muda jenius dari E-Rantel pemilik Talent langka yang bisa memakai item sihir apa pun.
+- name: Lizzie Bareare
+  since_chapter: 1
+  aliases: ["Lizzie"]
+  dialog_format: 'Lizzie: "..."'
+  role: Nenek Nfirea sekaligus ahli ramuan terbaik di E-Rantel yang tajam dan keras.
+- name: Ninya
+  since_chapter: 2
+  dialog_format: 'Ninya: "..."'
+  role: Penyihir muda berbakat anggota grup petualang Swords of Darkness yang menyimpan rahasia masa lalu.
+- name: Peter Mork
+  since_chapter: 2
+  aliases: ["Peter"]
+  dialog_format: 'Peter: "..."'
+  role: Pemimpin ramah dan berhati tulus dari tim petualang Swords of Darkness.
+- name: Clementine
+  since_chapter: 3
+  dialog_format: 'Clementine: "..."'
+  role: Pembunuh psikopat mantan anggota Black Scripture Slane Theocracy yang mengoleksi pelat petualang korban-korbannya.
+- name: Khajiit Dale Badantel
+  since_chapter: 3
+  aliases: ["Khajiit"]
+  dialog_format: 'Khajiit: "..."'
+  role: Necromancer gila anggota organisasi sesat Zurrernorn yang merencanakan ritual kematian di E-Rantel.
 locations_and_factions:
 - Nazarick (Great Tomb of Nazarick, markas besar benteng bawah tanah Guild Ainz Ooal Gown)
 - Ainz Ooal Gown (Guild legendaris YGGDRASIL beranggotakan ras heteromorfik yang ditakuti)
