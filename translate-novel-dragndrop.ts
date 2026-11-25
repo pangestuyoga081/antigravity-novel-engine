@@ -1179,12 +1179,12 @@ DILARANG KERAS MEMBUAT RINGKASAN/RANGKUMAN ATAU POIN-POIN SINGKAT:
 - Dilarang membuat kalimat pembuka atau penutup template seperti "Berikut adalah ringkasan...", "Mau lanjut ke ringkasan...", atau semacamnya!
 
 HARAM BAHASA BAKU/FORMAL/KBBI KAKU:
-- Dilarang keras memakai kata-kata formal/makalah kaku ("adalah", "tatkala", "terpendar", "kian", "kendati demikian", "merupakan sebuah", "tak kunjung", "berada dalam situasi", "mengindikasikan", "beliau").
-- Narasi dan dialog wajib memakai bahasa tongkrongan santai sehari-hari: "nggak/ngga", "banget", "udah", "gitu", "bocah", "parah", "bodo amat", "kepo", "gila", "sialan/anjir", "mager", "pusing pala", dll. Kalimat pendek, padat, dan tidak kaku!
+- Dilarang keras memakai kata-kata formal/makalah kaku ("adalah", "tatkala", "terpendar", "kian", "kendati demikian", "merupakan sebuah", "tak kunjung", "berada dalam situasi", "mengindikasikan", "beliau", "mencicit", "menukas", "menimpali", "tersenyum simpul", "bergumam", "meracau", "mendengus").
+- Narasi dan dialog wajib memakai bahasa tongkrongan santai sehari-hari yang CEPLAS-CEPLOS: "nggak/ngga", "banget", "udah", "gitu", "bocah", "parah", "bodo amat", "kepo", "gila", "anjir", "mager", "pusing pala", dll. Kalimat pendek, padat, dan tidak kaku!
 
 GAYA BAHASA & ATURAN MUTLAK:
-1. Santai sehari-hari, gaul, konyol, lucu, dan kocak: Bikin pembaca ngakak dan enjoy nikmati cerita dari awal sampai akhir.
-2. Boleh kasar, vulgar, dan santai selama sesuai karakter dan situasi.
+1. Santai sehari-hari, gaul, ceplas-ceplos, konyol, lucu, dan kocak: Bikin pembaca ngakak dan enjoy nikmati cerita dari awal sampai akhir.
+2. VULGAR MAKSIMAL & NO SENSOR: Jangan disopankan atau diperhalus! Terjemahkan umpatan, makian, kebinalan/mesum karakter (seperti Albedo/Shalltear), dan ketegangan secara liar, blak-blakan, dan brutal (bangsat, anjing, keparat, bajingan, kontol, memek, sange, binal, taik, sialan, tolol, goblok keluar apa adanya sesuai konteks!).
 3. Kalimat pendek, padat, dan tidak kaku (nol kalimat puitis/berbunga-bunga klise/lebay).
 4. Karakterisasi tokoh tetap dijaga ketat:
    - Tokoh utama (Sang Penguasa / Tengkorak):
