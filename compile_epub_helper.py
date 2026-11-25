@@ -235,6 +235,9 @@ def load_lore_dict(base_dir, base_name, chapter_num=None):
                     elif "hobbit" in b_clean and "hobbit" in y_clean:
                         target_yaml = os.path.join(engine_profiles, yf)
                         break
+                    elif "overlord" in b_clean and "overlord" in y_clean:
+                        target_yaml = os.path.join(engine_profiles, yf)
+                        break
 
         if target_yaml and os.path.exists(target_yaml):
             try:
@@ -345,6 +348,15 @@ def get_faction_badge(speaker_name):
         return '<span class="faction-badge badge-fallen">🪶 FALLEN ANGEL</span>'
     if any(w in spk_low for w in ["freed"]):
         return '<span class="faction-badge badge-exorcist">✝️ EXORCIST</span>'
+    # Faksi Overlord
+    if any(w in spk_low for w in ["momonga", "ainz"]):
+        return '<span class="faction-badge badge-dragon">💀 NAZARICK</span>'
+    if any(w in spk_low for w in ["albedo", "shalltear", "demiurge", "cocytus", "aura", "mare", "sebas"]):
+        return '<span class="faction-badge badge-gremory">🖤 GUARDIAN</span>'
+    if any(w in spk_low for w in ["gazef"]):
+        return '<span class="faction-badge badge-spartan">⚔️ KINGDOM</span>'
+    if any(w in spk_low for w in ["nigun"]):
+        return '<span class="faction-badge badge-exorcist">✝️ THEOCRACY</span>'
     return ""
 
 def text_to_html(body_text, lore_map=None, available_images=None):

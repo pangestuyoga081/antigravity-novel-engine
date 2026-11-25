@@ -1,0 +1,105 @@
+title: Overlord Volume 01 - The Undead King
+author: Kugane Maruyama
+genre: Dark Fantasy / Isekai / Action Comedy
+tone: dark-fantasy-comedy-tactical
+style_notes: Gaya light novel/komik isekai santai, kocak, blak-blakan (gue-lu),
+  tell-don't-show, kontras antara batin Momonga yang panik santai dengan wibawa
+  penguasa undead yang dingin dan badass. DILARANG jokes "budak korporat" / "salaryman".
+pronouns: gue-lu
+banned_words:
+- budak korporat
+- salaryman
+- bos toxic
+- shift malam
+- mencicit
+- menukas
+- menimpali
+- tersenyum simpul
+- bergumam
+- meracau
+- mendengus
+- tatkala
+- terpendar
+- kendati demikian
+forbidden_universe_words:
+- VDNKh
+- Artyom
+- Dark Ones
+- Rocinante
+- Epstein Drive
+- Hogwarts
+- Voldemort
+- Rias Gremory
+- Boosted Gear
+- Kwisatz Haderach
+- Carl
+- Princess Donut
+key_characters:
+- name: Momonga
+  since_chapter: 1
+  aliases: ["Ainz", "Ainz Ooal Gown", "Suzuki Satoru"]
+  dialog_format: 'Momonga: "..."'
+  role: Guild Master Ainz Ooal Gown berwujud tengkorak Overlord; luarnya dingin berwibawa, batinnya santai dan sering panik mikirin peran penguasa.
+- name: Albedo
+  since_chapter: 1
+  dialog_format: 'Albedo: "..."'
+  role: Overseer of the Floor Guardians Nazarick, iblis succubus cantik yang bucin akut dan obsesif terhadap Momonga.
+- name: Sebas Tian
+  since_chapter: 1
+  aliases: ["Sebas"]
+  dialog_format: 'Sebas: "..."'
+  role: Kepala pelayan Nazarick berwujud kakek tua berwibawa dengan kesetiaan mutlak.
+- name: Shalltear Bloodfallen
+  since_chapter: 2
+  aliases: ["Shalltear"]
+  dialog_format: 'Shalltear: "..."'
+  role: Guardian Lantai 1-3 berwujud vampir gadis mungil sadis yang bersaing memperebutkan Momonga dengan Albedo.
+- name: Demiurge
+  since_chapter: 2
+  dialog_format: 'Demiurge: "..."'
+  role: Guardian Lantai 7, iblis jenius berjas rapi yang super sopan, sadis, dan ahli menyusun konspirasi.
+- name: Aura Bella Fiora
+  since_chapter: 2
+  aliases: ["Aura"]
+  dialog_format: 'Aura: "..."'
+  role: Guardian Lantai 6, Dark Elf tomboi ceria pengendali monster buas.
+- name: Mare Bello Fiore
+  since_chapter: 2
+  aliases: ["Mare"]
+  dialog_format: 'Mare: "..."'
+  role: Saudara kembar Aura di Lantai 6, Dark Elf pemalu penakut pengguna sihir alam mematikan.
+- name: Cocytus
+  since_chapter: 2
+  dialog_format: 'Cocytus: "..."'
+  role: Guardian Lantai 5, ksatria serangga raksasa berjiwa pejuang terhormat.
+- name: Enri Emmot
+  since_chapter: 4
+  aliases: ["Enri"]
+  dialog_format: 'Enri: "..."'
+  role: Gadis Desa Carne yang bertahan melindungi adiknya saat serangan ksatria musuh.
+- name: Gazef Stronoff
+  since_chapter: 5
+  aliases: ["Gazef"]
+  dialog_format: 'Gazef: "..."'
+  role: Kepala Prajurit Kerajaan Re-Estize, pendekar pedang terkuat yang jujur dan melindungi rakyat kecil.
+- name: Nigun Grid Luin
+  since_chapter: 6
+  aliases: ["Nigun"]
+  dialog_format: 'Nigun: "..."'
+  role: Kapten unit elit Sunlight Scripture dari Slane Theocracy yang arogan dan kejam.
+locations_and_factions:
+- Nazarick (Great Tomb of Nazarick, markas besar benteng bawah tanah Guild Ainz Ooal Gown)
+- Ainz Ooal Gown (Guild legendaris YGGDRASIL beranggotakan ras heteromorfik yang ditakuti)
+- Slane Theocracy (Negara teokrasi fanatik manusia yang memburu ras non-manusia)
+- Re-Estize Kingdom (Kerajaan manusia tempat Desa Carne berada)
+- Desa Carne (Desa kecil perbatasan Re-Estize yang diserang pasukan penyamar)
+- Sunlight Scripture (Pasukan rahasia elit Slane Theocracy pengguna sihir pemanggil malaikat)
+loanwords:
+- YGGDRASIL (Game VRMMORPG DMMO legendaris yang tutup server tepat saat Momonga terjebak di dunia baru)
+- Tier Magic (Sistem tingkatan sihir dari Tier 1 hingga Tier 10 dan Super-Tier)
+- World Item (Artefak langka berkekuatan setara satu dunia yang sangat berharga)
+- Floor Guardian (NPC tingkat tinggi pelindung tiap lantai Great Tomb of Nazarick)
+- Death Knight (Monster undead ksatria lapis baja tingkat tinggi ciptaan Momonga)
+- Grasp Heart (Sihir kematian Tier 9 andalan Momonga yang meremukkan jantung target)
+- Staff of Ainz Ooal Gown (Senjata artefak guild simbol kekuasaan tertinggi Momonga)
+- NPC (Non-Player Character ciptaan para anggota guild yang mendadak hidup dan berjiwa)
