@@ -1,0 +1,77 @@
+title: Isekai Meikyuu de Harem wo - Volume 01
+author: Shachi Sogano
+genre: Isekai / Dark Fantasy / Harem / Lewd 18+
+tone: vulgar-santai-ceplas-ceplos-erotis
+style_notes: Gaya bahasa sangat santai, ceplas-ceplos, tongkrongan lo-gue yang frontal,
+  vulgar maksimal dan no-sensor (seksual, anatomi, umpatan kasar, adegan ranjang basah).
+  Monolog batin Michio menggunakan "gue", dialog kasual menggunakan "gue-lu" kecuali saat
+  berbicara formal dengan bangsawan/pelanggan, sementara dialog Roxanne tetap hormat namun menggoda.
+pronouns: gue-lu
+banned_words:
+- mencicit
+- menukas
+- menimpali
+- tersenyum simpul
+- bergumam
+- meracau
+- mendengus
+- tatkala
+- terpendar
+- kendati demikian
+- budak korporat
+- salaryman
+forbidden_universe_words:
+- VDNKh
+- Artyom
+- Momonga
+- Ainz
+- Hogwarts
+- Rias Gremory
+- Boosted Gear
+- Princess Donut
+key_characters:
+- name: Michio Kaga
+  since_chapter: 1
+  aliases: ["Michio", "Kaga Michio"]
+  dialog_format: 'Michio: "..."'
+  role: Protagonis reinkarnator pragmatis dan mesum jujur yang menggunakan skill cheat untuk grinding labirin demi mengumpulkan uang dan menaklukkan harem budak demihuman.
+- name: Roxanne
+  since_chapter: 3
+  dialog_format: 'Roxanne: "..."'
+  role: Gadis demihuman ras Manusia-Serigala (Wolfkin) berbody montok, setia, penurut, dan jago bertarung dengan indra penciuman tajam di labirin.
+- name: Alan
+  since_chapter: 2
+  aliases: ["Tuan Alan", "Pedagang Budak"]
+  dialog_format: 'Alan: "..."'
+  role: Pedagang budak profesional di Kota Veil yang jujur, lugas, dan menjadi perantara pembelian Roxanne.
+- name: Kepala Desa
+  since_chapter: 1
+  dialog_format: 'Kepala Desa: "..."'
+  role: Pemimpin desa pertama tempat Michio mendarat dan menumpas kawanan bandit.
+- name: Pemimpin Bandit
+  since_chapter: 1
+  aliases: ["Bos Bandit"]
+  dialog_format: 'Bos Bandit: "..."'
+  role: Penjahat buronan kelas kakap yang diserang Michio demi mendapatkan uang tebusan dan pedang Durandal.
+locations_and_factions:
+- term: Kota Veil
+  desc: Kota perdagangan utama dekat labirin Quratar, tempat toko pedagang budak Alan berada.
+- term: Labirin Quratar
+  desc: Dungeon penuh monster tempat para Explorer berburu kristal sihir dan menaikkan level Job.
+- term: Durandal
+  desc: Pedang pusaka legendaris yang dirampas Michio, mampu membelah musuh dengan tebasan maut dan punya slot skill Bonus.
+- term: Nar
+  desc: Mata uang resmi kerajaan (koin tembaga, perak, dan emas; 1 Koin Emas = 10.000 Nar).
+- term: Explorer
+  desc: Job petualang penjelajah labirin yang memungkinkan akses cepat masuk dan keluar lantai dungeon.
+loanwords:
+- Job
+- Skill
+- Bonus Point
+- HP
+- MP
+- Level
+- Party
+- Explorer
+- Durandal
+- Item Box
